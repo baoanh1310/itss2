@@ -1,0 +1,43 @@
+#menu {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+	min-height: 100vh;
+}
+
+.menu-item {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	padding-top: 35px;
+	padding-bottom: 35px;
+	border-bottom: 1px solid black;
+	background: #0aa1a1;
+}
+
+.menu-item-label {
+	color: #FEECEE;
+	font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.menu-item:focus,
+.menu-item:hover,
+.menu-item-active {
+    background: #2A6FBE;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#menuLogo {
+	border-bottom: 1px solid black;
+}
+
+#signOutBtn {
+	position: relative;
+	margin-top: 50px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
