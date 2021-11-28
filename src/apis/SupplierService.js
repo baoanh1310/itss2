@@ -16,19 +16,19 @@ class SupplierService extends BaseService {
         });
     }
 
-    getProducts = (data) => {
-        return this.get("/get", data);
+    getSuppliers = (data) => {
+        return this.get("/", data);
     }
 
-    getProduct = (id) => {
-        return this.get("/get/"+id);
+    getSupplier = (id) => {
+        return this.get("/"+id);
     }
 
-    updateProduct = (id, data) => {
+    updateSupplier = (id, data) => {
         return this.put("/update/"+id, data);
     }
 
-    delProducts = (data) => {
+    delSuppliers = (data) => {
         return this.delete("/delete", data);
     }
 };

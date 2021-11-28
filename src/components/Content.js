@@ -5,7 +5,21 @@ import ProductModal from './ProductModal'
 import ImportModal from './ImportModal'
 import ExportModal from './ExportModal'
 
+import SupplierService from '../apis/SupplierService'
+
 const Content = (props) => {
+
+	const [suppliers, setSuppliers] = useState([])
+	const [products, setProducts] = useState([])
+	const [imports, setImports] = useState([])
+	const [exports, setExports] = useState([])
+
+	const fetchSuppliers = async () => {
+		const res = await SupplierService.getSuppliers()
+		console.log(res)
+	}
+
+
 	let body;
 	switch (props.model) {
 		case "dashboard":
@@ -14,7 +28,7 @@ const Content = (props) => {
 		case "supplier":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
-				<SupplierTable />
+				<SupplierTable fetchSuppliers={fetchSuppliers} />
 			</div>
 			break
 		case "product":
@@ -42,6 +56,7 @@ const Content = (props) => {
 			body = <div></div>
 			break
 	}
+
 
 	return (
 		<div id="content">
@@ -98,6 +113,9 @@ const AddBtn = (props) => {
 }
 
 const SupplierTable = (props) => {
+
+	let suppliers = props.fetchSuppliers()
+	console.log(suppliers)
 
 	return (
 		<table className="table table-striped table-bordered" style={{width: "100%"}}>
