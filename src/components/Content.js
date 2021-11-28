@@ -177,7 +177,7 @@ const ImportTable = (props) => {
 					<td className="text-center">Iphone</td>
 					<td className="text-center">Apple</td>
 					<td className="text-center">10</td>
-					<td className="text-center">2021-10-01 08:15:23</td>
+					<td className="text-center">2021-10-01</td>
 					<td className="text-center">
 						<button>編集</button>
 					</td>
@@ -211,7 +211,7 @@ const ExportTable = (props) => {
 					<td className="text-center">Iphone</td>
 					<td className="text-center">Apple</td>
 					<td className="text-center">10</td>
-					<td className="text-center">2021-10-01 08:15:23</td>
+					<td className="text-center">2021-10-01</td>
 					<td className="text-center">
 						<button>編集</button>
 					</td>

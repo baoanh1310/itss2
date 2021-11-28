@@ -12,24 +12,28 @@ const SignIn = (props) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
+	console.log("Token: ", LocalStorageKeys.Token)
+
+
 	const handleLogin = async () => {
+		console.log("Email: ", email, " Password: ", password)
         const response = await AuthenService.login({
             email: email,
             password: password
-        });
+        })
         if (response.status === 200) {
-            localStorage.setItem(LocalStorageKeys.Token, response.data.accessToken)
-            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user.userid)
+            localStorage.setItem(LocalStorageKeys.Token, response.data.token)
+            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
             window.location.replace('/')
         } 
     }
 
-    const handleChangeEmail = (value) => {
-        setEmail(value)
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value)
     }
 
-    const handleChangePassword = (value) => {
-        setPassword(value)
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value)
     }
 
     const changeSignInState = () => {
@@ -47,12 +51,12 @@ const SignIn = (props) => {
 
 		            <div className="form-group">
 		                <label>メールアドレス</label>
-		                <input type="email" onChange={(e) => handleChangeEmail(e.target.value)} className="form-control" placeholder="メールアドレスを入力する" required />
+		                <input type="email" value={email} onChange={handleEmailChange} className="form-control" placeholder="メールアドレスを入力する" required />
 		            </div>
 
 		            <div className="form-group">
 		                <label>パスワード</label>
-		                <input type="password" onChange={(e) => handleChangePassword(e.target.value)} className="form-control" placeholder="パスワードを入力する" required />
+		                <input type="password" value={password} onChange={handlePasswordChange} className="form-control" placeholder="パスワードを入力する" required />
 		            </div>
 
 		            <div className="form-group">

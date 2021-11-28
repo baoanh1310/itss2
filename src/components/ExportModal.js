@@ -42,7 +42,7 @@ const ExportModal = (props) => {
 		        	<input value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
 		        	<input value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
 		        	<input value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
-		        	<input value={exportDate} onChange={handleExportDateChange} type="text" className="form-control validate" placeholder="出庫日" />
+		        	<input value={exportDate} onChange={handleExportDateChange} type="date" className="form-control validate" placeholder="出庫日" />
 		        </form>
 		      </div>
 		      <div className="modal-footer">

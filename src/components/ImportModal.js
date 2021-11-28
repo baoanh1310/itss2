@@ -20,6 +20,7 @@ const ImportModal = (props) => {
 	}
 
 	const handleImportDateChange = (e) => {
+		console.log(e.target.value)
 		setImportDate(e.target.value)
 	}
 
@@ -42,7 +43,7 @@ const ImportModal = (props) => {
 		        	<input value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
 		        	<input value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
 		        	<input value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
-		        	<input value={importDate} onChange={handleImportDateChange} type="text" className="form-control validate" placeholder="入庫日" />
+		        	<input value={importDate} onChange={handleImportDateChange} type="date" className="form-control validate" placeholder="入庫日" />
 		        </form>
 		      </div>
 		      <div className="modal-footer">

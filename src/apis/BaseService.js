@@ -16,7 +16,7 @@ class BaseService {
 
     initialAxiosInstance = (config) => {
         const subUrl = config.subURL || "";
-        let baseURL = config.enpoint || endpoint;
+        let baseURL = config.endpoint || endpoint;
         if (!!subUrl) {
             baseURL += `${subUrl}`
         }
@@ -63,7 +63,7 @@ class BaseService {
                     return Promise.reject(err);
                 }
                 const status = get(err, "response.status");
-                const msg = get(err, "response.data.data.message");
+                const msg = get(err, "response.data.message");
                 switch (status) {
                     case StatusCode.NotFound:
                         msg && this.mNotification.warning(msg);

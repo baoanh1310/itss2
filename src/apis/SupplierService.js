@@ -1,12 +1,12 @@
 import BaseService from "./BaseService";
 
-class ProductService extends BaseService {
+class SupplierService extends BaseService {
     /**
      *
      */
     constructor() {
         super({
-            subURL: "products"
+            subURL: "suppliers"
         });
     }
 
@@ -33,4 +33,4 @@ class ProductService extends BaseService {
     }
 };
 
-export default new ProductService();
+export default new SupplierService();
