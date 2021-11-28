@@ -12,7 +12,7 @@ const App = () => {
     	<div className="App">
          	<Switch>
             	<Route exact path="/" component={() => <Homepage label="ダッシュボード" />} />
-            	<Route exact path="/supplier" component={() => <Homepage label="サプライヤー" model="supplier" btnTitle="サプライヤー" />} />
+            	<Route exact path="/supplier" component={() => <Homepage label="サプライヤー" model="supplier" btnTitle="新サプライヤー" />} />
             	<Route exact path="/product" component={() => <Homepage label="製品管理" model="product" btnTitle="新製品" />} />
             	<Route exact path="/import" component={() => <Homepage label="輸入管理" model="import" btnTitle="新製品" />} />
             	<Route exact path="/export" component={() => <Homepage label="輸出管理" model="export" btnTitle="新製品" />} />

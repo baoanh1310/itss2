@@ -97,6 +97,10 @@ class BaseService {
         return this.mAxios.put(url, data, config);
     };
 
+    patch = (url, data, config) => {
+        return this.mAxios.patch(url, data, config);
+    };
+
 }
 
 export default BaseService
