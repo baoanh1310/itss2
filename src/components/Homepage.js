@@ -19,7 +19,7 @@ const Homepage = (props) => {
 			<div className="col-sm-10">
 				<div>
 					<Navbar />
-					<Content />
+					<Content {...props} />
 				</div>
 			</div>
 		</div>
