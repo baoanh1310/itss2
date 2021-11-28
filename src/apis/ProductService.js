@@ -29,7 +29,7 @@ class ProductService extends BaseService {
     }
 
     delProducts = (data) => {
-        return this.post("/delete", data);
+        return this.delete("/delete", data);
     }
 };
 
