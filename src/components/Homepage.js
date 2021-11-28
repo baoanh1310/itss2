@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { LocalStorageKeys } from '../apis/localStorageKeys'
-import Logo from './Logo'
 import Content from './Content'
+import Navbar from './Navbar'
 import Menu from './Menu'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './Homepage.css'
@@ -17,7 +17,10 @@ const Homepage = (props) => {
 				<Menu />
 			</div>
 			<div className="col-sm-10">
-				<Content />
+				<div>
+					<Navbar />
+					<Content />
+				</div>
 			</div>
 		</div>
 	)

@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import './Menu.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import Logo from './Logo'
 
 const Menu = (props) => {
 	const itemList = [
