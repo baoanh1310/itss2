@@ -38,11 +38,16 @@ const Menu = (props) => {
 
 	const renderItems = itemList.map(item => <MenuItem key={item.id} href={item.href} itemName={item.itemName} />)
 
+	const logout = () => {
+      localStorage.clear()
+      window.location.href = '/sign-in'
+    }
+
 	return (
 		<div id="menu">
 			<img src="/logo.png" alt="logo" id="menuLogo" />
 			{renderItems}
-			<button id="signOutBtn" type="button" class="btn btn-secondary">ログアウト</button>
+			<button id="signOutBtn" onClick={logout} type="button" className="btn btn-secondary">ログアウト</button>
 		</div>
 	)
 }

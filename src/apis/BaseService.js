@@ -63,7 +63,7 @@ class BaseService {
                     return Promise.reject(err);
                 }
                 const status = get(err, "response.status");
-                const msg = get(err, "response.data.message");
+                const msg = get(err, "response.message");
                 switch (status) {
                     case StatusCode.NotFound:
                         msg && this.mNotification.warning(msg);

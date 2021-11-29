@@ -8,9 +8,12 @@ import './Homepage.css'
 
 const Homepage = (props) => {
 	let user = localStorage.getItem(LocalStorageKeys.UserInfo)
-    // if (!user) {
-    //     window.location.replace('/sign-in')
-    // }
+	console.log("User: ", user)
+	console.log("LocalStorageKeys: ", LocalStorageKeys)
+	console.log("localstorage: ", localStorage)
+    if (!user) {
+        window.location.replace('/sign-in')
+    }
 	return (
 		<div id="homepage">
 			<div className="col-sm-2">

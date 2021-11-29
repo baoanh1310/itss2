@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 import "./Content.css"
+
+import Profile from './Profile'
+
 import SupplierModal from './SupplierModal'
 import ProductModal from './ProductModal'
 import ImportModal from './ImportModal'
@@ -61,7 +64,9 @@ const Content = (props) => {
 			body = <div></div>
 			break
 		case "profile":
-			body = <div></div>
+			body = <div>
+				<Profile />
+			</div>
 			break
 	}
 

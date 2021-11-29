@@ -3,6 +3,8 @@ import AuthenService from '../apis/AuthenServices'
 import { LocalStorageKeys } from '../apis/localStorageKeys'
 import './SignIn.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios'
+import { endpoint } from '../apis/config'
 
 import Logo from './Logo'
 
@@ -12,18 +14,20 @@ const SignIn = (props) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	console.log("Token: ", LocalStorageKeys.Token)
+	console.log("Token: ", LocalStorageKeys.Token, " User: ", LocalStorageKeys.UserInfo)
 
-
-	const handleLogin = async () => {
-		console.log("Email: ", email, " Password: ", password)
+	const handleLogin = async (e) => {
+		e.preventDefault()
         const response = await AuthenService.login({
             email: email,
             password: password
         })
+        
         if (response.status === 200) {
+        	// console.log("Token: ", response.token, " User: ", response.user)
+        	console.log("response: ", response)
             localStorage.setItem(LocalStorageKeys.Token, response.data.token)
-            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
+            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user["_id"])
             window.location.replace('/')
         } 
     }

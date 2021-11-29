@@ -18,8 +18,8 @@ const Navbar = (props) => {
 				<a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				    abc@gmail.com
 				</a>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				    <a class="dropdown-item" href="/profile">プロフィール</a>
+				<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				    <a className="dropdown-item" href="/profile">プロフィール</a>
   				</div>
 			</div>
 		</div>
