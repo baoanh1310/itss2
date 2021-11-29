@@ -1,12 +1,12 @@
 import BaseService from "./BaseService";
 
-class SupplierService extends BaseService {
+class ImportService extends BaseService {
     /**
      *
      */
     constructor() {
         super({
-            subURL: "suppliers"
+            subURL: "warehouse/import"
         });
     }
 
@@ -14,21 +14,21 @@ class SupplierService extends BaseService {
         return this.post('/', data);
     }
 
-    getSuppliers = (data) => {
+    getProducts = (data) => {
         return this.get("/", data);
     }
 
-    getSupplier = (id) => {
-        return this.get("/"+id);
+    getProduct = (id) => {
+        return this.get("/get/"+id);
     }
 
-    updateSupplier = (id, data) => {
+    updateProduct = (id, data) => {
         return this.put("/update/"+id, data);
     }
 
-    delSuppliers = (data) => {
+    delProducts = (data) => {
         return this.delete("/delete", data);
     }
 };
 
-export default new SupplierService();
+export default new ImportService();

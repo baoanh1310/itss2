@@ -6,6 +6,9 @@ import ImportModal from './ImportModal'
 import ExportModal from './ExportModal'
 
 import SupplierService from '../apis/SupplierService'
+import ProductService from '../apis/ProductService'
+import ImportService from '../apis/ImportService'
+import ExportService from '../apis/ExportService'
 
 const Content = (props) => {
 
@@ -17,8 +20,13 @@ const Content = (props) => {
 	const fetchSuppliers = async () => {
 		const res = await SupplierService.getSuppliers()
 		console.log(res)
+		setSuppliers(res.suppliers)
 	}
 
+	const fetchProducts = async () => {
+		const res = await ProductService.getProducts()
+		setProducts(res.products)
+	}
 
 	let body;
 	switch (props.model) {

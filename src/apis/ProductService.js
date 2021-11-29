@@ -9,15 +9,13 @@ class ProductService extends BaseService {
             subURL: "products"
         });
     }
-
-    upload = (data) => {
-        return this.post('/upload', data, {
-            "Content-Type": "multipart/form-data"
-        });
+    
+    create = (data) => {
+        return this.post('/', data);
     }
 
     getProducts = (data) => {
-        return this.get("/get", data);
+        return this.get("/", data);
     }
 
     getProduct = (id) => {
