@@ -14,7 +14,6 @@ const SignIn = (props) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	console.log("Token: ", LocalStorageKeys.Token, " User: ", LocalStorageKeys.UserInfo)
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
@@ -24,10 +23,9 @@ const SignIn = (props) => {
         })
         
         if (response.status === 200) {
-        	// console.log("Token: ", response.token, " User: ", response.user)
-        	console.log("response: ", response)
             localStorage.setItem(LocalStorageKeys.Token, response.data.token)
-            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user["_id"])
+            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
+            localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
             window.location.replace('/')
         } 
     }

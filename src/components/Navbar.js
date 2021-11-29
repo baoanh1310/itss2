@@ -4,6 +4,8 @@ import '../../node_modules/bootstrap/dist/js/bootstrap.js'
 import './Navbar.css'
 
 const Navbar = (props) => {
+	console.log("User: ", props.user_email)
+
 	return (
 		<div id="myNavbar">
 			<div className="col-sm-1"></div>
@@ -16,7 +18,7 @@ const Navbar = (props) => {
 			<div className="col-sm-2"></div>
 			<div id="avatar" className="col-sm-2 dropdown show">
 				<a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    abc@gmail.com
+				    {props.user_email}
 				</a>
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
 				    <a className="dropdown-item" href="/profile">プロフィール</a>

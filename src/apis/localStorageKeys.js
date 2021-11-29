@@ -6,6 +6,7 @@
 
 export const LocalStorageKeys = {
     UserInfo: "UserInfo",
+    UserEmail: "abc@gmail.com",
     Token: "Token",
     Menu: "Menu"
 };

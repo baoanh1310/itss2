@@ -44,7 +44,7 @@ const Content = (props) => {
 		case "product":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="product" />
-				<ProductTable />
+				<ProductTable products={products} />
 			</div>
 			break
 		case "import":
@@ -155,6 +155,8 @@ const SupplierTable = (props) => {
 }
 
 const ProductTable = (props) => {
+
+	console.log("Products: ", props.products)
 
 	return (
 		<table className="table table-striped table-bordered" style={{width: "100%"}}>

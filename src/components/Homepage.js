@@ -8,9 +8,7 @@ import './Homepage.css'
 
 const Homepage = (props) => {
 	let user = localStorage.getItem(LocalStorageKeys.UserInfo)
-	console.log("User: ", user)
-	console.log("LocalStorageKeys: ", LocalStorageKeys)
-	console.log("localstorage: ", localStorage)
+	let user_email = localStorage.getItem(LocalStorageKeys.UserEmail)
     if (!user) {
         window.location.replace('/sign-in')
     }
@@ -21,7 +19,7 @@ const Homepage = (props) => {
 			</div>
 			<div className="col-sm-10">
 				<div>
-					<Navbar />
+					<Navbar user_email={user_email} />
 					<Content {...props} />
 				</div>
 			</div>
