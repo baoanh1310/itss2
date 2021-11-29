@@ -11,12 +11,13 @@ const Forget = (props) => {
         setEmail(value)
     }
 
-	const handleSubmit = async () => {
-		console.log("Forget password")
+	const handleSubmit = async (e) => {
+		e.preventDefault()
 		const response = await AuthenService.forgotPassword({
             email: email,
         })
         if (response.status === 200) {
+        	alert("メールで新しいパスワードを確認してください")
             window.location.replace('/sign-in')
         } 
 	}

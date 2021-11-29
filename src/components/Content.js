@@ -22,13 +22,12 @@ const Content = (props) => {
 
 	const fetchSuppliers = async () => {
 		const res = await SupplierService.getSuppliers()
-		console.log(res)
-		setSuppliers(res.suppliers)
+		setSuppliers(res.data.suppliers)
 	}
 
 	const fetchProducts = async () => {
 		const res = await ProductService.getProducts()
-		setProducts(res.products)
+		setProducts(res.data.products)
 	}
 
 	let body;
@@ -39,7 +38,7 @@ const Content = (props) => {
 		case "supplier":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
-				<SupplierTable fetchSuppliers={fetchSuppliers} />
+				<SupplierTable suppliers={suppliers} />
 			</div>
 			break
 		case "product":
@@ -127,8 +126,7 @@ const AddBtn = (props) => {
 
 const SupplierTable = (props) => {
 
-	let suppliers = props.fetchSuppliers()
-	console.log(suppliers)
+	console.log("Suppliers: ", props.suppliers)
 
 	return (
 		<table className="table table-striped table-bordered" style={{width: "100%"}}>
