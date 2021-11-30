@@ -4,7 +4,10 @@ import '../../node_modules/bootstrap/dist/js/bootstrap.js'
 import './Navbar.css'
 
 const Navbar = (props) => {
-	console.log("User: ", props.user_email)
+	const logout = () => {
+      localStorage.clear()
+      window.location.href = '/sign-in'
+    }
 
 	return (
 		<div id="myNavbar">
@@ -22,6 +25,7 @@ const Navbar = (props) => {
 				</a>
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
 				    <a className="dropdown-item" href="/profile">プロフィール</a>
+				    <a className="dropdown-item" href="/sign-in" onClick={logout}>ログアウト</a>
   				</div>
 			</div>
 		</div>
