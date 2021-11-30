@@ -20,7 +20,7 @@ const App = () => {
             	<Route exact path="/profile" component={() => <Homepage label="プロフィール" model="profile" />} />
             	<Route exact path="/sign-in" component={SignIn} />
             	<Route exact path="/forget" component={Forget} />
-          	</Switch>
+          </Switch>
 	    </div>
     </Router>
   )

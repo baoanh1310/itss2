@@ -13,8 +13,8 @@ const SupplierModal = (props) => {
 		console.log("Created new suppllier")
 	}
 	return (
-		<div className="modal fade" id={props.modalId} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div className="modal-dialog modal-dialog-centered" role="document">
+		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 		    <div className="modal-content">
 		      <div className="modal-header">
 		        <h5 className="modal-title" id="exampleModalLabel">新サプライヤー</h5>
