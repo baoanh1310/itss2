@@ -39,10 +39,22 @@ const ExportModal = (props) => {
 		      </div>
 		      <div className="modal-body">
 		        <form action="/warehouse/export" method="POST">
-		        	<input value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
-		        	<input value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
-		        	<input value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
-		        	<input value={exportDate} onChange={handleExportDateChange} type="date" className="form-control validate" placeholder="出庫日" />
+		        	<div className="form-group" style={{display: "flex"}}>
+		        		<label for="productNameInput3" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+		        		<input id="productNameInput3" style={{flex: "5", marginTop: "5px"}} value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
+		        	</div>
+		        	<div className="form-group" style={{display: "flex"}}>
+		        		<label for="supplierNameInput4" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
+		        		<input id="supplierNameInput4" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
+		        	</div>
+		        	<div className="form-group" style={{display: "flex"}}>
+		        		<label for="productQuantityInput3" style={{flex: "1", marginTop: "10px"}}>製品数</label>
+		        		<input id="productQuantityInput3" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
+		        	</div>
+		        	<div className="form-group" style={{display: "flex"}}>
+		        		<label for="exportDateInput" style={{flex: "1", marginTop: "10px"}}>出庫日</label>
+		        		<input id="exportDateInput" style={{flex: "5", marginTop: "5px"}} value={exportDate} onChange={handleExportDateChange} type="date" className="form-control validate" placeholder="出庫日" />
+		        	</div>
 		        </form>
 		      </div>
 		      <div className="modal-footer">

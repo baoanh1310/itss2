@@ -24,7 +24,10 @@ const SupplierModal = (props) => {
 		      </div>
 		      <div className="modal-body">
 		        <form action="/suppliers" method="POST">
-		        	<input value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
+		        	<div className="form-group" style={{display: "flex"}}>
+		        		<label for="supplierInput" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
+		        		<input id="supplierInput" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
+		        	</div>
 		        </form>
 		      </div>
 		      <div className="modal-footer">
