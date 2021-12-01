@@ -28,7 +28,7 @@ const ExportModal = (props) => {
 		console.log("Created new product export")
 	}
 	return (
-		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 		    <div className="modal-content">
 		      <div className="modal-header">
