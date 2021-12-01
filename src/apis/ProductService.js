@@ -15,11 +15,11 @@ class ProductService extends BaseService {
     }
 
     getProducts = (data) => {
-        return this.get("/", data);
+        return this.getData("/", data);
     }
 
     getProduct = (id) => {
-        return this.get("/get/"+id);
+        return this.getData("/get/"+id);
     }
 
     updateProduct = (id, data) => {
@@ -27,7 +27,7 @@ class ProductService extends BaseService {
     }
 
     delProducts = (data) => {
-        return this.delete("/delete", data);
+        return this.del("/delete", data);
     }
 };
 

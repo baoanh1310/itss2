@@ -15,11 +15,11 @@ class SupplierService extends BaseService {
     }
 
     getSuppliers = (data) => {
-        return this.get("/", data);
+        return this.getData("/", data);
     }
 
     getSupplier = (id) => {
-        return this.get("/"+id);
+        return this.getData("/"+id);
     }
 
     updateSupplier = (id, data) => {
@@ -27,7 +27,7 @@ class SupplierService extends BaseService {
     }
 
     delSuppliers = (data) => {
-        return this.delete("/delete", data);
+        return this.del("/delete", data);
     }
 };
 

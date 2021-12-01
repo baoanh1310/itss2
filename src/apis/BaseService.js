@@ -85,11 +85,11 @@ class BaseService {
         return this.mAxios.post(url, data, config);
     }
 
-    get = (url, config) => {
+    getData = (url, config) => {
         return this.mAxios.get(url, config);
     }
 
-    delete = (url, config) => {
+    del = (url, config) => {
         return this.mAxios.delete(url, config);
     };
 
