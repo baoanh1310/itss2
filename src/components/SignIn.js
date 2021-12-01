@@ -3,23 +3,46 @@ import AuthenService from '../apis/AuthenServices'
 import { LocalStorageKeys } from '../apis/localStorageKeys'
 import './SignIn.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import axios from 'axios'
-import { endpoint } from '../apis/config'
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { Box, Button, TextField } from '@mui/material';
+
 
 import Logo from './Logo'
 
 const SignIn = (props) => {
 
-	const [isSignIn, setIsSignIn] = useState(true)
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+
+	const formik = useFormik({
+
+		initialValues: {
+			email: '',
+			password: ''
+		  },
+		
+		validationSchema: Yup.object({
+		  email: Yup
+			.string()
+			.email(
+			  '有効なメールアドレスである必要があります')
+			.max(255)
+			.required(
+			  'メールが必要です'),
+		  password: Yup
+			.string()
+			.max(255)
+			.required(
+			  'パスワードが必要です')
+		})
+
+	  });
 
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
         const response = await AuthenService.login({
-            email: email,
-            password: password
+            email: formik.values.email,
+            password: formik.values.password
         })
         
         if (response.status === 200) {
@@ -30,48 +53,62 @@ const SignIn = (props) => {
         } 
     }
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value)
-    }
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value)
-    }
-
-    const changeSignInState = () => {
-        setIsSignIn(!isSignIn)
-    }
-
 
 	return (
 		<div className="sign-in">
 			<div className="col-sm-4"></div>
 			<div>
 				<Logo />
-				<form className="container col-sm-4 justify-content-center" style={{ marginTop: "15px" }}>
-		            <h3 className="text-center">ログイン</h3>
+				<form
+				className="container col-sm-4 justify-content-center" style={{ marginTop: "15px" }}>
+		            
+					<h3 className="text-center">ようこそ</h3>
 
-		            <div className="form-group">
-		                <label>メールアドレス</label>
-		                <input type="email" value={email} onChange={handleEmailChange} className="form-control" placeholder="メールアドレスを入力する" required />
-		            </div>
+					<div>
+					<TextField
+						error={Boolean(formik.touched.email && formik.errors.email)}
+						fullWidth
+						helperText={formik.touched.email && formik.errors.email}
+						label="メールアドレス"
+						margin="normal"
+						name="email"
+						onBlur={formik.handleBlur}
+						onChange={formik.handleChange}
+						type="email"
+						value={formik.values.email}
+						variant="outlined"
+						/>
+					<TextField
+						error={Boolean(formik.touched.password && formik.errors.password)}
+						fullWidth
+						helperText={formik.touched.password && formik.errors.password}
+						label="パスワード"
+						margin="normal"
+						name="password"
+						onBlur={formik.handleBlur}
+						onChange={formik.handleChange}
+						type="password"
+						value={formik.values.password}
+						variant="outlined"
+						/>
 
-		            <div className="form-group">
-		                <label>パスワード</label>
-		                <input type="password" value={password} onChange={handlePasswordChange} className="form-control" placeholder="パスワードを入力する" required />
-		            </div>
-
-		            <div className="form-group">
-		                <div className="custom-control custom-checkbox">
-		                    <input type="checkbox" className="custom-control-input" id="customCheck1" />
-		                    <label className="custom-control-label" htmlFor="customCheck1">情報を保存する？</label>
-		                </div>
-		            </div>
-
-		            <button type="submit" onClick={handleLogin} className="btn btn-dark btn-lg btn-block">ログイン</button>
-		            <p className="forgot-password text-center">
+					<Box sx={{ py: 2 }}>
+						<Button
+						onClick={handleLogin}
+							color="primary"
+							disabled={formik.isSubmitting}
+							fullWidth
+							size="large"
+							type="submit"
+							variant="contained"
+						>
+								ログイン
+						</Button>
+					</Box>
+					<p className="forgot-password text-center">
 		                <a href="/forget">パスワードをお忘れですか？</a>
-		            </p>
+		            </p> 
+					</div>
 		        </form>
 	        </div>
 	        <div className="col-sm-4"></div>
