@@ -161,10 +161,24 @@ const SupplierTable = ({suppliers}) => {
 	)
 }
 
-const ProductTable = (props) => {
+const ProductTable = ({products}) => {
 
 	// let products = props.products
-	// let renderProducts = products.map((product, i) => <tr key={product.id}></tr>)
+	let renderProducts = products.map(
+		(product, i) => 
+			<tr key={product._id}>
+				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center">{product.name}</td>
+				<td className="text-center">{product.supplierName}</td>
+				<td className="text-center">{product.amount}</td>
+				<td className="text-center">
+					<button>編集</button>
+				</td>
+				<td className="text-center">
+					<button>消去</button>
+				</td>
+			</tr>
+	)
 
 	return (
 		<table className="table table-striped table-bordered" style={{width: "100%"}}>
@@ -178,78 +192,7 @@ const ProductTable = (props) => {
 				</tr>	
 			</thead>	
 			<tbody>
-				<tr>
-					<th className="text-center" scope="row">1</th>
-					<td className="text-center">キュウリ</td>
-					<td className="text-center">VinFarm</td>
-					<td className="text-center">10</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">2</th>
-					<td className="text-center">じゃがいも</td>
-					<td className="text-center">Notifarm</td>
-					<td className="text-center">142</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">3</th>
-					<td className="text-center">玉ねぎ</td>
-					<td className="text-center">VinaOrganic</td>
-					<td className="text-center">15</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">4</th>
-					<td className="text-center">ニンニク</td>
-					<td className="text-center">HP-Farm</td>
-					<td className="text-center">2</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">5</th>
-					<td className="text-center">にんじん</td>
-					<td className="text-center">HN-Organic</td>
-					<td className="text-center">100</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">6</th>
-					<td className="text-center">ヤムイモ</td>
-					<td className="text-center">TayBac</td>
-					<td className="text-center">101</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
+				{renderProducts}
 			</tbody>
 		</table>
 	)
