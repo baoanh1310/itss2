@@ -41,19 +41,19 @@ const ImportModal = (props) => {
 		      <div className="modal-body">
 		        <form action="/warehouse/import" method="POST">
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="productNameInput2" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+		        		<label htmlFor="productNameInput2" style={{flex: "1", marginTop: "10px"}}>製品名</label>
 		        		<input id="productNameInput2" style={{flex: "5", marginTop: "5px"}} value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="supplierNameInput3" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
+		        		<label htmlFor="supplierNameInput3" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
 		        		<input id="supplierNameInput3" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="productQuantityInput2" style={{flex: "1", marginTop: "10px"}}>製品数</label>
+		        		<label htmlFor="productQuantityInput2" style={{flex: "1", marginTop: "10px"}}>製品数</label>
 		        		<input id="productQuantityInput2" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="importDateInput" style={{flex: "1", marginTop: "10px"}}>入庫日</label>
+		        		<label htmlFor="importDateInput" style={{flex: "1", marginTop: "10px"}}>入庫日</label>
 		        		<input id="importDateInput" style={{flex: "5", marginTop: "5px"}} value={importDate} onChange={handleImportDateChange} type="date" className="form-control validate" placeholder="入庫日" />
 		        	</div>
 		        </form>

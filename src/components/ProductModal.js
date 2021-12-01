@@ -35,15 +35,15 @@ const ProductModal = (props) => {
 		      <div className="modal-body">
 		        <form action="/products" method="POST">
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="productNameInput1" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+		        		<label htmlFor="productNameInput1" style={{flex: "1", marginTop: "10px"}}>製品名</label>
 		        		<input id="productNameInput1" value={productName} style={{flex: "5", marginTop: "5px"}} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="supplierNameInput2" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
+		        		<label htmlFor="supplierNameInput2" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
 		        		<input id="supplierNameInput2" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label for="productQuantityInput1" style={{flex: "1", marginTop: "10px"}}>製品数</label>
+		        		<label htmlFor="productQuantityInput1" style={{flex: "1", marginTop: "10px"}}>製品数</label>
 		        		<input id="productQuantityInput1" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
 		        	</div>
 		        </form>

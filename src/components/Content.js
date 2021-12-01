@@ -207,8 +207,7 @@ const ImportTable = (props) => {
 					<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
 					<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
 					<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
-					<th className="text-center" scope="col" style={{width: "10%"}}>受取番号</th>
-					<th className="text-center" scope="col" style={{width: "15%"}}>入庫日</th>
+					<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
 					<th className="text-center" scope="col" colSpan="2">アクション</th>
 				</tr>	
 			</thead>	
@@ -229,8 +228,7 @@ const ExportTable = (props) => {
 					<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
 					<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
 					<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
-					<th className="text-center" scope="col" style={{width: "10%"}}>受取番号</th>
-					<th className="text-center" scope="col" style={{width: "15%"}}>出庫日</th>
+					<th className="text-center" scope="col" style={{width: "20%"}}>出庫日</th>
 					<th className="text-center" scope="col" colSpan="2">アクション</th>
 				</tr>	
 			</thead>	
