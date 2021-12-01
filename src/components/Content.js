@@ -18,7 +18,7 @@ const Content = (props) => {
 	const [suppliers, setSuppliers] = useState([])
 	const [products, setProducts] = useState([])
 	const [imports, setImports] = useState([])
-	const [exports, setExports] = useState([])
+	const [eports, setEports] = useState([])
 
 	const fetchSuppliers = async () => {
 		const res = await SupplierService.getSuppliers()
@@ -30,6 +30,10 @@ const Content = (props) => {
 		setProducts(res.data.products)
 	}
 
+	useEffect(() => {
+		fetchSuppliers()
+		fetchProducts()
+	}, [])
 
 	let body;
 	switch (props.model) {
@@ -125,7 +129,21 @@ const AddBtn = (props) => {
 	)
 }
 
-const SupplierTable = (props) => {
+const SupplierTable = ({suppliers}) => {
+
+	let renderSuppliers = suppliers.map(
+		(supplier, i) => 
+			<tr key={supplier._id}>
+				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center">{supplier.name}</td>
+				<td className="text-center">
+					<button>編集</button>
+				</td>
+				<td className="text-center">
+					<button>消去</button>
+				</td>
+			</tr>
+		)
 
 	return (
 		<table className="table table-striped table-bordered" style={{width: "100%"}}>
@@ -137,67 +155,7 @@ const SupplierTable = (props) => {
 				</tr>	
 			</thead>	
 			<tbody>
-				<tr>
-					<th className="text-center" scope="row">1</th>
-					<td className="text-center">VinFarm</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">2</th>
-					<td className="text-center">Notifarm</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">3</th>
-					<td className="text-center">VinaOrganic</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">3</th>
-					<td className="text-center">HP-Farm</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">3</th>
-					<td className="text-center">HN-Organic</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-				<tr>
-					<th className="text-center" scope="row">3</th>
-					<td className="text-center">TayBac</td>
-					<td className="text-center">
-						<button>編集</button>
-					</td>
-					<td className="text-center">
-						<button>消去</button>
-					</td>
-				</tr>
-
+				{renderSuppliers}
 			</tbody>
 		</table>
 	)
