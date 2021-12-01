@@ -48,7 +48,7 @@ const Content = (props) => {
 			break
 		case "product":
 			body = <div>
-				<AddBtn btnTitle={props.btnTitle} model="product" />
+				<AddBtn btnTitle={props.btnTitle} model="product" suppliers={suppliers} />
 				<ProductTable products={products} />
 			</div>
 			break
@@ -105,7 +105,7 @@ const AddBtn = (props) => {
 			break
 		case "product":
 			modalId = "productNewModal"
-			modal = <ProductModal show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
+			modal = <ProductModal suppliers={props.suppliers} show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
 			break
 		case "import":
 			modalId = "importNewModal"

@@ -22,6 +22,14 @@ const ProductModal = (props) => {
 		e.preventDefault()
 		console.log("Created new product")
 	}
+
+	let options = props.suppliers.map(
+		(supplier, i) => 
+			<option key={supplier._id} value={supplier.name}>
+				{supplier.name}
+			</option>
+	)
+
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -40,7 +48,10 @@ const ProductModal = (props) => {
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="supplierNameInput2" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
-		        		<input id="supplierNameInput2" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
+		        		{/* <input id="supplierNameInput2" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" /> */}
+		        		<select name="suppliers" id="supplierNameInput2" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} className="form-control validate">
+		        			{options}
+		        		</select>
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="productQuantityInput1" style={{flex: "1", marginTop: "10px"}}>製品数</label>
