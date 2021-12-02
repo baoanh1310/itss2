@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react"
+import Popup from "reactjs-popup";
+
 import "./Content.css"
 
 import Profile from './Profile'
@@ -12,6 +14,8 @@ import SupplierService from '../apis/SupplierService'
 import ProductService from '../apis/ProductService'
 import ImportService from '../apis/ImportService'
 import ExportService from '../apis/ExportService'
+
+import UpdateProduct from "./UpdateProduct";
 
 const Content = (props) => {
 
@@ -163,7 +167,39 @@ const SupplierTable = ({suppliers}) => {
 
 const ProductTable = ({products}) => {
 
+
+	let popupUpdate;
+	let [showPopupUpdate, setShowPopupUpdate] = useState(false)
+	let [productIndex, setProductIndex] = useState(0)
+
+	let onUpdateProductButonChange = (e) =>{
+
+		setProductIndex(e.target.value)
+		setShowPopupUpdate(true)
+	}
+
+	if(showPopupUpdate){
+		
+		let product = products.at(productIndex)
+		console.log(products)
+		console.log("Content")
+		console.log(product)
+		console.log("Index "+productIndex)
+		popupUpdate = <UpdateProduct product = {product} />
+	}
+
 	// let products = props.products
+
+	const onDeleteProductButonChange = (e) => {
+		let index = e.target.value
+		let productDelete = products.at(productIndex)
+		console.log("Delete")
+		console.log(productDelete._id)
+		console.log(productDelete)
+		ProductService.delProducts(productDelete._id)
+	}
+	
+
 	let renderProducts = products.map(
 		(product, i) => 
 			<tr key={product._id}>
@@ -172,10 +208,19 @@ const ProductTable = ({products}) => {
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.amount}</td>
 				<td className="text-center">
-					<button>編集</button>
+				<button class="btn btn-primary" 
+				data-toggle="modal" 
+				data-target=".update" 
+				id={product._id}
+				value={i}
+				onClick={onUpdateProductButonChange}>編集</button>
+				{popupUpdate}
+				
 				</td>
 				<td className="text-center">
-					<button>消去</button>
+					<button 
+					value={i}
+					onClick={onDeleteProductButonChange}>消去</button>
 				</td>
 			</tr>
 	)
