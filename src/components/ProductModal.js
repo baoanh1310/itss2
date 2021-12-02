@@ -10,16 +10,18 @@ const ProductModal = (props) => {
 	const [supplierName, setSupplierName] = useState("Vinamilk")
 	const [supplierID, setSupplierID] = useState(0)
 	const [productQuantity, setProductQuantity] = useState(1)
+
+	let suppNameExactly = "Vinamilk"
 	
 
 	const handleSupplierNameChange = (e) => {
 
 		setSupplierName(e.target.value)
+		suppNameExactly = e.target.value
 
-		console.log(supplierName)
-		
-		var supplierTmp = props.suppliers.find(({name}) => name === supplierName);
-		
+		console.log(suppNameExactly)
+		var supplierTmp = props.suppliers.find(({name}) => name === suppNameExactly);
+		console.log(supplierTmp)
 		if(supplierTmp == null || supplierTmp == undefined){
 			const supplier0 = props.suppliers.at(0)
 			setSupplierID(supplier0._id)
@@ -47,11 +49,13 @@ const ProductModal = (props) => {
 			name : productName,
 			supplierId : supplierID
 		}
+		console.log(product)
 
 		if(supplierID == 0){
 			const supplier0 = props.suppliers.at(0)
 			product.supplierId = supplier0._id
 		}
+		console.log(product)
 
 	 	ProductService.create(product)
 	}
@@ -75,7 +79,7 @@ const ProductModal = (props) => {
 		        </button>
 		      </div>
 		      <div className="modal-body">
-		        <form onSubmit={handleCreateProduct}>
+		        <form >
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="productNameInput1" style={{flex: "1", marginTop: "10px"}}>製品名</label>
 		        		<input id="productNameInput1" value={productName} style={{flex: "5", marginTop: "5px"}} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />

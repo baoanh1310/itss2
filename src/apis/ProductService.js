@@ -19,15 +19,15 @@ class ProductService extends BaseService {
     }
 
     getProduct = (id) => {
-        return this.getData("/get/"+id);
+        return this.getData("/"+id);
     }
 
     updateProduct = (id, data) => {
-        return this.put("/update/"+id, data);
+        return this.patch("/"+id, data);
     }
 
-    delProducts = (data) => {
-        return this.del("/delete", data);
+    delProducts = (id) => {
+        return this.del("/"+id);
     }
 };
 
