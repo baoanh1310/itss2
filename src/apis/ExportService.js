@@ -6,7 +6,7 @@ class ExportService extends BaseService {
      */
     constructor() {
         super({
-            subURL: "warehouse/export"
+            subURL: "warehouses/export"
         });
     }
 

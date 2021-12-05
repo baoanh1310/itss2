@@ -4,6 +4,8 @@ import Popup from "reactjs-popup";
 import "./Content.css"
 
 import Profile from './Profile'
+import Dashboard from './Dashboard'
+import Report from './Report'
 
 import SupplierModal from './SupplierModal'
 import ProductModal from './ProductModal'
@@ -37,15 +39,27 @@ const Content = (props) => {
 		setProducts(res.data.products)
 	}
 
+	const fetchImportProducts = async () => {
+		const res = await ImportService.getProducts()
+		setImports(res.data.products)
+	}
+
+	const fetchExportProducts = async () => {
+		const res = await ExportService.getProducts()
+		setEports(res.data.products)
+	}
+
 	useEffect(() => {
 		fetchSuppliers()
 		fetchProducts()
+		fetchImportProducts()
+		fetchExportProducts()
 	}, [])
 
 	let body;
 	switch (props.model) {
 		case "dashboard":
-			body = <div></div>
+			body = <Dashboard suppliers={suppliers} products={products} />
 			break
 		case "supplier":
 			body = <div>
@@ -61,24 +75,26 @@ const Content = (props) => {
 			break
 		case "import":
 			body = <div>
-				<AddBtn btnTitle={props.btnTitle} model="import" />
-				<ImportTable className="custom-table" />
+				<AddBtn btnTitle={props.btnTitle} model="import" suppliers={suppliers} products={products} />
+				<ImportTable className="custom-table" imports={imports} />
 			</div>
 			break
 		case "export":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="export" />
-				<ExportTable className="custom-table" />
+				<ExportTable className="custom-table" eports={eports} />
 			</div>
 			break
 		case "report":
-			body = <div></div>
+			body = <Report products={products} suppliers={suppliers} imports={imports} eports={eports} />
 			break
 		case "profile":
 			body = <div>
 				<Profile />
 			</div>
 			break
+		default:
+			body = <div></div>
 	}
 
 
@@ -116,11 +132,11 @@ const AddBtn = (props) => {
 			break
 		case "import":
 			modalId = "importNewModal"
-			modal = <ImportModal show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
+			modal = <ImportModal suppliers={props.suppliers} products={props.products} show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
 			break
 		case "export":
 			modalId = "exportNewModal"
-			modal = <ExportModal show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
+			modal = <ExportModal suppliers={props.suppliers} products={props.products} show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
 			break
 	}
 
@@ -293,43 +309,86 @@ const ProductTable = ({products}) => {
 
 const ImportTable = (props) => {
 
-	return (
-		<table className="table table-striped table-bordered" style={{width: "100%"}}>
-			<thead>
-				<tr>
-					<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-					<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
-					<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
-					<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
-					<th className="text-center" scope="col" colSpan="2">アクション</th>
-				</tr>	
-			</thead>	
-			<tbody>
-				
+	const getDateFormat = (miliseconds) => {
+		let date = new Date(miliseconds)
+		let day = date.getDate().toString()
+		let month = date.getMonth().toString()
+		let year = date.getFullYear().toString()
+		let result = day.concat("-").concat(month).concat("-").concat(year)
+		return result
+	}
 
-			</tbody>
-		</table>
+	let renderImports = props.imports.map(
+		(productImport, i) => 
+			<tr key={productImport._id}>
+				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center">{productImport.productName}</td>
+				<td className="text-center">{productImport.supplierName}</td>
+				<td className="text-center">{productImport.amount}</td>
+				<td className="text-center">{getDateFormat(productImport.time)}</td>
+			</tr>
+	)
+
+	return (
+		<div className="table-bound">
+			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+				<thead>
+					<tr>
+						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
+					</tr>	
+				</thead>	
+				<tbody>
+					{renderImports}
+				</tbody>
+			</table>
+		</div>
+		
 	)
 }
 
 const ExportTable = (props) => {
 
-	return (
-		<table className="table table-striped table-bordered" style={{width: "100%"}}>
-			<thead>
-				<tr>
-					<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-					<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
-					<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
-					<th className="text-center" scope="col" style={{width: "20%"}}>出庫日</th>
-					<th className="text-center" scope="col" colSpan="2">アクション</th>
-				</tr>	
-			</thead>	
-			<tbody>
-				
+	const getDateFormat = (miliseconds) => {
+		let date = new Date(miliseconds)
+		let day = date.getDate().toString()
+		let month = date.getMonth().toString()
+		let year = date.getFullYear().toString()
+		let result = day.concat("-").concat(month).concat("-").concat(year)
+		return result
+	}
 
-			</tbody>
-		</table>
+	let renderExports = props.eports.map(
+		(productExport, i) => 
+			<tr key={productExport._id}>
+				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center">{productExport.productName}</td>
+				<td className="text-center">{productExport.supplierName}</td>
+				<td className="text-center">{productExport.amount}</td>
+				<td className="text-center">{getDateFormat(productExport.time)}</td>
+			</tr>
+	)
+
+	return (
+		<div className="table-bound">
+			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+				<thead>
+					<tr>
+						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>出庫日</th>
+					</tr>	
+				</thead>	
+				<tbody>
+					{renderExports}
+				</tbody>
+			</table>
+		</div>
 	)
 }
 
