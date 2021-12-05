@@ -6,6 +6,7 @@ import "./Content.css"
 import Profile from './Profile'
 import Dashboard from './Dashboard'
 import Report from './Report'
+import Navbar from './Navbar'
 
 import SupplierModal from './SupplierModal'
 import ProductModal from './ProductModal'
@@ -28,6 +29,22 @@ const Content = (props) => {
 	const [products, setProducts] = useState([])
 	const [imports, setImports] = useState([])
 	const [eports, setEports] = useState([])
+	const [searchResult, setSearchResult] = useState([])
+	const [search, setSearch] = useState("")
+
+	const handleSearchChange = (e) => {
+		setSearch(e.target.value.toString().toLowerCase())
+		setSearchResult(products.filter(product => product.name.includes(search)))
+		// setProducts(products.filter(product => product.name.includes(search)))
+		console.log("Raw Search: ", search)
+		console.log("Search result: ", searchResult)
+	}
+
+	const handleSearch = (e) => {
+		e.preventDefault()
+		
+		window.location.replace('/searchResult')
+	}
 
 	const fetchSuppliers = async () => {
 		const res = await SupplierService.getSuppliers()
@@ -59,37 +76,62 @@ const Content = (props) => {
 	let body;
 	switch (props.model) {
 		case "dashboard":
-			body = <Dashboard suppliers={suppliers} products={products} />
+			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
+				<Dashboard suppliers={suppliers} products={products} />
+			</div>
 			break
 		case "supplier":
 			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
 				<SupplierTable className="custom-table" suppliers={suppliers} />
 			</div>
 			break
 		case "product":
 			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="product" suppliers={suppliers} />
 				<ProductTable className="custom-table" products={products} />
 			</div>
 			break
+		case "searchResult":
+			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
+				<ProductTable className="custom-table" products={searchResult} search={search} />
+			</div>
+			break
 		case "import":
 			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="import" suppliers={suppliers} products={products} />
 				<ImportTable className="custom-table" imports={imports} />
 			</div>
 			break
 		case "export":
 			body = <div>
-				<AddBtn btnTitle={props.btnTitle} model="export" />
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
+				<AddBtn btnTitle={props.btnTitle} model="export" suppliers={suppliers} products={products} />
 				<ExportTable className="custom-table" eports={eports} />
 			</div>
 			break
 		case "report":
-			body = <Report products={products} suppliers={suppliers} imports={imports} eports={eports} />
+			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
+				<Report products={products} suppliers={suppliers} imports={imports} eports={eports} />
+			</div>
 			break
 		case "profile":
 			body = <div>
+				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Label label={props.label} />
 				<Profile />
 			</div>
 			break
@@ -100,9 +142,6 @@ const Content = (props) => {
 
 	return (
 		<div id="content">
-			<div className="label-btn">
-				<Label label={props.label} />
-			</div>
 			{body}
 		</div>
 	)
@@ -110,9 +149,12 @@ const Content = (props) => {
 
 const Label = (props) => {
 	return (
-		<div className="page-label">
-			<h3>{props.label}</h3>
+		<div className="label-btn">
+			<div className="page-label">
+				<h3>{props.label}</h3>
+			</div>
 		</div>
+		
 	)
 }
 
@@ -233,12 +275,15 @@ const SupplierTable = ({suppliers}) => {
 	)
 }
 
-const ProductTable = ({products}) => {
+const ProductTable = (props) => {
 
 	let popupUpdate = <div></div>
 	let popupDelete = <div></div>
 	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
 	const [productIndex, setProductIndex] = useState(0)
+	let products = props.products;
+	console.log("Products: ", products)
+	console.log("Search: ", props.search)
 
 	const onUpdateProductButonChange = (e) =>{
 		e.preventDefault()
@@ -312,13 +357,15 @@ const ImportTable = (props) => {
 	const getDateFormat = (miliseconds) => {
 		let date = new Date(miliseconds)
 		let day = date.getDate().toString()
-		let month = date.getMonth().toString()
+		let month = (date.getMonth()+1).toString()
 		let year = date.getFullYear().toString()
 		let result = day.concat("-").concat(month).concat("-").concat(year)
 		return result
 	}
 
-	let renderImports = props.imports.map(
+	let sortedImports = props.imports.sort((a, b) => a.time - b.time)
+
+	let renderImports = sortedImports.map(
 		(productImport, i) => 
 			<tr key={productImport._id}>
 				<th className="text-center" scope="row">{i+1}</th>
@@ -355,13 +402,15 @@ const ExportTable = (props) => {
 	const getDateFormat = (miliseconds) => {
 		let date = new Date(miliseconds)
 		let day = date.getDate().toString()
-		let month = date.getMonth().toString()
+		let month = (date.getMonth()+1).toString()
 		let year = date.getFullYear().toString()
 		let result = day.concat("-").concat(month).concat("-").concat(year)
 		return result
 	}
 
-	let renderExports = props.eports.map(
+	let sortedExports = props.eports.sort((a, b) => a.time - b.time)
+
+	let renderExports = sortedExports.map(
 		(productExport, i) => 
 			<tr key={productExport._id}>
 				<th className="text-center" scope="row">{i+1}</th>

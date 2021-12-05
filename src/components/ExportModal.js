@@ -1,14 +1,10 @@
 import React, { useState } from "react"
+import ExportService from "../apis/ExportService"
 
 const ExportModal = (props) => {
-	const [productName, setProductName] = useState('')
-	const [supplierName, setSupplierName] = useState('')
+	const [productName, setProductName] = useState('Milk')
 	const [productQuantity, setProductQuantity] = useState(1)
 	const [exportDate, setExportDate] = useState('')
-
-	const handleSupplierNameChange = (e) => {
-		setSupplierName(e.target.value)
-	}
 
 	const handleProductNameChange = (e) => {
 		setProductName(e.target.value)
@@ -23,10 +19,29 @@ const ExportModal = (props) => {
 		setExportDate(e.target.value)
 	}
 
-	const handleCreateProductExport = (e) => {
-		e.preventDefault()
-		console.log("Created new product export")
+	const convertStringToDate = (str) => {
+		let arr = str.split("-")
+		let year = parseInt(arr[0])
+		let month = parseInt(arr[1]) - 1
+		let day = parseInt(arr[2])
+		return new Date(year, month, day).getTime()
 	}
+
+	const handleCreateProductExport = async (e) => {
+		e.preventDefault()
+		const productId = props.products.filter(product => product.name === productName)[0]._id
+		const data = {
+			productId: productId,
+			amount: productQuantity,
+			time: convertStringToDate(exportDate)
+		}
+		const res = await ExportService.create(data)
+		if (res.status === 201) {
+			window.location.reload()
+		}
+	}
+
+	
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -42,10 +57,6 @@ const ExportModal = (props) => {
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="productNameInput3" style={{flex: "1", marginTop: "10px"}}>製品名</label>
 		        		<input id="productNameInput3" style={{flex: "5", marginTop: "5px"}} value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
-		        	</div>
-		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="supplierNameInput4" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
-		        		<input id="supplierNameInput4" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="productQuantityInput3" style={{flex: "1", marginTop: "10px"}}>製品数</label>
