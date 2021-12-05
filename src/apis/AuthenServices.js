@@ -29,7 +29,7 @@ class AuthenService extends BaseService {
     }
 
     resetPassword = (data) => {
-        return this.post("reset-password", data)
+        return this.put("authentication/change-password", data)
     }
 
     refreshToken = (data) => {
