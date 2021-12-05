@@ -1,54 +1,34 @@
-import React, { useState, Component } from "react"
+import React, { useState } from "react"
 import ProductService from "../apis/ProductService";
 
 const UpdateProduct = (props) => {
 
-
-    
-    console.log("Update1")
-    console.log(props.product)
-    // let [supplierID, setSupplierID] = useState(props.product._id)
-    // let [productName, setProductName] = useState(props.product.name)
     let productID = props.product._id
     let productName = props.product.name
     let supplierName = props.product.supplierName
     let supplierID = props.product.supplierId
-	// let [supplierName, setSupplierName] = useState(props.product.supplierName)
-    console.log("Update2")
-    console.log(productName)
     
     const handleUpdateProduct = (e) => {
 		e.preventDefault()
-		console.log("Update the product")
-        
-        // setSupplierID(props.product.supplierId)
-        // setProductName(props.product.name)
-        // setSupplierName(props.product.supplierName)
-        console.log("handleUpdateProduct")
-        console.log(productName)
-        
         
         const product = {
 			name : productName,
 			supplier : supplierID
 		}
 
-        console.log(product)
-        console.log(productID)
-	 	ProductService.updateProduct(productID,product)
+	 	ProductService.updateProduct(productID, product)
 	}
 
     const handleProductNameChange = (e) => {
-		// setProductName(e.target.value)
         productName = e.target.value
 	}
 
     return (
         <>
-        <div class="modal fade update" tabindex="-1" role="dialog"
+        <div className="modal fade update-product" tabIndex="-1" role="dialog"
 					aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-					<div className="modal-content">
+            <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalLabel">編集</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -77,9 +57,9 @@ const UpdateProduct = (props) => {
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">キャンセル</button>
                         <button type="submit" className="btn btn-primary" onClick={handleUpdateProduct}>編集</button>
                     </div>
-					</div>
-                </div>
-                </div>
+				</div>
+            </div>
+        </div>
         </>
     )
 }

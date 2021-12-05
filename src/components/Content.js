@@ -15,7 +15,10 @@ import ProductService from '../apis/ProductService'
 import ImportService from '../apis/ImportService'
 import ExportService from '../apis/ExportService'
 
-import UpdateProduct from "./UpdateProduct";
+import UpdateProduct from "./UpdateProduct"
+import UpdateSupplierModal from "./UpdateSupplierModal"
+import DeleteSupplierModal from "./DeleteSupplierModal"
+import { create } from "@mui/material/styles/createTransitions"
 
 const Content = (props) => {
 
@@ -47,25 +50,25 @@ const Content = (props) => {
 		case "supplier":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
-				<SupplierTable suppliers={suppliers} />
+				<SupplierTable className="custom-table" suppliers={suppliers} />
 			</div>
 			break
 		case "product":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="product" suppliers={suppliers} />
-				<ProductTable products={products} />
+				<ProductTable className="custom-table" products={products} />
 			</div>
 			break
 		case "import":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="import" />
-				<ImportTable />
+				<ImportTable className="custom-table" />
 			</div>
 			break
 		case "export":
 			body = <div>
 				<AddBtn btnTitle={props.btnTitle} model="export" />
-				<ExportTable />
+				<ExportTable className="custom-table" />
 			</div>
 			break
 		case "report":
@@ -135,56 +138,100 @@ const AddBtn = (props) => {
 
 const SupplierTable = ({suppliers}) => {
 
+	let popupUpdate;
+	let popupDelete;
+
+	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
+	const [showPopupDelete, setShowPopupDelete] = useState(false)
+	const [supplierIndex, setSupplierIndex] = useState(-1)
+
+	const onUpdateSupplierButtonChange = (e) => {
+		e.preventDefault()
+		setSupplierIndex(e.target.value)
+		setShowPopupUpdate(true)
+	}
+
+	if (showPopupUpdate) {
+		let supplier = suppliers.at(supplierIndex)
+		popupUpdate = <UpdateSupplierModal supplier={supplier} />
+	}
+
+	const onDeleteSupplierButtonChange = (e) => {
+		e.preventDefault()
+		setSupplierIndex(e.target.value)
+		setShowPopupDelete(true)
+	}
+
+	if (showPopupDelete) {
+		let supplier = suppliers.at(supplierIndex)
+		popupDelete = <DeleteSupplierModal supplier={supplier} />
+	}
+
 	let renderSuppliers = suppliers.map(
 		(supplier, i) => 
 			<tr key={supplier._id}>
 				<th className="text-center" scope="row">{i+1}</th>
 				<td className="text-center">{supplier.name}</td>
 				<td className="text-center">
-					<button>編集</button>
+					<button className="btn btn-primary" 
+						data-toggle="modal" 
+						data-target=".update-supplier" 
+						id={supplier._id}
+						value={i}
+						onClick={onUpdateSupplierButtonChange}>編集
+					</button>
+					{popupUpdate}
+				
 				</td>
 				<td className="text-center">
-					<button>消去</button>
+					<button className="btn btn-danger" 
+						data-toggle="modal" 
+						data-target=".delete-supplier" 
+						id={supplier._id}
+						value={i}
+						onClick={onDeleteSupplierButtonChange}>消去
+					</button>
+					{popupDelete}
 				</td>
 			</tr>
 		)
 
+	
+
 	return (
-		<table className="table table-striped table-bordered" style={{width: "100%"}}>
-			<thead>
-				<tr>
-					<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-					<th className="text-center" scope="col" style={{width: "60%"}}>サプライヤー名</th>
-					<th className="text-center" scope="col" colSpan="2">アクション</th>
-				</tr>	
-			</thead>	
-			<tbody>
-				{renderSuppliers}
-			</tbody>
-		</table>
+		<div className="table-bound">
+			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+				<thead>
+					<tr>
+						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+						<th className="text-center" scope="col" style={{width: "60%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" colSpan="2">アクション</th>
+					</tr>	
+				</thead>	
+				<tbody>
+					{renderSuppliers}
+				</tbody>
+			</table>
+		</div>
+		
 	)
 }
 
 const ProductTable = ({products}) => {
 
+	let popupUpdate = <div></div>
+	let popupDelete = <div></div>
+	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
+	const [productIndex, setProductIndex] = useState(0)
 
-	let popupUpdate;
-	let [showPopupUpdate, setShowPopupUpdate] = useState(false)
-	let [productIndex, setProductIndex] = useState(0)
-
-	let onUpdateProductButonChange = (e) =>{
-
+	const onUpdateProductButonChange = (e) =>{
+		e.preventDefault()
 		setProductIndex(e.target.value)
 		setShowPopupUpdate(true)
 	}
 
-	if(showPopupUpdate){
-		
+	if (showPopupUpdate){
 		let product = products.at(productIndex)
-		console.log(products)
-		console.log("Content")
-		console.log(product)
-		console.log("Index "+productIndex)
 		popupUpdate = <UpdateProduct product = {product} />
 	}
 
@@ -193,9 +240,6 @@ const ProductTable = ({products}) => {
 	const onDeleteProductButonChange = (e) => {
 		let index = e.target.value
 		let productDelete = products.at(productIndex)
-		console.log("Delete")
-		console.log(productDelete._id)
-		console.log(productDelete)
 		ProductService.delProducts(productDelete._id)
 	}
 	
@@ -208,13 +252,14 @@ const ProductTable = ({products}) => {
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.amount}</td>
 				<td className="text-center">
-				<button class="btn btn-primary" 
-				data-toggle="modal" 
-				data-target=".update" 
-				id={product._id}
-				value={i}
-				onClick={onUpdateProductButonChange}>編集</button>
-				{popupUpdate}
+					<button className="btn btn-primary" 
+						data-toggle="modal" 
+						data-target=".update-product" 
+						id={product._id}
+						value={i}
+						onClick={onUpdateProductButonChange}>編集
+					</button>
+					{popupUpdate}
 				
 				</td>
 				<td className="text-center">
@@ -226,20 +271,23 @@ const ProductTable = ({products}) => {
 	)
 
 	return (
-		<table className="table table-striped table-bordered" style={{width: "100%"}}>
-			<thead>
-				<tr>
-					<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-					<th className="text-center" scope="col" style={{width: "30%"}}>製品名</th>
-					<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー名</th>
-					<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
-					<th className="text-center" scope="col" colSpan="2">アクション</th>
-				</tr>	
-			</thead>	
-			<tbody>
-				{renderProducts}
-			</tbody>
-		</table>
+		<div>
+			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+				<thead>
+					<tr>
+						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>製品名</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
+						<th className="text-center" scope="col" colSpan="2">アクション</th>
+					</tr>	
+				</thead>	
+				<tbody>
+					{renderProducts}
+				</tbody>
+			</table>
+		</div>
+		
 	)
 }
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import SupplierService from "../apis/SupplierService"
 
 const SupplierModal = (props) => {
 
@@ -8,9 +9,16 @@ const SupplierModal = (props) => {
 		setSupplierName(e.target.value)
 	}
 
-	const handleCreateSupplier = (e) => {
+	const handleCreateSupplier = async (e) => {
 		e.preventDefault()
-		console.log("Created new suppllier")
+		let data = {
+			"name": supplierName
+		}
+		const res = await SupplierService.create(data)
+		if (res.status == 201) {
+			setSupplierName("")
+            window.location.reload()
+        }
 	}
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
