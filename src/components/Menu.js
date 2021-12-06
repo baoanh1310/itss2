@@ -53,10 +53,15 @@ const Menu = (props) => {
 }
 
 const MenuItem = (props) => {
+
+	const onClick = () => {
+		window.location.replace(props.href)
+	}
+
 	return (
-		<div className="menu-item">
+		<button className="menu-item" onClick={onClick} style={{borderTop: "none"}}>
 			<a href={props.href} style={{textDecoration: "none"}}><span className="menu-item-label">{props.itemName}</span></a>
-		</div>
+		</button>
 	)
 }
 
