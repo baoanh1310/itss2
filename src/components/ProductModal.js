@@ -41,7 +41,7 @@ const ProductModal = (props) => {
 		setProductQuantity(quantity)
 	}
 
-	const handleCreateProduct = (e) => {
+	const handleCreateProduct = async (e) => {
 		e.preventDefault()
 		console.log("Created new product")
 
@@ -57,7 +57,12 @@ const ProductModal = (props) => {
 		}
 		console.log(product)
 
-	 	ProductService.create(product)
+		const res = await ProductService.create(product)
+
+		if (res.status == 201) {
+			setProductName("")
+            window.location.reload()
+        }
 	}
 
 	let options = props.suppliers.map(

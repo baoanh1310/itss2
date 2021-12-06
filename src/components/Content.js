@@ -19,6 +19,7 @@ import ImportService from '../apis/ImportService'
 import ExportService from '../apis/ExportService'
 
 import UpdateProduct from "./UpdateProduct"
+import DeleteProductModal from "./DeleteProductModal"
 import UpdateSupplierModal from "./UpdateSupplierModal"
 import DeleteSupplierModal from "./DeleteSupplierModal"
 import DeleteImportModal from "./DeleteImportModal"
@@ -324,10 +325,12 @@ const SupplierTable = ({suppliers}) => {
 
 const ProductTable = (props) => {
 
-	let popupUpdate = <div></div>
-	let popupDelete = <div></div>
+	let popupUpdate;
+	let popupDelete;
 	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
-	const [productIndex, setProductIndex] = useState(0)
+	const [showPopupDelete, setShowPopupDelete] = useState(false)
+	const [productIndex, setProductIndex] = useState(-1)
+
 	let products = props.products;
 	console.log("Products: ", products)
 	console.log("Search: ", props.search)
@@ -342,13 +345,20 @@ const ProductTable = (props) => {
 		let product = products.at(productIndex)
 		popupUpdate = <UpdateProduct product = {product} />
 	}
+	
+
+	
 
 	// let products = props.products
 
 	const onDeleteProductButonChange = (e) => {
-		let index = e.target.value
+		e.preventDefault()
+		setProductIndex(e.target.value)
+		setShowPopupDelete(true)
+	}
+	if (showPopupDelete) {
 		let productDelete = products.at(productIndex)
-		ProductService.delProducts(productDelete._id)
+		popupDelete = <DeleteProductModal product={productDelete} />
 	}
 	
 
@@ -372,8 +382,13 @@ const ProductTable = (props) => {
 				</td>
 				<td className="text-center">
 					<button 
+					className="btn btn-danger" 
+					data-toggle="modal" 
+					data-target=".delete-product"
 					value={i}
+					id={product._id}
 					onClick={onDeleteProductButonChange}>消去</button>
+					{popupDelete}
 				</td>
 			</tr>
 	)
