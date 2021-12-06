@@ -8,7 +8,7 @@ const UpdateProduct = (props) => {
     let supplierName = props.product.supplierName
     let supplierID = props.product.supplierId
     
-    const handleUpdateProduct = (e) => {
+    const handleUpdateProduct = async (e) => {
 		e.preventDefault()
         
         const product = {
@@ -16,7 +16,12 @@ const UpdateProduct = (props) => {
 			supplier : supplierID
 		}
 
-	 	ProductService.updateProduct(productID, product)
+	 	
+        const res = await ProductService.updateProduct(productID, product)
+
+		if (res.status == 200) {
+            window.location.reload()
+        }
 	}
 
     const handleProductNameChange = (e) => {
