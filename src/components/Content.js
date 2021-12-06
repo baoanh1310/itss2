@@ -31,6 +31,50 @@ const Content = (props) => {
 	const [eports, setEports] = useState([])
 	const [searchResult, setSearchResult] = useState([])
 	const [search, setSearch] = useState("")
+	const [lastMonthImport, setLastMonthImport] = useState([])
+	const [lastWeekImport, setLastWeekImport] = useState([])
+	const [lastMonthExport, setLastMonthExport] = useState([])
+	const [lastWeekExport, setLastWeekExport] = useState([])
+
+	const fetchLastMonthImport = async () => {
+		const data = {
+			type: "last-month"
+		}
+		const res = await ImportService.getProducts(data)
+		if (res.status === 200) {
+			setLastMonthImport(res.data.products)
+		}
+	}
+
+	const fetchLastWeekImport = async () => {
+		const data = {
+			type: "last-week"
+		}
+		const res = await ImportService.getProducts(data)
+		if (res.status === 200) {
+			setLastWeekImport(res.data.products)
+		}
+	}
+
+	const fetchLastMonthExport = async () => {
+		const data = {
+			type: "last-month"
+		}
+		const res = await ExportService.getProducts(data)
+		if (res.status === 200) {
+			setLastMonthExport(res.data.products)
+		}
+	}
+
+	const fetchLastWeekExport = async () => {
+		const data = {
+			type: "last-week"
+		}
+		const res = await ExportService.getProducts(data)
+		if (res.status === 200) {
+			setLastWeekExport(res.data.products)
+		}
+	}
 
 	const handleSearchChange = (e) => {
 		setSearch(e.target.value.toString().toLowerCase())
@@ -71,6 +115,11 @@ const Content = (props) => {
 		fetchProducts()
 		fetchImportProducts()
 		fetchExportProducts()
+
+		fetchLastMonthImport()
+		fetchLastWeekImport()
+		fetchLastMonthExport()
+		fetchLastWeekExport()
 	}, [])
 
 	let body;
@@ -125,7 +174,10 @@ const Content = (props) => {
 			body = <div>
 				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
 				<Label label={props.label} />
-				<Report products={products} suppliers={suppliers} imports={imports} eports={eports} />
+				<Report products={products} suppliers={suppliers} imports={imports} eports={eports} 
+						lastMonthImport={lastMonthImport} lastWeekImport={lastWeekImport} 
+						lastMonthExport={lastMonthExport} lastWeekExport={lastWeekExport}
+				/>
 			</div>
 			break
 		case "profile":
