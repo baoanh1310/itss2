@@ -22,6 +22,10 @@ class ImportService extends BaseService {
         return this.getData("/"+id);
     }
 
+    getProductsType = (type) => {
+        return this.getData("/type="+type)
+    }
+
     updateProduct = (id, data) => {
         return this.put("/"+id, data);
     }

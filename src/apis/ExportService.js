@@ -18,6 +18,10 @@ class ExportService extends BaseService {
         return this.getData("/", data);
     }
 
+    getProductsType = (type) => {
+        return this.getData("/type="+type)
+    }
+
     getProduct = (id) => {
         return this.getData("/get/"+id);
     }
