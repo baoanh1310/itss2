@@ -26,8 +26,8 @@ class ExportService extends BaseService {
         return this.put("/update/"+id, data);
     }
 
-    delProducts = (data) => {
-        return this.del("/delete", data);
+    delProducts = (id) => {
+        return this.del("/"+id);
     }
 };
 

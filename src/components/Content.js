@@ -21,6 +21,8 @@ import ExportService from '../apis/ExportService'
 import UpdateProduct from "./UpdateProduct"
 import UpdateSupplierModal from "./UpdateSupplierModal"
 import DeleteSupplierModal from "./DeleteSupplierModal"
+import DeleteImportModal from "./DeleteImportModal"
+import DeleteExportModal from "./DeleteExportModal"
 import { create } from "@mui/material/styles/createTransitions"
 
 const Content = (props) => {
@@ -406,6 +408,21 @@ const ProductTable = (props) => {
 
 const ImportTable = (props) => {
 
+	let popupDelete;
+	const [showPopupDelete, setShowPopupDelete] = useState(false)
+	const [importIndex, setImportIndex] = useState(-1)
+
+	const onDeleteImportButtonChange = (e) => {
+		e.preventDefault()
+		setImportIndex(e.target.value)
+		setShowPopupDelete(true)
+	}
+
+	if (showPopupDelete) {
+		let productImport = props.imports.at(importIndex)
+		popupDelete = <DeleteImportModal productImport={productImport} />
+	}
+
 	const getDateFormat = (miliseconds) => {
 		let date = new Date(miliseconds)
 		let day = date.getDate().toString()
@@ -425,6 +442,16 @@ const ImportTable = (props) => {
 				<td className="text-center">{productImport.supplierName}</td>
 				<td className="text-center">{productImport.amount}</td>
 				<td className="text-center">{getDateFormat(productImport.time)}</td>
+				<td className="text-center">
+					<button className="btn btn-danger" 
+						data-toggle="modal" 
+						data-target=".delete-import" 
+						id={productImport._id}
+						value={i}
+						onClick={onDeleteImportButtonChange}>消去
+					</button>
+					{popupDelete}
+				</td>
 			</tr>
 	)
 
@@ -438,6 +465,7 @@ const ImportTable = (props) => {
 						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
 						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
 						<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
+						<th className="text-center" scope="col">アクション</th>
 					</tr>	
 				</thead>	
 				<tbody>
@@ -450,6 +478,21 @@ const ImportTable = (props) => {
 }
 
 const ExportTable = (props) => {
+
+	let popupDelete;
+	const [showPopupDelete, setShowPopupDelete] = useState(false)
+	const [exportIndex, setExportIndex] = useState(-1)
+
+	const onDeleteExportButtonChange = (e) => {
+		e.preventDefault()
+		setExportIndex(e.target.value)
+		setShowPopupDelete(true)
+	}
+
+	if (showPopupDelete) {
+		let productExport = props.eports.at(exportIndex)
+		popupDelete = <DeleteExportModal productExport={productExport} />
+	}
 
 	const getDateFormat = (miliseconds) => {
 		let date = new Date(miliseconds)
@@ -470,6 +513,16 @@ const ExportTable = (props) => {
 				<td className="text-center">{productExport.supplierName}</td>
 				<td className="text-center">{productExport.amount}</td>
 				<td className="text-center">{getDateFormat(productExport.time)}</td>
+				<td className="text-center">
+					<button className="btn btn-danger" 
+						data-toggle="modal" 
+						data-target=".delete-export" 
+						id={productExport._id}
+						value={i}
+						onClick={onDeleteExportButtonChange}>消去
+					</button>
+					{popupDelete}
+				</td>
 			</tr>
 	)
 
@@ -483,6 +536,7 @@ const ExportTable = (props) => {
 						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
 						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
 						<th className="text-center" scope="col" style={{width: "20%"}}>出庫日</th>
+						<th className="text-center" scope="col">アクション</th>
 					</tr>	
 				</thead>	
 				<tbody>
