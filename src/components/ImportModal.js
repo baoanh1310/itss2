@@ -71,8 +71,8 @@ const ImportModal = (props) => {
 		        <form action="/warehouse/import" method="POST">
 
 					<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productNameInput20" style={{flex: "1", marginTop: "10px"}}>製品名</label>
-		        		<select name="products" id="productNameInput20" 
+		        		<label htmlFor="productNameInput21" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+		        		<select name="products" id="productNameInput21" 
 								style={{flex: "5", marginTop: "5px"}} 
 								className="form-control validate"
 								onChange={handleProductNameChange} 

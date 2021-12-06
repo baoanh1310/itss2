@@ -39,40 +39,33 @@ const Content = (props) => {
 	const [lastWeekExport, setLastWeekExport] = useState([])
 
 	const fetchLastMonthImport = async () => {
-		const data = {
-			type: "last-month"
-		}
-		const res = await ImportService.getProducts(data)
+		const type = "last-month"
+		const res = await ImportService.getProductsType(type)
 		if (res.status === 200) {
 			setLastMonthImport(res.data.products)
 		}
 	}
 
 	const fetchLastWeekImport = async () => {
-		const data = {
-			type: "last-week"
-		}
-		const res = await ImportService.getProducts(data)
+		const type = "last-week"
+		const res = await ImportService.getProductsType(type)
 		if (res.status === 200) {
 			setLastWeekImport(res.data.products)
 		}
 	}
 
 	const fetchLastMonthExport = async () => {
-		const data = {
-			type: "last-month"
-		}
-		const res = await ExportService.getProducts(data)
+		
+		const type = "last-month"
+		const res = await ExportService.getProductsType(type)
 		if (res.status === 200) {
 			setLastMonthExport(res.data.products)
 		}
 	}
 
 	const fetchLastWeekExport = async () => {
-		const data = {
-			type: "last-week"
-		}
-		const res = await ExportService.getProducts(data)
+		const type = "last-week"
+		const res = await ExportService.getProductsType(type)
 		if (res.status === 200) {
 			setLastWeekExport(res.data.products)
 		}

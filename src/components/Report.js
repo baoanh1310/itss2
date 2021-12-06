@@ -60,7 +60,6 @@ const Report = (props) => {
 				<td className="text-center">{productImport.productName}</td>
 				<td className="text-center">{productImport.supplierName}</td>
 				<td className="text-center">{productImport.amount}</td>
-				<td className="text-center">{getDateFormat(productImport.time)}</td>
 			</tr>
 	)
 
@@ -73,7 +72,6 @@ const Report = (props) => {
 				<td className="text-center">{productExport.productName}</td>
 				<td className="text-center">{productExport.supplierName}</td>
 				<td className="text-center">{productExport.amount}</td>
-				<td className="text-center">{getDateFormat(productExport.time)}</td>
 			</tr>
 	)
 
@@ -87,8 +85,7 @@ const Report = (props) => {
 	const importHeaders = [
 		{ label: "製品名", key: "productName" },
 		{ label: "サプライヤー名", key: "supplierName" },
-		{ label: "数", key: "amount" },
-		{ label: "入庫日", key: "date"}
+		{ label: "数", key: "amount" }
 	]
 	let importData = [...reportImports]
 	for (let data of importData) {
@@ -97,8 +94,7 @@ const Report = (props) => {
 	const exportHeaders = [
 		{ label: "製品名", key: "productName" },
 		{ label: "サプライヤー名", key: "supplierName" },
-		{ label: "数", key: "amount" },
-		{ label: "出庫日", key: "date"}
+		{ label: "数", key: "amount" }
 	]
 	const exportData = [...reportExports]
 	for (let data of exportData) {
@@ -129,9 +125,8 @@ const Report = (props) => {
 				
 				<h5>輸入</h5>
 				<select value={toggleImport} onChange={onToggleImportChange} style={{width: "100px", marginLeft: "20px"}} className="custom-select custom-select-sm">
-					<option value="0">全て</option>
-					<option value="1">先月</option>
-					<option value="2">先週</option>
+					<option value="0">先月</option>
+					<option value="1">先週</option>
 				</select>
 			</div>
 
@@ -144,7 +139,6 @@ const Report = (props) => {
 							<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
 							<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
 							<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
-							<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
 						</tr>	
 					</thead>	
 					<tbody>
@@ -156,9 +150,8 @@ const Report = (props) => {
 			<div style={{display: "flex", marginTop: "40px"}}>
 				<h5>輸出</h5>
 				<select value={toggleExport} onChange={onToggleExportChange} style={{width: "100px", marginLeft: "20px"}} className="custom-select custom-select-sm">
-					<option value="0">全て</option>
-					<option value="1">先月</option>
-					<option value="2">先週</option>
+					<option value="0">先月</option>
+					<option value="1">先週</option>
 				</select>
 			</div>
 			<CSVButton data={exportData} headers={exportHeaders} filename={"Export.csv"} />
@@ -170,7 +163,6 @@ const Report = (props) => {
 							<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
 							<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
 							<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
-							<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
 						</tr>	
 					</thead>	
 					<tbody>

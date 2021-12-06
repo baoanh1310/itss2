@@ -41,6 +41,12 @@ const ExportModal = (props) => {
 		}
 	}
 
+	let productOptions = props.products.map(
+		(product, i) => 
+			<option key={product._id} value={product.name}>
+				{product.name}
+			</option>
+	)
 	
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,9 +60,15 @@ const ExportModal = (props) => {
 		      </div>
 		      <div className="modal-body">
 		        <form action="/warehouse/export" method="POST">
-		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productNameInput3" style={{flex: "1", marginTop: "10px"}}>製品名</label>
-		        		<input id="productNameInput3" style={{flex: "5", marginTop: "5px"}} value={productName} onChange={handleProductNameChange} type="text" className="form-control validate" placeholder="製品名" />
+					<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="productNameInput20" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+		        		<select name="products" id="productNameInput20" 
+								style={{flex: "5", marginTop: "5px"}} 
+								className="form-control validate"
+								onChange={handleProductNameChange} 
+								value={productName}>
+		        			{productOptions}
+		        		</select>
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="productQuantityInput3" style={{flex: "1", marginTop: "10px"}}>製品数</label>
