@@ -1,3 +1,4 @@
+import { data } from "jquery"
 import React, { useState, useEffect } from "react"
 import { CSVLink } from 'react-csv'
 
@@ -76,12 +77,33 @@ const Report = (props) => {
 			</tr>
 	)
 
-	const outOfStockData = []
-	const outOfStockHeaders = []
-	const importData = []
-	const importHeaders = []
-	const exportData = []
-	const exportHeaders = []
+	const outOfStockHeaders = [
+		{ label: "製品名", key: "name" },
+		{ label: "サプライヤー名", key: "supplierName" },
+		{ label: "数", key: "amount" }
+	]
+	console.log("Imports: ", props.imports)
+	let outOfStockData = [...outOfStock]
+	const importHeaders = [
+		{ label: "製品名", key: "productName" },
+		{ label: "サプライヤー名", key: "supplierName" },
+		{ label: "数", key: "amount" },
+		{ label: "入庫日", key: "date"}
+	]
+	let importData = [...reportImports]
+	for (let data of importData) {
+		data.date = getDateFormat(data.time)
+	}
+	const exportHeaders = [
+		{ label: "製品名", key: "productName" },
+		{ label: "サプライヤー名", key: "supplierName" },
+		{ label: "数", key: "amount" },
+		{ label: "出庫日", key: "date"}
+	]
+	const exportData = [...reportExports]
+	for (let data of exportData) {
+		data.date = getDateFormat(data.time)
+	}
 
     return (
         <div>
@@ -112,8 +134,9 @@ const Report = (props) => {
 					<option value="2">先週</option>
 				</select>
 			</div>
+
+			<CSVButton data={importData} headers={importHeaders} filename={"Import.csv"} />
             <div style={{marginTop: "20px"}} className="table-bound-report">
-				<CSVButton data={importData} headers={importHeaders} filename={"Import.csv"} />
 				<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
 					<thead>
 						<tr>
@@ -138,8 +161,8 @@ const Report = (props) => {
 					<option value="2">先週</option>
 				</select>
 			</div>
+			<CSVButton data={exportData} headers={exportHeaders} filename={"Export.csv"} />
 			<div style={{marginTop: "20px"}} className="table-bound-report">
-				<CSVButton data={exportData} headers={exportHeaders} filename={"Export.csv"} />
 				<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
 					<thead>
 						<tr>
