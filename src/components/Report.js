@@ -153,7 +153,7 @@ const Report = (props) => {
 				</table>
             </div>
 
-			<div style={{display: "flex", marginTop: "20px"}}>
+			<div style={{display: "flex", marginTop: "40px"}}>
 				<h5>輸出</h5>
 				<select value={toggleExport} onChange={onToggleExportChange} style={{width: "100px", marginLeft: "20px"}} className="custom-select custom-select-sm">
 					<option value="0">全て</option>
