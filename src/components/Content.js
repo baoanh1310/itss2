@@ -61,7 +61,7 @@ const Content = (props) => {
 	}
 
 	const handleSearchChange = (e) => {
-		let searchTerm = e.target.value
+		let searchTerm = e.target.value.toLowerCase()
 		setSearchValue(searchTerm)
 		searchProducts(searchTerm)
 		searchSuppliers(searchTerm)
