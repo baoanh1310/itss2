@@ -257,7 +257,7 @@ const SupplierTable = ({suppliers, filteredSuppliers}) => {
 	let popupUpdate;
 	let popupDelete;
 
-	console.log("Filtered suppliers: ", filteredSuppliers)
+	// console.log("Filtered suppliers: ", filteredSuppliers)
 
 	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
 	const [showPopupDelete, setShowPopupDelete] = useState(false)
@@ -345,7 +345,10 @@ const ProductTable = (props) => {
 	const [showPopupDelete, setShowPopupDelete] = useState(false)
 	const [productIndex, setProductIndex] = useState(-1)
 
-	let products = props.products;
+	let products = props.products
+	let filteredProducts = props.filteredProducts
+
+	console.log("Filtered products: ", filteredProducts)
 
 	const onUpdateProductButonChange = (e) =>{
 		e.preventDefault()
@@ -354,12 +357,10 @@ const ProductTable = (props) => {
 	}
 
 	if (showPopupUpdate){
-		let product = products.at(productIndex)
+		// let product = products.at(productIndex)
+		let product = filteredProducts.at(productIndex)
 		popupUpdate = <UpdateProduct product = {product} />
 	}
-	
-
-	
 
 	// let products = props.products
 
@@ -369,12 +370,13 @@ const ProductTable = (props) => {
 		setShowPopupDelete(true)
 	}
 	if (showPopupDelete) {
-		let productDelete = products.at(productIndex)
+		// let productDelete = products.at(productIndex)
+		let productDelete = filteredProducts.at(productIndex)
 		popupDelete = <DeleteProductModal product={productDelete} />
 	}
 	
 
-	let renderProducts = products.map(
+	let renderProducts = filteredProducts.map(
 		(product, i) => 
 			<tr key={product._id}>
 				<th className="text-center" scope="row">{i+1}</th>
