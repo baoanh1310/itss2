@@ -292,6 +292,8 @@ const SupplierTable = ({suppliers, filteredSuppliers}) => {
 			<tr key={supplier._id}>
 				<th className="text-center" scope="row">{i+1}</th>
 				<td className="text-center">{supplier.name}</td>
+				<td className="text-center">{supplier.phoneNumber}</td>
+				<td className="text-center">{supplier.address}</td>
 				<td className="text-center">
 					<button className="btn btn-primary" 
 						data-toggle="modal" 
@@ -324,7 +326,9 @@ const SupplierTable = ({suppliers, filteredSuppliers}) => {
 				<thead>
 					<tr>
 						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "60%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "15%"}}>サプライヤー電話番号</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー住所</th>
 						<th className="text-center" scope="col" colSpan="2">アクション</th>
 					</tr>	
 				</thead>	
