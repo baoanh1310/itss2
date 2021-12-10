@@ -32,12 +32,38 @@ const Content = (props) => {
 	const [products, setProducts] = useState([])
 	const [imports, setImports] = useState([])
 	const [eports, setEports] = useState([])
-	const [searchResult, setSearchResult] = useState([])
-	const [search, setSearch] = useState("")
 	const [lastMonthImport, setLastMonthImport] = useState([])
 	const [lastWeekImport, setLastWeekImport] = useState([])
 	const [lastMonthExport, setLastMonthExport] = useState([])
 	const [lastWeekExport, setLastWeekExport] = useState([])
+	const [filteredProducts, setFilteredProducts] = useState([])
+	const [filteredSuppliers, setFilteredSuppliers] = useState([])
+	const [searchValue, setSearchValue] = useState('')
+
+	const searchProducts = () => {
+
+		const filtered = products.filter(
+			product => 
+				product.name.toLowerCase().indexOf(searchValue) > - 1
+		)
+
+		setFilteredProducts(filtered) 
+	}
+
+	const searchSupplierss = (searchTerm) => {
+
+		const filtered = suppliers.filter(
+			supplier => 
+				supplier.name.toLowerCase().indexOf(searchValue) > - 1
+		)
+
+		setFilteredSuppliers(filtered) 
+	}
+
+	const handleSearchChange = (e) => {
+		setSearchValue(e.target.value)
+		console.log("Searching: ", e.target.value)
+	}
 
 	const fetchLastMonthImport = async () => {
 		const type = "last-month"
@@ -72,20 +98,6 @@ const Content = (props) => {
 		}
 	}
 
-	const handleSearchChange = (e) => {
-		setSearch(e.target.value.toString().toLowerCase())
-		setSearchResult(products.filter(product => product.name.includes(search)))
-		// setProducts(products.filter(product => product.name.includes(search)))
-		console.log("Raw Search: ", search)
-		console.log("Search result: ", searchResult)
-	}
-
-	const handleSearch = (e) => {
-		e.preventDefault()
-		
-		window.location.replace('/searchResult')
-	}
-
 	const fetchSuppliers = async () => {
 		const res = await SupplierService.getSuppliers()
 		setSuppliers(res.data.suppliers)
@@ -94,6 +106,7 @@ const Content = (props) => {
 	const fetchProducts = async () => {
 		const res = await ProductService.getProducts()
 		setProducts(res.data.products)
+		// setFilteredProducts(res.data.products)
 	}
 
 	const fetchImportProducts = async () => {
@@ -122,14 +135,14 @@ const Content = (props) => {
 	switch (props.model) {
 		case "dashboard":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<Dashboard suppliers={suppliers} products={products} />
 			</div>
 			break
 		case "supplier":
 			body = <div>
-				<Navbar has_search={true} user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar has_search={true} placeholder="サプライヤーを探す" user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={searchSupplierss} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
 				<SupplierTable className="custom-table" suppliers={suppliers} />
@@ -137,22 +150,15 @@ const Content = (props) => {
 			break
 		case "product":
 			body = <div>
-				<Navbar has_search={true} user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar has_search={true} placeholder="製品を探す" user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={searchProducts} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="product" suppliers={suppliers} />
 				<ProductTable className="custom-table" products={products} />
 			</div>
 			break
-		case "searchResult":
-			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
-				<Label label={props.label} />
-				<ProductTable className="custom-table" products={searchResult} search={search} />
-			</div>
-			break
 		case "import":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="import" suppliers={suppliers} products={products} />
 				<ImportTable className="custom-table" imports={imports} />
@@ -160,7 +166,7 @@ const Content = (props) => {
 			break
 		case "export":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="export" suppliers={suppliers} products={products} />
 				<ExportTable className="custom-table" eports={eports} />
@@ -168,7 +174,7 @@ const Content = (props) => {
 			break
 		case "report":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<Report products={products} suppliers={suppliers} imports={imports} eports={eports} 
 						lastMonthImport={lastMonthImport} lastWeekImport={lastWeekImport} 
@@ -178,7 +184,7 @@ const Content = (props) => {
 			break
 		case "profile":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<Profile />
 			</div>
@@ -332,8 +338,6 @@ const ProductTable = (props) => {
 	const [productIndex, setProductIndex] = useState(-1)
 
 	let products = props.products;
-	console.log("Products: ", products)
-	console.log("Search: ", props.search)
 
 	const onUpdateProductButonChange = (e) =>{
 		e.preventDefault()

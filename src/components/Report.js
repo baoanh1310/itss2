@@ -12,9 +12,9 @@ const Report = (props) => {
 	const [reportImports, setReportImports] = useState(localImports)
 	const [reportExports, setReportExports] = useState(localExports)
 
-	let importArr = [props.imports, props.lastMonthImport, props.lastWeekImport]
-	let exportArr = [props.eports, props.lastMonthExport, props.lastWeekExport]
-	
+	let importArr = [props.lastMonthImport, props.lastWeekImport]
+	let exportArr = [props.lastMonthExport, props.lastWeekExport]
+
     const getDateFormat = (miliseconds) => {
 		let date = new Date(miliseconds)
 		let day = date.getDate().toString()
@@ -48,8 +48,8 @@ const Report = (props) => {
 		setReportExports(exportArr[index])
 	}
 
-	console.log("Report imports: ", reportImports)
-	console.log("Report exports: ", reportExports)
+	// console.log("Report imports: ", reportImports)
+	// console.log("Report exports: ", reportExports)
 
     reportImports.sort((a, b) => a.time - b.time)
 

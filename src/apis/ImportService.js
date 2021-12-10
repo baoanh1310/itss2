@@ -23,7 +23,7 @@ class ImportService extends BaseService {
     }
 
     getProductsType = (type) => {
-        return this.getData("/type="+type)
+        return this.getData("?type="+type)
     }
 
     updateProduct = (id, data) => {

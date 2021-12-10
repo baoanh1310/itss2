@@ -13,7 +13,7 @@ const Navbar = (props) => {
 			<div className="col-sm-1"></div>
 			<div className="col-sm-7">
 				<form id="searchForm" className="form-inline"> 
-    				<input className="form-control col-sm-6" type="search" value={props.search} onChange={props.handleSearchChange} placeholder="製品を探す" aria-label="Search" />
+    				<input className="form-control col-sm-6" type="search" value={props.search} onChange={props.handleSearchChange} placeholder={props.placeholder} aria-label="Search" />
 					<button className="btn btn-outline-success col-sm-2" type="submit" onClick={props.handleSearch}>探す</button>
   				</form>
 			</div>
