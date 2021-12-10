@@ -257,7 +257,7 @@ const SupplierTable = ({suppliers, filteredSuppliers}) => {
 	let popupUpdate;
 	let popupDelete;
 
-	// console.log("Filtered suppliers: ", filteredSuppliers)
+	console.log("suppliers: ", suppliers)
 
 	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
 	const [showPopupDelete, setShowPopupDelete] = useState(false)
