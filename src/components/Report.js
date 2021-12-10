@@ -180,7 +180,7 @@ const Report = (props) => {
 const CSVButton = (props) => {
 	return (
 		<div>
-			<CSVLink className="btn btn-success" filename={props.filename} headers={props.headers} data={props.data} style={{float: "right", marginBottom: "5px"}}>CSVをエクスポート</CSVLink>
+			<CSVLink className="btn btn-success" filename={props.filename} headers={props.headers} data={props.data} style={{float: "right", marginBottom: "5px"}}>Excelをエクスポート</CSVLink>
 		</div>
 	)
 }
