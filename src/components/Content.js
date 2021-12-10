@@ -40,29 +40,31 @@ const Content = (props) => {
 	const [filteredSuppliers, setFilteredSuppliers] = useState([])
 	const [searchValue, setSearchValue] = useState('')
 
-	const searchProducts = () => {
+	const searchProducts = (searchTerm) => {
 
 		const filtered = products.filter(
 			product => 
-				product.name.toLowerCase().indexOf(searchValue) > - 1
+				product.name.toLowerCase().indexOf(searchTerm) > - 1
 		)
 
 		setFilteredProducts(filtered) 
 	}
 
-	const searchSupplierss = (searchTerm) => {
+	const searchSuppliers = (searchTerm) => {
 
 		const filtered = suppliers.filter(
 			supplier => 
-				supplier.name.toLowerCase().indexOf(searchValue) > - 1
+				supplier.name.toLowerCase().indexOf(searchTerm) > - 1
 		)
 
 		setFilteredSuppliers(filtered) 
 	}
 
 	const handleSearchChange = (e) => {
-		setSearchValue(e.target.value)
-		console.log("Searching: ", e.target.value)
+		let searchTerm = e.target.value
+		setSearchValue(searchTerm)
+		searchProducts(searchTerm)
+		searchSuppliers(searchTerm)
 	}
 
 	const fetchLastMonthImport = async () => {
@@ -101,12 +103,13 @@ const Content = (props) => {
 	const fetchSuppliers = async () => {
 		const res = await SupplierService.getSuppliers()
 		setSuppliers(res.data.suppliers)
+		setFilteredSuppliers(res.data.suppliers)
 	}
 
 	const fetchProducts = async () => {
 		const res = await ProductService.getProducts()
 		setProducts(res.data.products)
-		// setFilteredProducts(res.data.products)
+		setFilteredProducts(res.data.products)
 	}
 
 	const fetchImportProducts = async () => {
@@ -131,6 +134,7 @@ const Content = (props) => {
 		fetchLastWeekExport()
 	}, [])
 
+
 	let body;
 	switch (props.model) {
 		case "dashboard":
@@ -142,10 +146,10 @@ const Content = (props) => {
 			break
 		case "supplier":
 			body = <div>
-				<Navbar has_search={true} placeholder="サプライヤーを探す" user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={searchSupplierss} />
+				<Navbar has_search={true} placeholder="サプライヤーを探す" user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={searchSuppliers} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
-				<SupplierTable className="custom-table" suppliers={suppliers} />
+				<SupplierTable className="custom-table" suppliers={suppliers} filteredSuppliers={filteredSuppliers} />
 			</div>
 			break
 		case "product":
@@ -153,7 +157,7 @@ const Content = (props) => {
 				<Navbar has_search={true} placeholder="製品を探す" user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={searchProducts} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="product" suppliers={suppliers} />
-				<ProductTable className="custom-table" products={products} />
+				<ProductTable className="custom-table" products={products} filteredProducts={filteredProducts} />
 			</div>
 			break
 		case "import":
@@ -248,10 +252,12 @@ const AddBtn = (props) => {
 	)
 }
 
-const SupplierTable = ({suppliers}) => {
+const SupplierTable = ({suppliers, filteredSuppliers}) => {
 
 	let popupUpdate;
 	let popupDelete;
+
+	console.log("Filtered suppliers: ", filteredSuppliers)
 
 	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
 	const [showPopupDelete, setShowPopupDelete] = useState(false)
@@ -264,7 +270,8 @@ const SupplierTable = ({suppliers}) => {
 	}
 
 	if (showPopupUpdate) {
-		let supplier = suppliers.at(supplierIndex)
+		// let supplier = suppliers.at(supplierIndex)
+		let supplier = filteredSuppliers.at(supplierIndex)
 		popupUpdate = <UpdateSupplierModal supplier={supplier} />
 	}
 
@@ -275,11 +282,12 @@ const SupplierTable = ({suppliers}) => {
 	}
 
 	if (showPopupDelete) {
-		let supplier = suppliers.at(supplierIndex)
+		// let supplier = suppliers.at(supplierIndex)
+		let supplier = filteredSuppliers.at(supplierIndex)
 		popupDelete = <DeleteSupplierModal supplier={supplier} />
 	}
 
-	let renderSuppliers = suppliers.map(
+	let renderSuppliers = filteredSuppliers.map(
 		(supplier, i) => 
 			<tr key={supplier._id}>
 				<th className="text-center" scope="row">{i+1}</th>
