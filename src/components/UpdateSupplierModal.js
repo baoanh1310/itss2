@@ -4,12 +4,18 @@ import SupplierService from "../apis/SupplierService";
 const UpdateSupplierModal = (props) => {
 
     const [supplierName, setSupplierName] = useState(props.supplier.name)
+    const [supplierPhone, setSupplierPhone] = useState(props.supplier.phoneNumber)
+    const [supplierAddress, setSupplierAddress] = useState(props.supplier.address)
     let supplierID = props.supplier._id
+
+    console.log("supplier ID: ", supplierID)
     
     const handleUpdateSupplier = async (e) => {
 		e.preventDefault()
         const data = {
-			name : supplierName
+			name : supplierName,
+            phoneNumber: supplierPhone,
+            address: supplierAddress
 		}
         const res = await SupplierService.updateSupplier(supplierID, data)
         if (res.status === 200) {
@@ -21,6 +27,14 @@ const UpdateSupplierModal = (props) => {
         setSupplierName(e.target.value)
         // supplierName = e.target.value
 	}
+
+    const handleSupplierPhoneChange = (e) => {
+        setSupplierPhone(e.target.value)
+    }
+
+    const handleSupplierAddressChange = (e) => {
+        setSupplierAddress(e.target.value)
+    }
 
     return (
         <div className="modal fade bd-example-modal-lg update-supplier" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,7 +50,15 @@ const UpdateSupplierModal = (props) => {
                 <form>
                     <div className="form-group" style={{display: "flex"}}>
                         <label htmlFor="supplierInput5" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
-                        <input id="supplierInput5" style={{flex: "5", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" required />
+                        <input id="supplierInput5" style={{flex: "3", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" required />
+                    </div>
+                    <div className="form-group" style={{display: "flex"}}>
+                        <label htmlFor="supplierPhoneInput1" style={{flex: "1", marginTop: "10px"}}>サプライヤー電話番号</label>
+                        <input id="supplierPhoneInput1" style={{flex: "3", marginTop: "5px"}} value={supplierPhone} onChange={handleSupplierPhoneChange} type="text" className="form-control validate" placeholder="サプライヤー電話番号" />
+                    </div>
+                    <div className="form-group" style={{display: "flex"}}>
+                        <label htmlFor="supplierAddressInput1" style={{flex: "1", marginTop: "10px"}}>サプライヤー住所</label>
+                        <input id="supplierAddressInput1" style={{flex: "3", marginTop: "5px"}} value={supplierAddress} onChange={handleSupplierAddressChange} type="text" className="form-control validate" placeholder="サプライヤー住所" />
                     </div>
                 </form>
                 </div>
