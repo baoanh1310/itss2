@@ -129,7 +129,7 @@ const Content = (props) => {
 			break
 		case "supplier":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar has_search={true} user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="supplier" />
 				<SupplierTable className="custom-table" suppliers={suppliers} />
@@ -137,7 +137,7 @@ const Content = (props) => {
 			break
 		case "product":
 			body = <div>
-				<Navbar user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
+				<Navbar has_search={true} user_email={props.user_email} products={products} handleSearchChange={handleSearchChange} handleSearch={handleSearch} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="product" suppliers={suppliers} />
 				<ProductTable className="custom-table" products={products} />

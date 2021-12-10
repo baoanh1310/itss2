@@ -9,8 +9,7 @@ const Navbar = (props) => {
       window.location.href = '/sign-in'
     }
 
-	return (
-		<div id="myNavbar">
+    let renderNavbar = props.has_search ? <div id="myNavbar">
 			<div className="col-sm-1"></div>
 			<div className="col-sm-7">
 				<form id="searchForm" className="form-inline"> 
@@ -28,6 +27,25 @@ const Navbar = (props) => {
 				    <a className="dropdown-item" href="/sign-in" onClick={logout}>ログアウト</a>
   				</div>
 			</div>
+		</div> : <div id="myNavbar">
+			<div className="col-sm-1"></div>
+			<div className="col-sm-7">
+			</div>
+			<div className="col-sm-2"></div>
+			<div id="avatar" className="col-sm-2 dropdown show">
+				<a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    {props.user_email}
+				</a>
+				<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				    <a className="dropdown-item" href="/profile">プロフィール</a>
+				    <a className="dropdown-item" href="/sign-in" onClick={logout}>ログアウト</a>
+  				</div>
+			</div>
+		</div>
+
+	return (
+		<div>
+			{renderNavbar}
 		</div>
 	)
 }
