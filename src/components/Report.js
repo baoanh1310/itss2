@@ -103,9 +103,12 @@ const Report = (props) => {
 
     return (
         <div>
-            <div style={{marginTop: "20px"}} className="table-bound-report">
+        	<div style={{marginTop: "30px"}}>
 				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.csv"} />
-                <h5>{"商品の在庫がなくなりそうです".concat("(<10)")}</h5>
+            	<h5>{"商品の在庫がなくなりそうです".concat("(<10)")}</h5>
+        	</div>
+			
+            <div style={{marginTop: "20px"}} className="table-bound-report">
                 <table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
 				<thead>
 					<tr>
@@ -121,7 +124,7 @@ const Report = (props) => {
 			</table>
             </div>
 
-			<div style={{display: "flex", marginTop: "10px"}}>
+			<div style={{display: "flex", marginTop: "20px"}}>
 				
 				<h5>輸入</h5>
 				<select value={toggleImport} onChange={onToggleImportChange} style={{width: "100px", marginLeft: "20px"}} className="custom-select custom-select-sm">
