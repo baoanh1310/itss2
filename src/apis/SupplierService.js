@@ -23,7 +23,8 @@ class SupplierService extends BaseService {
     }
 
     updateSupplier = (id, data) => {
-        return this.put("/"+id, data);
+        // return this.put("/"+id, data);
+        return this.patch("/"+id, data);
     }
 
     delSuppliers = (id, data) => {
