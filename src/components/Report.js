@@ -48,7 +48,7 @@ const Report = (props) => {
 		setReportExports(exportArr[index])
 	}
 
-	// console.log("Report imports: ", reportImports)
+	console.log("toggleImport: ", toggleImport)
 	// console.log("Report exports: ", reportExports)
 
     reportImports.sort((a, b) => a.time - b.time)
@@ -104,7 +104,7 @@ const Report = (props) => {
     return (
         <div>
         	<div style={{marginTop: "30px"}}>
-				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.csv"} />
+				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.xls"} />
             	<h5>{"商品の在庫がなくなりそうです".concat("(<10)")}</h5>
         	</div>
 			
