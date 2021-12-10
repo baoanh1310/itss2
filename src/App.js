@@ -11,7 +11,7 @@ const App = () => {
     <Router>
     	<div className="App">
          	<Switch>
-            	<Route exact path="/" component={() => <Homepage label="ダッシュボード" model="dashboard" />} />
+            	<Route exact path="/dashboard" component={() => <Homepage label="ダッシュボード" model="dashboard" />} />
             	<Route exact path="/supplier" component={() => <Homepage label="サプライヤー" model="supplier" btnTitle="新サプライヤー" />} />
             	<Route exact path="/product" component={() => <Homepage label="製品管理" model="product" btnTitle="新製品" />} />
             	<Route exact path="/searchResult" component={() => <Homepage label="検索結果" model="searchResult" btnTitle="検索結果" />} />
@@ -20,6 +20,7 @@ const App = () => {
             	<Route exact path="/report" component={() => <Homepage label="レポート" model="report" />} />
             	<Route exact path="/profile" component={() => <Homepage label="プロフィール" model="profile" />} />
             	<Route exact path="/sign-in" component={SignIn} />
+              <Route exact path="/" component={SignIn} />
             	<Route exact path="/forget" component={Forget} />
           </Switch>
 	    </div>

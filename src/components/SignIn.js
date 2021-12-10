@@ -49,7 +49,7 @@ const SignIn = (props) => {
             localStorage.setItem(LocalStorageKeys.Token, response.data.token)
             localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
             localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
-            window.location.replace('/')
+            window.location.replace('/dashboard')
         } 
     }
 
