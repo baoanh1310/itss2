@@ -104,7 +104,7 @@ const Report = (props) => {
     return (
         <div>
         	<div style={{marginTop: "30px"}}>
-				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.xlsx"} />
+				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.xls"} />
             	<h5>{"商品の在庫がなくなりそうです".concat("(<10)")}</h5>
         	</div>
 			
@@ -133,7 +133,7 @@ const Report = (props) => {
 				</select>
 			</div>
 
-			<CSVButton data={importData} headers={importHeaders} filename={"Import.xlsx"} />
+			<CSVButton data={importData} headers={importHeaders} filename={"Import.xls"} />
             <div style={{marginTop: "20px"}} className="table-bound-report">
 				<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
 					<thead>
@@ -157,7 +157,7 @@ const Report = (props) => {
 					<option value="1">先週</option>
 				</select>
 			</div>
-			<CSVButton data={exportData} headers={exportHeaders} filename={"Export.xlsx"} />
+			<CSVButton data={exportData} headers={exportHeaders} filename={"Export.xls"} />
 			<div style={{marginTop: "20px"}} className="table-bound-report">
 				<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
 					<thead>
