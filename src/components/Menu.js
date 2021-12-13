@@ -7,7 +7,7 @@ const Menu = (props) => {
 		{
 			id: 1,
 			itemName: "ダッシュボード",
-			href: "/"
+			href: "/dashboard"
 		},
 		{
 			id: 2,
