@@ -47,7 +47,7 @@ const Menu = (props) => {
 		<div id="menu">
 			<img src="/logo.png" alt="logo" id="menuLogo" />
 			{renderItems}
-			<button id="signOutBtn" onClick={logout} type="button" className="btn btn-secondary">ログアウト</button>
+			{/*<button id="signOutBtn" onClick={logout} type="button" className="btn btn-secondary">ログアウト</button>*/}
 		</div>
 	)
 }
