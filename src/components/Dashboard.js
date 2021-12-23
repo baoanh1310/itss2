@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import Skeleton from "react-loading-skeleton"
 
 const Dashboard = (props) => {
 
@@ -22,7 +23,7 @@ const Card = (props) => {
         <div className="card col-sm-3">
             <div className="card-body">
                 <h4 className="card-title text-center">{props.label}</h4>
-                <h1 className="card-text text-center">{props.text}</h1>
+                <h1 className="card-text text-center">{props.text || <Skeleton />}</h1>
             </div>
         </div>
     )
