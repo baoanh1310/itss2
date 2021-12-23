@@ -384,6 +384,7 @@ const ProductTable = (props) => {
 				<th className="text-center" scope="row">{i+1}</th>
 				<td className="text-center">{product.name}</td>
 				<td className="text-center">{product.supplierName}</td>
+				<td className="text-center">{product.price}</td>
 				<td className="text-center">{product.amount}</td>
 				<td className="text-center">
 					<button className="btn btn-primary" 
@@ -415,8 +416,9 @@ const ProductTable = (props) => {
 				<thead>
 					<tr>
 						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>製品名</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "10%"}}>単価</th>
 						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
 						<th className="text-center" scope="col" colSpan="2">アクション</th>
 					</tr>	
