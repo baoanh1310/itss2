@@ -1,8 +1,5 @@
 import React, { useState, Component } from "react"
-import axios from "axios";
 import ProductService from "../apis/ProductService";
-import Select from 'react-select'
-
 
 const ProductModal = (props) => {
 
