@@ -24,9 +24,20 @@ const Report = (props) => {
 		return result
 	}
 
-	let outOfStock = props.products.filter(product => product.amount < 10)
+	let almostOutOfStock = props.products.filter(product => product.amount < 10 && product.amount > 0)
+	let outOfStock = props.products.filter(product => product.amount === 0)
 
-    let renderOutOfStock = outOfStock.map(
+    let renderAlmostOutOfStock = almostOutOfStock.map(
+		(product, i) => 
+			<tr key={product._id}>
+				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center">{product.name}</td>
+				<td className="text-center">{product.supplierName}</td>
+				<td className="text-center">{product.amount}</td>
+			</tr>
+	)
+
+	let renderOutOfStock = outOfStock.map(
 		(product, i) => 
 			<tr key={product._id}>
 				<th className="text-center" scope="row">{i+1}</th>
@@ -48,7 +59,7 @@ const Report = (props) => {
 		setReportExports(exportArr[index])
 	}
 
-	console.log("toggleImport: ", toggleImport)
+	// console.log("toggleImport: ", toggleImport)
 	// console.log("Report exports: ", reportExports)
 
     reportImports.sort((a, b) => a.time - b.time)
@@ -75,13 +86,20 @@ const Report = (props) => {
 			</tr>
 	)
 
+	const almostOutOfStockHeaders = [
+		{ label: "製品名", key: "name" },
+		{ label: "サプライヤー名", key: "supplierName" },
+		{ label: "数", key: "amount" }
+	]
+	let almostOutOfStockData = [...almostOutOfStock]
+
 	const outOfStockHeaders = [
 		{ label: "製品名", key: "name" },
 		{ label: "サプライヤー名", key: "supplierName" },
 		{ label: "数", key: "amount" }
 	]
-	console.log("Imports: ", props.imports)
 	let outOfStockData = [...outOfStock]
+
 	const importHeaders = [
 		{ label: "製品名", key: "productName" },
 		{ label: "サプライヤー名", key: "supplierName" },
@@ -91,6 +109,7 @@ const Report = (props) => {
 	for (let data of importData) {
 		data.date = getDateFormat(data.time)
 	}
+
 	const exportHeaders = [
 		{ label: "製品名", key: "productName" },
 		{ label: "サプライヤー名", key: "supplierName" },
@@ -104,24 +123,45 @@ const Report = (props) => {
     return (
         <div>
         	<div style={{marginTop: "30px"}}>
-				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.xls"} />
-            	<h5>{"商品の在庫がなくなりそうです".concat("(<10)")}</h5>
+				<CSVButton data={almostOutOfStockData} headers={almostOutOfStockHeaders} filename={"AlmostOutOfStock.xls"} />
+            	<h5>{"商品の在庫がなくなりそうです"}</h5>
         	</div>
 			
             <div style={{marginTop: "20px"}} className="table-bound-report">
                 <table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
-				<thead>
-					<tr>
-						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>製品名</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー名</th>
-						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
-					</tr>	
-				</thead>	
-				<tbody>
-					{renderOutOfStock}
-				</tbody>
-			</table>
+					<thead>
+						<tr>
+							<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+							<th className="text-center" scope="col" style={{width: "30%"}}>製品名</th>
+							<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー名</th>
+							<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
+						</tr>	
+					</thead>	
+					<tbody>
+						{renderAlmostOutOfStock}
+					</tbody>
+				</table>
+            </div>
+
+			<div style={{marginTop: "30px"}}>
+				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.xls"} />
+            	<h5>{"商品数量が在庫切れ"}</h5>
+        	</div>
+			
+            <div style={{marginTop: "20px"}} className="table-bound-report">
+                <table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+					<thead>
+						<tr>
+							<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+							<th className="text-center" scope="col" style={{width: "30%"}}>製品名</th>
+							<th className="text-center" scope="col" style={{width: "30%"}}>サプライヤー名</th>
+							<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
+						</tr>	
+					</thead>	
+					<tbody>
+						{renderOutOfStock}
+					</tbody>
+				</table>
             </div>
 
 			<div style={{display: "flex", marginTop: "20px"}}>
