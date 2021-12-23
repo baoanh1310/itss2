@@ -33,6 +33,11 @@ const Menu = (props) => {
 			id: 6,
 			itemName: "レポート",
 			href: "/report"
+		}, 
+		{
+			id: 7,
+			itemName: "ツール管理",
+			href: "/tools"
 		}
 	]
 
@@ -54,15 +59,18 @@ const Menu = (props) => {
 
 const MenuItem = (props) => {
 
+
 	const onClick = () => {
 		window.location.replace(props.href)
 	}
+
 
 	return (
 		<button className="menu-item" onClick={onClick} style={{borderTop: "none"}}>
 			<a href={props.href} style={{textDecoration: "none"}}><span className="menu-item-label">{props.itemName}</span></a>
 		</button>
 	)
+	
 }
 
 export default Menu

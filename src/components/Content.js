@@ -12,6 +12,7 @@ import SupplierModal from './SupplierModal'
 import ProductModal from './ProductModal'
 import ImportModal from './ImportModal'
 import ExportModal from './ExportModal'
+import ToolModal from './ToolModal'
 
 import SupplierService from '../apis/SupplierService'
 import ProductService from '../apis/ProductService'
@@ -122,11 +123,16 @@ const Content = (props) => {
 		setEports(res.data.products)
 	}
 
+	const fetchTools = async () => {
+		
+	}
+
 	useEffect(() => {
 		fetchSuppliers()
 		fetchProducts()
 		fetchImportProducts()
 		fetchExportProducts()
+		fetchTools()
 
 		fetchLastMonthImport()
 		fetchLastWeekImport()
@@ -193,6 +199,14 @@ const Content = (props) => {
 				<Profile />
 			</div>
 			break
+		case "tools":
+			body = <div>
+				<Navbar user_email={props.user_email} />
+				<Label label={props.label} />
+				<AddBtn btnTitle={props.btnTitle} model="tools" />
+				
+			</div>
+			break
 		default:
 			body = <div></div>
 	}
@@ -237,6 +251,10 @@ const AddBtn = (props) => {
 		case "export":
 			modalId = "exportNewModal"
 			modal = <ExportModal suppliers={props.suppliers} products={props.products} show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
+			break
+		case "tools":
+			modalId = "toolNewModal"
+			modal = <ToolModal show={modalShow} onHide={() => setModalShow(false)} modalId={modalId} />
 			break
 	}
 

@@ -15,6 +15,12 @@
 	background: #0aa1a1;
 }
 
+.menu-item-selected {
+	background: #2A6FBE;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .menu-item-label {
 	color: #FEECEE;
 	font-style: normal;
