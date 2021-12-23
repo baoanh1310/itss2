@@ -3,15 +3,18 @@ import AuthenService from '../apis/AuthenServices'
 import { LocalStorageKeys } from '../apis/localStorageKeys'
 import './SignIn.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
-import { Box, Button, TextField } from '@mui/material';
-
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
+import { Box, Button, TextField } from '@mui/material'
+import AlertDismissible from './AlertDismissible'
 
 import Logo from './Logo'
 
 const SignIn = (props) => {
 
+	const [variant, setVariant] = useState("")
+	const [isShow, setIsShow] = useState(false)
+	const [content, setContent] = useState("")
 
 	const formik = useFormik({
 
@@ -35,7 +38,7 @@ const SignIn = (props) => {
 			  'パスワードが必要です')
 		})
 
-	  });
+	  })
 
 
 	const handleLogin = async (e) => {
@@ -44,75 +47,83 @@ const SignIn = (props) => {
             email: formik.values.email,
             password: formik.values.password
         })
-        
+
         if (response.status === 200) {
             localStorage.setItem(LocalStorageKeys.Token, response.data.token)
             localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
             localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
             window.location.replace('/dashboard')
-        } 
+        } else {
+			setIsShow(true)
+			setVariant("danger")
+			setContent("入力したメールアドレスまたはパスワードが間違っているようです")
+		}
     }
-
 
 	return (
 		<div className="sign-in">
-			<div className="col-sm-4"></div>
 			<div>
-				<Logo />
-				<form
-				className="container col-sm-4 justify-content-center" style={{ marginTop: "15px" }}>
-		            
-					<h3 className="text-center">ようこそ</h3>
+				<AlertDismissible content={content} isShow={isShow} variant={variant} />
+			</div>
+			<div>
+				<div className="col-sm-4"></div>
+				<div>
+					<Logo />
+					<form
+					className="container col-sm-4 justify-content-center" style={{ marginTop: "15px" }}>
+						
+						<h3 className="text-center">ようこそ</h3>
 
-					<div>
-					<TextField
-						error={Boolean(formik.touched.email && formik.errors.email)}
-						fullWidth
-						helperText={formik.touched.email && formik.errors.email}
-						label="メールアドレス"
-						margin="normal"
-						name="email"
-						onBlur={formik.handleBlur}
-						onChange={formik.handleChange}
-						type="email"
-						value={formik.values.email}
-						variant="outlined"
-						/>
-					<TextField
-						error={Boolean(formik.touched.password && formik.errors.password)}
-						fullWidth
-						helperText={formik.touched.password && formik.errors.password}
-						label="パスワード"
-						margin="normal"
-						name="password"
-						onBlur={formik.handleBlur}
-						onChange={formik.handleChange}
-						type="password"
-						value={formik.values.password}
-						variant="outlined"
-						/>
-
-					<Box sx={{ py: 2 }}>
-						<Button
-						onClick={handleLogin}
-							color="primary"
-							disabled={formik.isSubmitting}
+						<div>
+						<TextField
+							error={Boolean(formik.touched.email && formik.errors.email)}
 							fullWidth
-							size="large"
-							type="submit"
-							variant="contained"
-						>
-								ログイン
-						</Button>
-					</Box>
-					<p className="forgot-password text-center">
-		                <a href="/forget">パスワードをお忘れですか？</a>
-		            </p> 
-					</div>
-		        </form>
-	        </div>
-	        <div className="col-sm-4"></div>
-        </div>
+							helperText={formik.touched.email && formik.errors.email}
+							label="メールアドレス"
+							margin="normal"
+							name="email"
+							onBlur={formik.handleBlur}
+							onChange={formik.handleChange}
+							type="email"
+							value={formik.values.email}
+							variant="outlined"
+							/>
+						<TextField
+							error={Boolean(formik.touched.password && formik.errors.password)}
+							fullWidth
+							helperText={formik.touched.password && formik.errors.password}
+							label="パスワード"
+							margin="normal"
+							name="password"
+							onBlur={formik.handleBlur}
+							onChange={formik.handleChange}
+							type="password"
+							value={formik.values.password}
+							variant="outlined"
+							/>
+
+						<Box sx={{ py: 2 }}>
+							<Button
+								onClick={handleLogin}
+								color="primary"
+								disabled={formik.isSubmitting}
+								fullWidth
+								size="large"
+								type="submit"
+								variant="contained"
+							>
+									ログイン
+							</Button>
+						</Box>
+						<p className="forgot-password text-center">
+							<a href="/forget">パスワードをお忘れですか？</a>
+						</p> 
+						</div>
+					</form>
+				</div>
+				<div className="col-sm-4"></div>
+			</div>
+		</div>
 	)
 }
 
