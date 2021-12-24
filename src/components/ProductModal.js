@@ -6,7 +6,7 @@ const ProductModal = (props) => {
 	const [productName, setProductName] = useState('')
 	const [supplierName, setSupplierName] = useState("Vinamilk")
 	const [supplierID, setSupplierID] = useState(0)
-	const [productQuantity, setProductQuantity] = useState(1)
+	const [price, setPrice] = useState(1)
 
 	let suppNameExactly = "Vinamilk"
 	
@@ -33,18 +33,18 @@ const ProductModal = (props) => {
 	}
 
 
-	const handleProductQuantityChange = (e) => {
-		let quantity = parseInt(e.target.value)
-		setProductQuantity(quantity)
+	const handleProductPriceChange = (e) => {
+		let price = parseInt(e.target.value)
+		setPrice(price)
 	}
 
 	const handleCreateProduct = async (e) => {
 		e.preventDefault()
-		console.log("Created new product")
 
 		const product = {
 			name : productName,
-			supplierId : supplierID
+			supplierId : supplierID,
+			price: price
 		}
 		console.log(product)
 
@@ -98,10 +98,10 @@ const ProductModal = (props) => {
 		        		</select>
 						
 		        	</div>
-		        	{/* <div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productQuantityInput1" style={{flex: "1", marginTop: "10px"}}>製品数</label>
-		        		<input id="productQuantityInput1" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
-		        	</div> */}
+		        	<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="productPriceInput1" style={{flex: "1", marginTop: "10px"}}>単価</label>
+		        		<input id="productPriceInput1" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
+		        	</div>
 		        </form>
 		      </div>
 		      <div className="modal-footer">
