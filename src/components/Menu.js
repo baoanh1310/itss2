@@ -36,7 +36,7 @@ const Menu = (props) => {
 		}, 
 		{
 			id: 7,
-			itemName: "ツール管理",
+			itemName: "倉庫用品",
 			href: "/tools"
 		}
 	]
