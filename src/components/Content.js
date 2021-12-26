@@ -474,7 +474,6 @@ const ImportBillTable = (props) => {
 	let popupView;
 	const [showPopupView, setShowPopupView] = useState(false)
 	const [importIndex, setImportIndex] = useState(-1)
-	const [billInfo, setBillInfo] = useState({})
 
 	const onViewImportButtonChange = (e) => {
 		e.preventDefault()

@@ -20,6 +20,7 @@ const UpdateProduct = (props) => {
 
 	 	
         const res = await ProductService.updateProduct(productID, product)
+        console.log("Response: ", res)
 
 		if (res.status == 200) {
             window.location.reload()

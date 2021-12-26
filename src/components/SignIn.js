@@ -51,8 +51,9 @@ const SignIn = (props) => {
             localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
             window.location.replace('/dashboard')
         } else if (response.status === 403) {
-			alert("ログインに失敗しました")
+			window.alert("ログインに失敗しました")
 		}
+
     }
 
 	return (

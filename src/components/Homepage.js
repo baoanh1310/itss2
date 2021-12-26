@@ -15,7 +15,7 @@ const Homepage = (props) => {
 	return (
 		<div id="homepage">
 			<div className="col-sm-2">
-				<NewMenu />
+				<NewMenu selected={props.model} />
 			</div>
 			<div className="col-sm-10">
 				<div>
