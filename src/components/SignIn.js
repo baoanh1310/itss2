@@ -6,15 +6,10 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { Box, Button, TextField } from '@mui/material'
-import AlertDismissible from './AlertDismissible'
 
 import Logo from './Logo'
 
 const SignIn = (props) => {
-
-	const [variant, setVariant] = useState("")
-	const [isShow, setIsShow] = useState(false)
-	const [content, setContent] = useState("")
 
 	const formik = useFormik({
 
@@ -48,23 +43,20 @@ const SignIn = (props) => {
             password: formik.values.password
         })
 
+		console.log("Response: ", response)
+
         if (response.status === 200) {
             localStorage.setItem(LocalStorageKeys.Token, response.data.token)
             localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
             localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
             window.location.replace('/dashboard')
-        } else {
-			setIsShow(true)
-			setVariant("danger")
-			setContent("入力したメールアドレスまたはパスワードが間違っているようです")
+        } else if (response.status === 403) {
+			alert("ログインに失敗しました")
 		}
     }
 
 	return (
 		<div className="sign-in">
-			<div>
-				<AlertDismissible content={content} isShow={isShow} variant={variant} />
-			</div>
 			<div>
 				<div className="col-sm-4"></div>
 				<div>
