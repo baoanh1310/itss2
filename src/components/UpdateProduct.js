@@ -7,13 +7,15 @@ const UpdateProduct = (props) => {
     let productName = props.product.name
     let supplierName = props.product.supplierName
     let supplierID = props.product.supplierId
+    let price = props.product.price
     
     const handleUpdateProduct = async (e) => {
 		e.preventDefault()
         
         const product = {
 			name : productName,
-			supplier : supplierID
+			supplierId : supplierID,
+            price: price
 		}
 
 	 	
@@ -27,6 +29,10 @@ const UpdateProduct = (props) => {
     const handleProductNameChange = (e) => {
         productName = e.target.value
 	}
+
+    const handleProductPriceChange = (e) => {
+        price = e.target.value
+    }
 
     return (
         <>
@@ -53,9 +59,20 @@ const UpdateProduct = (props) => {
                                 />
                             </div>
                             <div className="form-group" style={{ display: "flex" }}>
+                                <label htmlFor="priceInput2" style={{ flex: "1", marginTop: "10px" }}>単価</label>
+                                <input 
+                                    id="priceInput2" 
+                                    style={{ flex: "5", marginTop: "5px" }} 
+                                    type="text" className="form-control validate" 
+                                    defaultValue={price} 
+                                    onChange={handleProductPriceChange}
+                                />
+                            </div>
+                            <div className="form-group" style={{ display: "flex" }}>
                                 <label htmlFor="supplierNameInput2" style={{ flex: "1", marginTop: "10px" }}>サプライヤー名</label>
                                 <h4 style={{ flex: "5", marginTop: "5px" }}>{supplierName}</h4>
                             </div>
+                            
                         </form>
                     </div>
                     <div className="modal-footer">
