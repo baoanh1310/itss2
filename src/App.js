@@ -21,7 +21,7 @@ const App = () => {
             	<Route exact path="/report" component={() => <Homepage label="レポート" model="report" />} />
             	<Route exact path="/profile" component={() => <Homepage label="プロフィール" model="profile" />} />
             	<Route exact path="/sign-in" component={SignIn} />
-              <Route exact path="/" component={SignIn} />
+              	<Route exact path="/" component={SignIn} />
             	<Route exact path="/forget" component={Forget} />
           </Switch>
 	    </div>

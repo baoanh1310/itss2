@@ -45,6 +45,8 @@ const Content = (props) => {
 	const [filteredSuppliers, setFilteredSuppliers] = useState([])
 	const [searchValue, setSearchValue] = useState('')
 
+	let label = props.label
+
 	const searchProducts = (searchTerm) => {
 
 		const filtered = products.filter(
@@ -142,6 +144,8 @@ const Content = (props) => {
 	}
 
 	useEffect(() => {
+		document.title = label
+
 		fetchSuppliers()
 		fetchProducts()
 		// fetchImportProducts()

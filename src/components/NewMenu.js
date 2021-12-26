@@ -4,7 +4,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 const NewMenu = (props) => {
 
-    const avoidPropagation = (e) => {
+    const handleClick = (e) => {
         e.stopPropagation()
     }
 
@@ -13,7 +13,7 @@ const NewMenu = (props) => {
             <img src="/logo.png" alt="logo" id="menuLogo" />
             <div className="menu-list">
 
-                <a className="menu-item-disabled" href="/dashboard">
+                <a onClock={handleClick} className="menu-item-disabled" href="/dashboard">
                     <div>
                         <span className="menu-item-label">ダッシュボード</span>
                     </div>
@@ -27,31 +27,31 @@ const NewMenu = (props) => {
 
                 <div className="menu-list collapse" id="productSubMenu">
 
-                    <a onClick={avoidPropagation} className="menu-sub-item" href="/supplier">
+                    <a onClick={handleClick} className="menu-sub-item" href="/supplier">
                         <div >
                             <span className="menu-item-label">サプライヤー</span>
                         </div>
                     </a>
 
-                    <a onClick={avoidPropagation} className="menu-sub-item" href="/product">
+                    <a onClick={handleClick} className="menu-sub-item" href="/product">
                         <div >
                             <span className="menu-item-label">製品管理</span>
                         </div>
                     </a>
 
-                    <a onClick={avoidPropagation} className="menu-sub-item" href="/import">
+                    <a onClick={handleClick} className="menu-sub-item" href="/import">
                         <div >
                             <span className="menu-item-label">輸入管理</span>
                         </div>
                     </a>
 
-                    <a onClick={avoidPropagation} className="menu-sub-item" href="/export">
+                    <a onClick={handleClick} className="menu-sub-item" href="/export">
                         <div >
                             <span className="menu-item-label">輸出管理</span>
                         </div>
                     </a>
 
-                    <a onClick={avoidPropagation} className="menu-sub-item" href="/report">
+                    <a onClick={handleClick} className="menu-sub-item" href="/report">
                         <div >
                             <span className="menu-item-label">レポート</span>
                         </div>
