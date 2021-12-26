@@ -68,6 +68,9 @@ class BaseService {
                     case StatusCode.NotFound:
                         msg && this.mNotification.warning(msg);
                         break;
+                    case StatusCode.Forbidden:
+                        msg && this.mNotification.warning(msg);
+                        break;
                     default:
                         msg && this.mNotification.warning(msg);
                         break;

@@ -1,6 +1,6 @@
 export const StatusCode = {
   NotFound: 404,
-
+  Forbidden: 403,
   Success: 200
 };
 

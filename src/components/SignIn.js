@@ -45,13 +45,13 @@ const SignIn = (props) => {
 
 		console.log("Response: ", response)
 
-        if (response.status === 200) {
+        if (response && response.status === 200) {
             localStorage.setItem(LocalStorageKeys.Token, response.data.token)
             localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
             localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
             window.location.replace('/dashboard')
-        } else if (response.status === 403) {
-			window.alert("ログインに失敗しました")
+        } else if (!response) {
+			alert("サインインに失敗しました!")
 		}
 
     }
