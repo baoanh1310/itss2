@@ -144,8 +144,8 @@ const Content = (props) => {
 	useEffect(() => {
 		fetchSuppliers()
 		fetchProducts()
-		fetchImportProducts()
-		fetchExportProducts()
+		// fetchImportProducts()
+		// fetchExportProducts()
 		fetchTools()
 		fetchImportBills()
 		fetchExportBills()
@@ -187,7 +187,6 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="import" suppliers={suppliers} products={products} />
-				{/*<ImportTable className="custom-table" imports={imports} />*/}
 				<ImportBillTable classname="custom-table" importBills={importBills} />
 			</div>
 			break
@@ -196,7 +195,6 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="export" suppliers={suppliers} products={products} />
-				{/*<ExportTable className="custom-table" eports={eports} />*/}
 				<ExportBillTable classname="custom-table" exportBills={exportBills} />
 			</div>
 			break
@@ -204,7 +202,7 @@ const Content = (props) => {
 			body = <div>
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
-				<Report products={products} suppliers={suppliers} imports={imports} eports={eports} 
+				<Report products={products} suppliers={suppliers} 
 						lastMonthImport={lastMonthImport} lastWeekImport={lastWeekImport} 
 						lastMonthExport={lastMonthExport} lastWeekExport={lastWeekExport}
 				/>
@@ -324,7 +322,7 @@ const SupplierTable = ({suppliers, filteredSuppliers}) => {
 	let renderSuppliers = filteredSuppliers.map(
 		(supplier, i) => 
 			<tr key={supplier._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{supplier.name}</td>
 				<td className="text-center">{supplier.phoneNumber}</td>
 				<td className="text-center">{supplier.address}</td>
@@ -417,7 +415,7 @@ const ProductTable = (props) => {
 	let renderProducts = filteredProducts.map(
 		(product, i) => 
 			<tr key={product._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{product.name}</td>
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.price}</td>
@@ -472,6 +470,7 @@ const ImportBillTable = (props) => {
 	let popupView;
 	const [showPopupView, setShowPopupView] = useState(false)
 	const [importIndex, setImportIndex] = useState(-1)
+	const [billInfo, setBillInfo] = useState({})
 
 	const onViewImportButtonChange = (e) => {
 		e.preventDefault()
@@ -498,7 +497,7 @@ const ImportBillTable = (props) => {
 	let renderImportBills = sortedImportBills.map(
 		(productImport, i) => 
 			<tr key={productImport._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{productImport.code}</td>
 				<td className="text-center">{getDateFormat(productImport.time)}</td>
 				<td className="text-center">
@@ -565,7 +564,7 @@ const ExportBillTable = (props) => {
 	let renderExportBills = sortedExportBills.map(
 		(productExport, i) => 
 			<tr key={productExport._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{productExport.code}</td>
 				<td className="text-center">{getDateFormat(productExport.time)}</td>
 				<td className="text-center">
