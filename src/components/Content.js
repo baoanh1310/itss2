@@ -18,13 +18,14 @@ import SupplierService from '../apis/SupplierService'
 import ProductService from '../apis/ProductService'
 import ImportService from '../apis/ImportService'
 import ExportService from '../apis/ExportService'
+import ImportBillService from '../apis/ImportBillService'
 
 import UpdateProduct from "./UpdateProduct"
 import DeleteProductModal from "./DeleteProductModal"
 import UpdateSupplierModal from "./UpdateSupplierModal"
 import DeleteSupplierModal from "./DeleteSupplierModal"
-import DeleteImportModal from "./DeleteImportModal"
-import DeleteExportModal from "./DeleteExportModal"
+import ViewImportModal from "./ViewImportModal"
+import DeleteExportModal from "./ViewExportModal"
 import { create } from "@mui/material/styles/createTransitions"
 
 const Content = (props) => {
@@ -33,6 +34,8 @@ const Content = (props) => {
 	const [products, setProducts] = useState([])
 	const [imports, setImports] = useState([])
 	const [eports, setEports] = useState([])
+	const [importBills, setImportBills] = useState([])
+	const [exportBills, setExportBills] = useState([])
 	const [lastMonthImport, setLastMonthImport] = useState([])
 	const [lastWeekImport, setLastWeekImport] = useState([])
 	const [lastMonthExport, setLastMonthExport] = useState([])
@@ -123,6 +126,11 @@ const Content = (props) => {
 		setEports(res.data.products)
 	}
 
+	const fetchImportBills = async () => {
+		const res = await ImportBillService.getProducts()
+		setImportBills(res.data.bills)
+	}
+
 	const fetchTools = async () => {
 		
 	}
@@ -133,6 +141,7 @@ const Content = (props) => {
 		fetchImportProducts()
 		fetchExportProducts()
 		fetchTools()
+		fetchImportBills()
 
 		fetchLastMonthImport()
 		fetchLastWeekImport()
@@ -171,7 +180,8 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="import" suppliers={suppliers} products={products} />
-				<ImportTable className="custom-table" imports={imports} />
+				{/*<ImportTable className="custom-table" imports={imports} />*/}
+				<ImportBillTable classname="custom-table" importBills={importBills} />
 			</div>
 			break
 		case "export":
@@ -179,7 +189,7 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="export" suppliers={suppliers} products={products} />
-				<ExportTable className="custom-table" eports={eports} />
+				{/*<ExportTable className="custom-table" eports={eports} />*/}
 			</div>
 			break
 		case "report":
@@ -450,21 +460,20 @@ const ProductTable = (props) => {
 	)
 }
 
-const ImportTable = (props) => {
-
-	let popupDelete;
-	const [showPopupDelete, setShowPopupDelete] = useState(false)
+const ImportBillTable = (props) => {
+	let popupView;
+	const [showPopupView, setShowPopupView] = useState(false)
 	const [importIndex, setImportIndex] = useState(-1)
 
-	const onDeleteImportButtonChange = (e) => {
+	const onViewImportButtonChange = (e) => {
 		e.preventDefault()
 		setImportIndex(e.target.value)
-		setShowPopupDelete(true)
+		setShowPopupView(true)
 	}
 
-	if (showPopupDelete) {
-		let productImport = props.imports.at(importIndex)
-		popupDelete = <DeleteImportModal productImport={productImport} />
+	if (showPopupView) {
+		let productImport = props.importBills.at(importIndex)
+		popupView = <ViewImportModal productImport={productImport} />
 	}
 
 	const getDateFormat = (miliseconds) => {
@@ -476,26 +485,25 @@ const ImportTable = (props) => {
 		return result
 	}
 
-	let sortedImports = props.imports.sort((a, b) => a.time - b.time)
+	let sortedImportBills = props.importBills.sort((a, b) => a.time - b.time)
 
-	let renderImports = sortedImports.map(
+	let renderImportBills = sortedImportBills.map(
 		(productImport, i) => 
 			<tr key={productImport._id}>
 				<th className="text-center" scope="row">{i+1}</th>
-				<td className="text-center">{productImport.productName}</td>
-				<td className="text-center">{productImport.supplierName}</td>
-				<td className="text-center">{productImport.amount}</td>
+				<td className="text-center">{productImport.code}</td>
 				<td className="text-center">{getDateFormat(productImport.time)}</td>
 				<td className="text-center">
-					<button className="btn btn-danger" 
+					<button className="btn btn-info" 
 						data-toggle="modal" 
-						data-target=".delete-import" 
+						data-target=".info-import" 
 						id={productImport._id}
 						value={i}
-						onClick={onDeleteImportButtonChange}>消去
+						onClick={onViewImportButtonChange}>詳細を見る
 					</button>
-					{popupDelete}
+					{popupView}
 				</td>
+				
 			</tr>
 	)
 
@@ -505,15 +513,13 @@ const ImportTable = (props) => {
 				<thead>
 					<tr>
 						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
-						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
-						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
-						<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
-						<th className="text-center" scope="col">アクション</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>請求書コード</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>入庫日</th>
+						<th className="text-center" scope="col" colSpan="2">アクション</th>
 					</tr>	
 				</thead>	
 				<tbody>
-					{renderImports}
+					{renderImportBills}
 				</tbody>
 			</table>
 		</div>
@@ -521,74 +527,6 @@ const ImportTable = (props) => {
 	)
 }
 
-const ExportTable = (props) => {
 
-	let popupDelete;
-	const [showPopupDelete, setShowPopupDelete] = useState(false)
-	const [exportIndex, setExportIndex] = useState(-1)
-
-	const onDeleteExportButtonChange = (e) => {
-		e.preventDefault()
-		setExportIndex(e.target.value)
-		setShowPopupDelete(true)
-	}
-
-	if (showPopupDelete) {
-		let productExport = props.eports.at(exportIndex)
-		popupDelete = <DeleteExportModal productExport={productExport} />
-	}
-
-	const getDateFormat = (miliseconds) => {
-		let date = new Date(miliseconds)
-		let day = date.getDate().toString()
-		let month = (date.getMonth()+1).toString()
-		let year = date.getFullYear().toString()
-		let result = day.concat("-").concat(month).concat("-").concat(year)
-		return result
-	}
-
-	let sortedExports = props.eports.sort((a, b) => a.time - b.time)
-
-	let renderExports = sortedExports.map(
-		(productExport, i) => 
-			<tr key={productExport._id}>
-				<th className="text-center" scope="row">{i+1}</th>
-				<td className="text-center">{productExport.productName}</td>
-				<td className="text-center">{productExport.supplierName}</td>
-				<td className="text-center">{productExport.amount}</td>
-				<td className="text-center">{getDateFormat(productExport.time)}</td>
-				<td className="text-center">
-					<button className="btn btn-danger" 
-						data-toggle="modal" 
-						data-target=".delete-export" 
-						id={productExport._id}
-						value={i}
-						onClick={onDeleteExportButtonChange}>消去
-					</button>
-					{popupDelete}
-				</td>
-			</tr>
-	)
-
-	return (
-		<div className="table-bound">
-			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
-				<thead>
-					<tr>
-						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
-						<th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
-						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
-						<th className="text-center" scope="col" style={{width: "20%"}}>出庫日</th>
-						<th className="text-center" scope="col">アクション</th>
-					</tr>	
-				</thead>	
-				<tbody>
-					{renderExports}
-				</tbody>
-			</table>
-		</div>
-	)
-}
 
 export default Content
