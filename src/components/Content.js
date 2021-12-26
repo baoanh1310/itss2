@@ -19,13 +19,14 @@ import ProductService from '../apis/ProductService'
 import ImportService from '../apis/ImportService'
 import ExportService from '../apis/ExportService'
 import ImportBillService from '../apis/ImportBillService'
+import ExportBillService from '../apis/ExportBillService'
 
 import UpdateProduct from "./UpdateProduct"
 import DeleteProductModal from "./DeleteProductModal"
 import UpdateSupplierModal from "./UpdateSupplierModal"
 import DeleteSupplierModal from "./DeleteSupplierModal"
 import ViewImportModal from "./ViewImportModal"
-import DeleteExportModal from "./ViewExportModal"
+import ViewExportModal from "./ViewExportModal"
 import { create } from "@mui/material/styles/createTransitions"
 
 const Content = (props) => {
@@ -131,6 +132,11 @@ const Content = (props) => {
 		setImportBills(res.data.bills)
 	}
 
+	const fetchExportBills = async () => {
+		const res = await ExportBillService.getProducts()
+		setExportBills(res.data.bills)
+	}
+
 	const fetchTools = async () => {
 		
 	}
@@ -142,6 +148,7 @@ const Content = (props) => {
 		fetchExportProducts()
 		fetchTools()
 		fetchImportBills()
+		fetchExportBills()
 
 		fetchLastMonthImport()
 		fetchLastWeekImport()
@@ -190,6 +197,7 @@ const Content = (props) => {
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="export" suppliers={suppliers} products={products} />
 				{/*<ExportTable className="custom-table" eports={eports} />*/}
+				<ExportBillTable classname="custom-table" exportBills={exportBills} />
 			</div>
 			break
 		case "report":
@@ -527,6 +535,71 @@ const ImportBillTable = (props) => {
 	)
 }
 
+const ExportBillTable = (props) => {
+	let popupView;
+	const [showPopupView, setShowPopupView] = useState(false)
+	const [exportIndex, setExportIndex] = useState(-1)
 
+	const onViewExportButtonChange = (e) => {
+		e.preventDefault()
+		setExportIndex(e.target.value)
+		setShowPopupView(true)
+	}
+
+	if (showPopupView) {
+		let productExport = props.exportBills.at(exportIndex)
+		popupView = <ViewExportModal productExport={productExport} />
+	}
+
+	const getDateFormat = (miliseconds) => {
+		let date = new Date(miliseconds)
+		let day = date.getDate().toString()
+		let month = (date.getMonth()+1).toString()
+		let year = date.getFullYear().toString()
+		let result = day.concat("-").concat(month).concat("-").concat(year)
+		return result
+	}
+
+	let sortedExportBills = props.exportBills.sort((a, b) => a.time - b.time)
+
+	let renderExportBills = sortedExportBills.map(
+		(productExport, i) => 
+			<tr key={productExport._id}>
+				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center">{productExport.code}</td>
+				<td className="text-center">{getDateFormat(productExport.time)}</td>
+				<td className="text-center">
+					<button className="btn btn-info" 
+						data-toggle="modal" 
+						data-target=".info-export" 
+						id={productExport._id}
+						value={i}
+						onClick={onViewExportButtonChange}>詳細を見る
+					</button>
+					{popupView}
+				</td>
+				
+			</tr>
+	)
+
+	return (
+		<div className="table-bound">
+			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+				<thead>
+					<tr>
+						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>請求書コード</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>出庫日</th>
+						<th className="text-center" scope="col" colSpan="2">アクション</th>
+					</tr>	
+				</thead>	
+				<tbody>
+					{renderExportBills}
+				</tbody>
+			</table>
+		</div>
+		
+	)
+}
 
 export default Content
