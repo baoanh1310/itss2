@@ -45,7 +45,7 @@ const Content = (props) => {
 	const [filteredSuppliers, setFilteredSuppliers] = useState([])
 	const [searchValue, setSearchValue] = useState('')
 
-	let label = props.label
+	let label = "New World - ".concat(props.label)
 
 	const searchProducts = (searchTerm) => {
 
