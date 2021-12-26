@@ -30,7 +30,7 @@ const Report = (props) => {
     let renderAlmostOutOfStock = almostOutOfStock.map(
 		(product, i) => 
 			<tr key={product._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{product.name}</td>
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.amount}</td>
@@ -40,7 +40,7 @@ const Report = (props) => {
 	let renderOutOfStock = outOfStock.map(
 		(product, i) => 
 			<tr key={product._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{product.name}</td>
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.amount}</td>
@@ -67,7 +67,7 @@ const Report = (props) => {
 	let renderImports = reportImports.map(
 		(productImport, i) => 
 			<tr key={productImport._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{productImport.productName}</td>
 				<td className="text-center">{productImport.supplierName}</td>
 				<td className="text-center">{productImport.amount}</td>
@@ -79,7 +79,7 @@ const Report = (props) => {
 	let renderExports = reportExports.map(
 		(productExport, i) => 
 			<tr key={productExport._id}>
-				<th className="text-center" scope="row">{i+1}</th>
+				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{productExport.productName}</td>
 				<td className="text-center">{productExport.supplierName}</td>
 				<td className="text-center">{productExport.amount}</td>
@@ -119,6 +119,56 @@ const Report = (props) => {
 	for (let data of exportData) {
 		data.date = getDateFormat(data.time)
 	}
+
+	// all in one
+	const allInOneHeaders = [
+		{ label: "ID", key: "ID"},
+		{ label: "製品名", key: "productName" },
+		{ label: "単位", key: "price" },
+		{ label: "入庫数", key: "importAmount" },
+		{ label: "出庫数", key: "exportAmount" },
+		{ label: "在庫数", key: "remainAmount" }
+	]
+
+	let allInOne = props.products.map(product => {
+		let rObj = {}
+		rObj.ID = product._id
+		rObj.productName = product.name
+		rObj.price = product.price
+		rObj.remainAmount = product.amount
+		rObj.importAmount = 0
+		rObj.exportAmount = 0
+		return rObj
+	})
+
+	for (let obj of allInOne) {
+		for (let obj1 of props.imports) {
+			if (obj.ID === obj1.productId) {
+				obj.importAmount += obj1.amount
+			}
+		}
+		for (let obj2 of props.eports) {
+			if (obj.ID === obj2.productId) {
+				obj.exportAmount += obj2.amount
+			}
+		}
+	}
+	console.log("All in one: ", allInOne)
+	allInOne.sort((a, b) => b.remainAmount - a.remainAmount)
+
+	const allInOneData = [...allInOne]
+	let renderAllInOne = allInOne.map(
+		(product, i) => 
+			<tr key={product.ID}>
+				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{product.ID}</td>
+				<td className="text-center">{product.productName}</td>
+				<td className="text-center">{product.price}</td>
+				<td className="text-center">{product.importAmount}</td>
+				<td className="text-center">{product.exportAmount}</td>
+				<td className="text-center">{product.remainAmount}</td>
+			</tr>
+	)
 
     return (
         <div>
@@ -213,6 +263,30 @@ const Report = (props) => {
 					</tbody>
 				</table>
 			</div>
+
+			<div style={{marginTop: "30px"}}>
+				<CSVButton data={allInOneData} headers={allInOneHeaders} filename={"AllInOne.xls"} />
+            	<h5>{"輸入と輸出の概要"}</h5>
+        	</div>
+			
+            <div style={{marginTop: "20px"}} className="table-bound-report">
+                <table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+					<thead>
+						<tr>
+							<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+							<th className="text-center" scope="col" style={{width: "10%"}}>ID</th>
+							<th className="text-center" scope="col" style={{width: "20%"}}>製品名</th>
+							<th className="text-center" scope="col" style={{width: "15%"}}>単位</th>
+							<th className="text-center" scope="col" style={{width: "15%"}}>入庫数</th>
+							<th className="text-center" scope="col" style={{width: "15%"}}>出庫数</th>
+							<th className="text-center" scope="col" style={{width: "15%"}}>在庫数</th>
+						</tr>	
+					</thead>	
+					<tbody>
+						{renderAllInOne}
+					</tbody>
+				</table>
+            </div>
         </div>
     )
 }

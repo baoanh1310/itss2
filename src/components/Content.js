@@ -148,8 +148,8 @@ const Content = (props) => {
 
 		fetchSuppliers()
 		fetchProducts()
-		// fetchImportProducts()
-		// fetchExportProducts()
+		fetchImportProducts()
+		fetchExportProducts()
 		fetchTools()
 		fetchImportBills()
 		fetchExportBills()
@@ -159,7 +159,6 @@ const Content = (props) => {
 		fetchLastMonthExport()
 		fetchLastWeekExport()
 	}, [])
-
 
 	let body;
 	switch (props.model) {
@@ -207,7 +206,7 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<Report products={products} suppliers={suppliers} 
-						lastMonthImport={lastMonthImport} lastWeekImport={lastWeekImport} 
+						lastMonthImport={lastMonthImport} lastWeekImport={lastWeekImport} imports={imports} eports={eports}
 						lastMonthExport={lastMonthExport} lastWeekExport={lastWeekExport}
 				/>
 			</div>
