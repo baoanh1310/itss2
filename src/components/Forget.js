@@ -15,11 +15,20 @@ const Forget = (props) => {
 		e.preventDefault()
 		const response = await AuthenService.forgotPassword({
             email: email,
-        })
-        if (response.status === 200) {
-        	alert("メールで新しいパスワードを確認してください")
-            window.location.replace('/sign-in')
-        } 
+        }).then(
+			res => {
+				alert("メールで新しいパスワードを確認してください")
+				window.location.replace('/sign-in')
+			}
+		).catch(
+			err => {
+				alert("メールが見つかりません")
+			}
+		)
+        // if (response.status === 200) {
+        // 	alert("メールで新しいパスワードを確認してください")
+        //     window.location.replace('/sign-in')
+        // } 
 	}
 
 	return (
