@@ -41,18 +41,33 @@ const SignIn = (props) => {
         const response = await AuthenService.login({
             email: formik.values.email,
             password: formik.values.password
-        })
+        }).then(
+			res => {
+				localStorage.setItem(LocalStorageKeys.Token, res.data.token)
+				localStorage.setItem(LocalStorageKeys.UserInfo, res.data.user._id)
+				localStorage.setItem(LocalStorageKeys.UserEmail, res.data.user.email)
+				window.location.replace('/dashboard')
+			} 
+		).catch (
+			err => {
+				alert("サインインに失敗しました!")
+			}
+		)
 
-		console.log("Response: ", response)
+		// console.log("Response: ", response)
+		// console.log("Typeof response: ", typeof response)
 
-        if (response && response.status === 200) {
-            localStorage.setItem(LocalStorageKeys.Token, response.data.token)
-            localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
-            localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
-            window.location.replace('/dashboard')
-        } else if (!response) {
-			alert("サインインに失敗しました!")
-		}
+		// if (!response) {
+		// 	alert("サインインに失敗しました!")
+		// 	return
+		// }
+
+        // if (response && response.status === 200) {
+        //     localStorage.setItem(LocalStorageKeys.Token, response.data.token)
+        //     localStorage.setItem(LocalStorageKeys.UserInfo, response.data.user._id)
+        //     localStorage.setItem(LocalStorageKeys.UserEmail, response.data.user.email)
+        //     window.location.replace('/dashboard')
+        // } 
 
     }
 
