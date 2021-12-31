@@ -86,6 +86,7 @@ const Content = (props) => {
 		setSearchValue(searchTerm)
 		searchProducts(searchTerm)
 		searchSuppliers(searchTerm)
+		searchTools(searchTerm)
 	}
 
 	const fetchLastMonthImport = async () => {
