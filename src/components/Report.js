@@ -172,7 +172,7 @@ const Report = (props) => {
 
     return (
         <div>
-        	<div style={{marginTop: "30px"}}>
+        	<div style={{marginTop: "30px"}} id="#almostOutOfStock">
 				<CSVButton data={almostOutOfStockData} headers={almostOutOfStockHeaders} filename={"AlmostOutOfStock.xls"} />
             	<h5>{"商品の在庫がなくなりそうです"}</h5>
         	</div>
@@ -193,7 +193,7 @@ const Report = (props) => {
 				</table>
             </div>
 
-			<div style={{marginTop: "30px"}}>
+			<div style={{marginTop: "30px"}} id="#outOfStock">
 				<CSVButton data={outOfStockData} headers={outOfStockHeaders} filename={"OutOfStock.xls"} />
             	<h5>{"商品数量が在庫切れ"}</h5>
         	</div>
