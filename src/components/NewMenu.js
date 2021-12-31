@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import './Menu.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 const NewMenu = (props) => {
 
@@ -30,7 +32,8 @@ const NewMenu = (props) => {
 
                 <a className="menu-item-disabled" style={{textAlign:"center"}} data-toggle="collapse" data-target="#productSubMenu">
                     <div>
-                        <span className="menu-item-label">製品管理</span>
+                        <span className="menu-item-label">製品</span>
+                        <span><FontAwesomeIcon icon={faCaretDown} id="caretRight" /></span>
                     </div>
                 </a>
 

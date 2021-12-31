@@ -15,11 +15,11 @@ const Homepage = (props) => {
 	return (
 		<div id="homepage">
 			<div className="col-sm-2">
-				<NewMenu selected={props.model} />
+				<NewMenu selected={props.model} id="newmenu" />
 			</div>
 			<div className="col-sm-10">
 				<div>
-					<Content {...props} user_email={user_email} />
+					<Content {...props} user_email={user_email} id="content" />
 				</div>
 			</div>
 		</div>

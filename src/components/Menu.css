@@ -69,6 +69,13 @@
     font-weight: bold;
 }
 
+.menu-item-disabled:focus,
+.menu-item-disabled:active {
+	background: #519ff8;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .menu-item:focus,
 .menu-item:hover,
 .menu-item:active {
@@ -105,4 +112,9 @@ a {
     height: 100%;
     width: 100%;
     text-decoration: none;
+}
+
+#caretRight {
+	color: white;
+	margin-left: 20px;
 }
