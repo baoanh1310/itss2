@@ -20,6 +20,7 @@ import ImportService from '../apis/ImportService'
 import ExportService from '../apis/ExportService'
 import ImportBillService from '../apis/ImportBillService'
 import ExportBillService from '../apis/ExportBillService'
+import ToolService from "../apis/ToolService";
 
 import UpdateProduct from "./UpdateProduct"
 import DeleteProductModal from "./DeleteProductModal"
@@ -37,12 +38,15 @@ const Content = (props) => {
 	const [eports, setEports] = useState([])
 	const [importBills, setImportBills] = useState([])
 	const [exportBills, setExportBills] = useState([])
+	const [tools, setTools] = useState([])
+
 	const [lastMonthImport, setLastMonthImport] = useState([])
 	const [lastWeekImport, setLastWeekImport] = useState([])
 	const [lastMonthExport, setLastMonthExport] = useState([])
 	const [lastWeekExport, setLastWeekExport] = useState([])
 	const [filteredProducts, setFilteredProducts] = useState([])
 	const [filteredSuppliers, setFilteredSuppliers] = useState([])
+	const [filteredTools, setFilteredTools] = useState([])
 	const [searchValue, setSearchValue] = useState('')
 
 	let label = "New World - ".concat(props.label)
@@ -65,6 +69,16 @@ const Content = (props) => {
 		)
 
 		setFilteredSuppliers(filtered) 
+	}
+
+	const searchTools = (searchTerm) => {
+
+		const filtered = tools.filter(
+			tool => 
+				tool.name.toLowerCase().indexOf(searchTerm) > - 1
+		)
+
+		setFilteredTools(filtered) 
 	}
 
 	const handleSearchChange = (e) => {
@@ -140,7 +154,9 @@ const Content = (props) => {
 	}
 
 	const fetchTools = async () => {
-		
+		const res = await ToolService.getTools()
+		setTools(res.data.tools)
+		setFilteredTools(res.data.tools)
 	}
 
 	useEffect(() => {
@@ -190,7 +206,7 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="import" suppliers={suppliers} products={products} />
-				<ImportBillTable classname="custom-table" importBills={importBills} />
+				<ImportBillTable className="custom-table" importBills={importBills} />
 			</div>
 			break
 		case "export":
@@ -198,7 +214,7 @@ const Content = (props) => {
 				<Navbar user_email={props.user_email} products={products} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="export" suppliers={suppliers} products={products} />
-				<ExportBillTable classname="custom-table" exportBills={exportBills} />
+				<ExportBillTable className="custom-table" exportBills={exportBills} />
 			</div>
 			break
 		case "report":
@@ -220,10 +236,10 @@ const Content = (props) => {
 			break
 		case "tools":
 			body = <div>
-				<Navbar user_email={props.user_email} />
+				<Navbar has_search={true} placeholder="用品を探す" user_email={props.user_email} tools={tools} handleSearchChange={handleSearchChange} handleSearch={searchTools} />
 				<Label label={props.label} />
 				<AddBtn btnTitle={props.btnTitle} model="tools" />
-				
+				<ToolTable className="custom-table" tools={tools} filteredTools={filteredTools} />
 			</div>
 			break
 		default:
@@ -462,6 +478,104 @@ const ProductTable = (props) => {
 				</thead>	
 				<tbody>
 					{renderProducts}
+				</tbody>
+			</table>
+		</div>
+		
+	)
+}
+
+const ToolTable = (props) => {
+	let popupUpdate;
+	let popupDelete;
+	const [showPopupUpdate, setShowPopupUpdate] = useState(false)
+	const [showPopupDelete, setShowPopupDelete] = useState(false)
+	const [toolIndex, setToolIndex] = useState(-1)
+
+	let tools = props.tools
+	let filteredTools = props.filteredTools
+
+	console.log("Filtered tools: ", filteredTools)
+
+	const onUpdateToolButonChange = (e) =>{
+		e.preventDefault()
+		setToolIndex(e.target.value)
+		setShowPopupUpdate(true)
+	}
+
+	if (showPopupUpdate){
+		let tool = filteredTools.at(toolIndex)
+		// popupUpdate = <UpdateTool tool = {tool} />
+	}
+
+	// let products = props.products
+
+	const onDeleteToolButonChange = (e) => {
+		e.preventDefault()
+		setToolIndex(e.target.value)
+		setShowPopupDelete(true)
+	}
+	if (showPopupDelete) {
+		let toolDelete = filteredTools.at(toolIndex)
+		// popupDelete = <DeleteToolModal tool={toolDelete} />
+	}
+	
+	const getDateFormat = (miliseconds) => {
+		let date = new Date(miliseconds)
+		let day = date.getDate().toString()
+		let month = (date.getMonth()+1).toString()
+		let year = date.getFullYear().toString()
+		let result = day.concat("-").concat(month).concat("-").concat(year)
+		return result
+	}
+
+	let sortedTools = filteredTools.sort((a, b) => a.time - b.time)
+
+	let renderTools = sortedTools.map(
+		(tool, i) => 
+			<tr key={tool._id}>
+				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{tool.name}</td>
+				<td className="text-center">{tool.amount}</td>
+				<td className="text-center">{getDateFormat(tool.time)}</td>
+				<td className="text-center">
+					<button className="btn btn-primary" 
+						data-toggle="modal" 
+						data-target=".update-tool" 
+						id={tool._id}
+						value={i}
+						onClick={onUpdateToolButonChange}>編集
+					</button>
+					{popupUpdate}
+				
+				</td>
+				<td className="text-center">
+					<button 
+					className="btn btn-danger" 
+					data-toggle="modal" 
+					data-target=".delete-tool"
+					value={i}
+					id={tool._id}
+					onClick={onDeleteToolButonChange}>消去</button>
+					{popupDelete}
+				</td>
+			</tr>
+	)
+
+	return (
+		<div>
+			<table className="table table-striped table-bordered table-fixed" style={{width: "100%"}}>
+				<thead>
+					<tr>
+						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
+						<th className="text-center" scope="col" style={{width: "25%"}}>用品名</th>
+						<th className="text-center" scope="col" style={{width: "10%"}}>数</th>
+						<th className="text-center" scope="col" style={{width: "30%"}}>入庫日</th>
+						<th className="text-center" scope="col" colSpan="2">アクション</th>
+					</tr>	
+				</thead>	
+				<tbody>
+					{renderTools}
 				</tbody>
 			</table>
 		</div>
