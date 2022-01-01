@@ -14,8 +14,7 @@ const UpdateProduct = (props) => {
         
         const product = {
 			name : productName,
-			supplierId : supplierID,
-            price: price
+			supplierId : supplierID
 		}
 
 	 	
@@ -59,6 +58,7 @@ const UpdateProduct = (props) => {
                                 onChange={handleProductNameChange}
                                 />
                             </div>
+                            {/*
                             <div className="form-group" style={{ display: "flex" }}>
                                 <label htmlFor="priceInput2" style={{ flex: "1", marginTop: "10px" }}>単価</label>
                                 <input 
@@ -69,6 +69,7 @@ const UpdateProduct = (props) => {
                                     onChange={handleProductPriceChange}
                                 />
                             </div>
+                            */}
                             <div className="form-group" style={{ display: "flex" }}>
                                 <label htmlFor="supplierNameInput2" style={{ flex: "1", marginTop: "10px" }}>サプライヤー名</label>
                                 <h4 style={{ flex: "5", marginTop: "5px" }}>{supplierName}</h4>

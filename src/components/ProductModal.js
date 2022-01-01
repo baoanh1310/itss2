@@ -43,8 +43,7 @@ const ProductModal = (props) => {
 
 		const product = {
 			name : productName,
-			supplierId : supplierID,
-			price: price
+			supplierId : supplierID
 		}
 		console.log(product)
 
@@ -98,10 +97,12 @@ const ProductModal = (props) => {
 		        		</select>
 						
 		        	</div>
-		        	<div className="form-group" style={{display: "flex"}}>
+		        	{/*
+					<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="productPriceInput1" style={{flex: "1", marginTop: "10px"}}>単価</label>
 		        		<input id="productPriceInput1" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
 		        	</div>
+					*/}
 		        </form>
 		      </div>
 		      <div className="modal-footer">
