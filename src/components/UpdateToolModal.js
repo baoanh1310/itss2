@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import ToolService from "../apis/ToolService"
 
 const UpdateToolModal = (props) => {
@@ -6,6 +6,11 @@ const UpdateToolModal = (props) => {
     const [name, setName] = useState('')
 	const [amount, setAmount] = useState('')
 	const [time, setTime] = useState('')
+
+    useEffect(() => {
+        setName(props.tool.name)
+        setAmount(props.tool.amount)
+    })
 
 	const handleToolNameChange = (e) => {
 		setName(e.target.value)
@@ -54,7 +59,7 @@ const UpdateToolModal = (props) => {
             <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">新用品</h5>
+                    <h5 className="modal-title" id="exampleModalLabel">用品編集</h5>
                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -77,7 +82,7 @@ const UpdateToolModal = (props) => {
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-dismiss="modal">キャンセル</button>
-                    <button type="submit" className="btn btn-primary" onClick={handleUpdateTool} >追加</button>
+                    <button type="submit" className="btn btn-primary" onClick={handleUpdateTool} >編集</button>
                 </div>
                 </div>
             </div>
