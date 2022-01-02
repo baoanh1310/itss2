@@ -49,15 +49,15 @@ const SupplierModal = (props) => {
 		        <form action="/suppliers" method="POST">
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="supplierInput" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
-		        		<input id="supplierInput" style={{flex: "3", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" />
+		        		<input id="supplierInput" style={{flex: "3", marginTop: "5px"}} value={supplierName} onChange={handleSupplierNameChange} type="text" className="form-control validate" placeholder="サプライヤー名" required />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="supplierPhoneInput" style={{flex: "1", marginTop: "10px"}}>サプライヤー電話番号</label>
-		        		<input id="supplierPhoneInput" style={{flex: "3", marginTop: "5px"}} value={supplierPhone} onChange={handleSupplierPhoneChange} type="text" className="form-control validate" placeholder="サプライヤー電話番号" />
+		        		<input id="supplierPhoneInput" style={{flex: "3", marginTop: "5px"}} value={supplierPhone} onChange={handleSupplierPhoneChange} type="text" className="form-control validate" placeholder="サプライヤー電話番号" required />
 		        	</div>
 		        	<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="supplierAddressInput" style={{flex: "1", marginTop: "10px"}}>サプライヤー住所</label>
-		        		<input id="supplierAddressInput" style={{flex: "3", marginTop: "5px"}} value={supplierAddress} onChange={handleSupplierAddressChange} type="text" className="form-control validate" placeholder="サプライヤー住所" />
+		        		<input id="supplierAddressInput" style={{flex: "3", marginTop: "5px"}} value={supplierAddress} onChange={handleSupplierAddressChange} type="text" className="form-control validate" placeholder="サプライヤー住所" required />
 		        	</div>
 		        </form>
 		      </div>
