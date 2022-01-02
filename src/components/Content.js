@@ -26,6 +26,8 @@ import UpdateProduct from "./UpdateProduct"
 import DeleteProductModal from "./DeleteProductModal"
 import UpdateSupplierModal from "./UpdateSupplierModal"
 import DeleteSupplierModal from "./DeleteSupplierModal"
+import UpdateToolModal from "./UpdateToolModal"
+import DeleteToolModal from "./DeleteToolModal"
 import ViewImportModal from "./ViewImportModal"
 import ViewExportModal from "./ViewExportModal"
 import { create } from "@mui/material/styles/createTransitions"
@@ -504,7 +506,7 @@ const ToolTable = (props) => {
 
 	if (showPopupUpdate){
 		let tool = filteredTools.at(toolIndex)
-		// popupUpdate = <UpdateTool tool = {tool} />
+		popupUpdate = <UpdateToolModal tool = {tool} />
 	}
 
 	// let products = props.products
@@ -516,7 +518,7 @@ const ToolTable = (props) => {
 	}
 	if (showPopupDelete) {
 		let toolDelete = filteredTools.at(toolIndex)
-		// popupDelete = <DeleteToolModal tool={toolDelete} />
+		popupDelete = <DeleteToolModal tool={toolDelete} />
 	}
 	
 	const getDateFormat = (miliseconds) => {
