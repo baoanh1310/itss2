@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import ImportBillService from "../apis/ImportBillService"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const ImportModal = (props) => {
 
@@ -87,6 +89,12 @@ const ImportModal = (props) => {
 			})
 	}
 
+	const handleCreateNewSubForm = (e) => {
+		e.preventDefault()
+		let form = document.getElementById("mainForm")
+		form.appendChild(productSubForm)
+	}
+
 	let supplierOptions = props.suppliers.map(
 		(supplier, i) => 
 			<option key={supplier._id} value={supplier.name}>
@@ -101,6 +109,36 @@ const ImportModal = (props) => {
 			</option>
 	)
 
+	let productSubForm = <div>
+		<hr></hr>
+		<div className="form-group" style={{display: "flex"}}>
+			<label htmlFor="productNameInput21" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+			<select name="products" id="productNameInput21" 
+					style={{flex: "5", marginTop: "5px"}} 
+					className="form-control validate"
+					onChange={handleProductNameChange} 
+					value={productName}>
+				{productOptions}
+			</select>
+		</div>
+		
+		<div className="form-group" style={{display: "flex"}}>
+			<label htmlFor="productQuantityInput2" style={{flex: "1", marginTop: "10px"}}>製品数</label>
+			<input id="productQuantityInput2" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" required/>
+		</div>
+
+		<div className="form-group" style={{display: "flex"}}>
+			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価</label>
+			<input id="productPriceInput3" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
+		</div>
+
+		<div id="newSubFormBtn" style={{display: "flex"}}>
+			<button style={{margin: "auto"}}>
+				<FontAwesomeIcon icon={faPlus} />
+			</button>
+		</div>
+	</div>
+
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -112,7 +150,7 @@ const ImportModal = (props) => {
 		        </button>
 		      </div>
 		      <div className="modal-body">
-		        <form>
+		        <form id="mainForm">
 
 					<div className="form-group" style={{display: "flex"}}>
 		        		<label htmlFor="billCodeInput" style={{flex: "1", marginTop: "10px"}}>請求書コード</label>
@@ -135,26 +173,7 @@ const ImportModal = (props) => {
 		        		</select>
 		        	</div>
 
-					<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productNameInput21" style={{flex: "1", marginTop: "10px"}}>製品名</label>
-		        		<select name="products" id="productNameInput21" 
-								style={{flex: "5", marginTop: "5px"}} 
-								className="form-control validate"
-								onChange={handleProductNameChange} 
-								value={productName}>
-		        			{productOptions}
-		        		</select>
-		        	</div>
-		        	
-		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productQuantityInput2" style={{flex: "1", marginTop: "10px"}}>製品数</label>
-		        		<input id="productQuantityInput2" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" required/>
-		        	</div>
-
-					<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価</label>
-		        		<input id="productPriceInput3" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
-		        	</div>
+					{productSubForm}
 
 		        </form>
 		      </div>
