@@ -1,14 +1,20 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import SupplierService from "../apis/SupplierService";
 
 const UpdateSupplierModal = (props) => {
 
-    const [supplierName, setSupplierName] = useState(props.supplier.name)
-    const [supplierPhone, setSupplierPhone] = useState(props.supplier.phoneNumber)
-    const [supplierAddress, setSupplierAddress] = useState(props.supplier.address)
+    const [supplierName, setSupplierName] = useState('')
+    const [supplierPhone, setSupplierPhone] = useState('')
+    const [supplierAddress, setSupplierAddress] = useState('')
     let supplierID = props.supplier._id
 
     console.log("supplier ID: ", supplierID)
+
+    // useEffect(() => {
+    //     setSupplierName(props.supplier.name)
+    //     setSupplierPhone(props.supplier.phoneNumber)
+    //     setSupplierAddress(props.supplier.address)
+    // })
     
     const handleUpdateSupplier = async (e) => {
 		e.preventDefault()

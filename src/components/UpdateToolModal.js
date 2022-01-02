@@ -7,10 +7,10 @@ const UpdateToolModal = (props) => {
 	const [amount, setAmount] = useState('')
 	const [time, setTime] = useState('')
 
-    useEffect(() => {
-        setName(props.tool.name)
-        setAmount(props.tool.amount)
-    })
+    // useEffect(() => {
+    //     setName(props.tool.name)
+    //     setAmount(props.tool.amount)
+    // })
 
 	const handleToolNameChange = (e) => {
 		setName(e.target.value)
