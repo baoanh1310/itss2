@@ -53,12 +53,27 @@ const ProductModal = (props) => {
 		}
 		console.log(product)
 
-		const res = await ProductService.create(product)
+		// const res = await ProductService.create(product)
 
-		if (res.status == 201) {
-			setProductName("")
-            window.location.reload()
-        }
+		const response = await ProductService.create(product)
+		.then(
+			res => {
+				console.log("Successfully!")
+				alert("製品を正常に作成する!")
+				setProductName("")
+				window.location.reload()
+			}
+		).catch(
+			err => {
+				console.log("Failed!")
+				alert("製品はすでに存在します!")
+			}
+		)
+
+		// if (res.status == 201) {
+			
+        //     window.location.reload()
+        // }
 	}
 
 	let options = props.suppliers.map(
