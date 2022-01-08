@@ -1,25 +1,91 @@
 import React, { useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import ListCardDashboard from './ListCardDashboard'
+import ContentDashboard from "./ContentDashboard"
 
 const Dashboard = (props) => {
+
+    const [modal, setModal] = useState()
 
     let numberSupplier = props.suppliers.length;
     let numberProductCategories = props.products.length;
     let numberAlmostOutOfStock = props.products.filter(product => product.amount < 10 && product.amount > 0).length;
     let numberOutOfStock = props.products.filter(product => product.amount == 0).length;
 
+    const [products,setProducts] = useState(props.products)
+    const [suppliers,setSuppliers] = useState(props.suppliers)
+    const [model, setModel] = useState("products")
+    const [label, setLabel] = useState("製品")
+
+    const handleClick = (e) => {
+
+        if(e.target.value==='1'){
+            setProducts(props.products)
+            setSuppliers(props.suppliers)
+            setModel("products")
+            setLabel("製品の種類の数")
+        }else if(e.target.value==='2'){
+            setProducts(props.products)
+            setSuppliers(props.suppliers)
+            setModel("suppliers")
+            setLabel("サプライヤーの数")
+        }else if(e.target.value==='3'){
+            setProducts(props.products.filter(product => product.amount < 10 && product.amount > 0))
+            setSuppliers(props.suppliers)
+            setModel("products_sap_het")
+            setLabel("商品の在庫がなくなりそうだ")
+        }else if(e.target.value==='4'){
+            setProducts(props.products.filter(product => product.amount == 0))
+            setSuppliers(props.suppliers)
+            setModel("products_da_het")
+            setLabel("商品数量が在庫切れ")
+        }
+        setModal(<ContentDashboard suppliers={suppliers} products={products} model={model} label={label}/>)
+    }
+
+  
     return (
-        <div style={{display: "flex", marginTop: "20px"}}>
-            <Card data-toggle="tab" href="/product" label="製品の種類の数" text={numberProductCategories} />
-            <Card data-toggle="tab" href="/supplier" label="サプライヤーの数" text={numberSupplier} />
-            <Card data-toggle="tab" href="/report#almostOutOfStock" label="商品の在庫がなくなりそうだ" text={numberAlmostOutOfStock} />
-            <Card data-toggle="tab" href="/report#outOfStock" label="商品数量が在庫切れ" text={numberOutOfStock} />
-        </div>
+        <>
+           
+            <div style={{display: "flex", marginTop: "20px"}}>
+            <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
+                <Card data-toggle="tab" label="製品の種類の数" text={numberProductCategories} suppliers={props.suppliers} products={props.products} model="products"/>
+                <div className="row align-self-center">
+                    <button className="btn btn-primary" onClick={handleClick} value="1">See More</button>
+                </div>
+            </a>
+            <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
+            <   Card data-toggle="tab" label="サプライヤーの数" text={numberSupplier} suppliers={props.suppliers} products={props.products} model="suppliers"/>
+                <div className="row align-self-center">
+                    <button className="btn btn-primary" onClick={handleClick} value="2">See More</button>
+                </div>
+            </a>
+            <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
+                <Card data-toggle="tab" label="商品の在庫がなくなりそうだ" text={numberAlmostOutOfStock} suppliers={props.suppliers} products={props.products.filter(product => product.amount < 10 && product.amount > 0)} model="products_sap_het"/>
+                <div className="row align-self-center">
+                    <button className="btn btn-primary" onClick={handleClick} value="3">See More</button>
+                </div>
+            </a>
+            <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
+                <Card data-toggle="tab" label="商品数量が在庫切れ" text={numberOutOfStock} suppliers={props.suppliers} products={props.products.filter(product => product.amount == 0)} model="products_da_het"/>
+                <div className="row align-self-center">
+                    <button className="btn btn-primary" onClick={handleClick} value="4">See More</button>
+                </div>
+            </a>
+         
+            </div>
+            {modal}
+            
+        </>
     )
 }
 
 const Card = (props) => {
+
+    let modal
+
+    
 
     let renderText = props.text
     if (props.text == 0) {
@@ -31,12 +97,12 @@ const Card = (props) => {
     }
 
     return (
-        <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
-            <div className="card-body">
+        <>
+            <div className="card-body" >
                 <h4 className="card-title text-center" style={{height: "40px", marginTop: "20px"}}>{props.label}</h4>
                 {renderText}
             </div>
-        </a>
+        </>
     )
 }
 

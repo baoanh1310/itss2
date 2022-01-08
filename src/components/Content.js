@@ -260,8 +260,8 @@ const Content = (props) => {
 const Label = (props) => {
 	return (
 		<div className="label-btn">
-			<div className="page-label">
-				<h3>{props.label}</h3>
+			<div className="page-label text-center">
+				<h1>{props.label}</h1>
 			</div>
 		</div>
 		
