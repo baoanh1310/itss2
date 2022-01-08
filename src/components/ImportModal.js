@@ -128,7 +128,7 @@ const ImportModal = (props) => {
 		</div>
 
 		<div className="form-group" style={{display: "flex"}}>
-			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価</label>
+			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価(¥)</label>
 			<input id="productPriceInput3" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
 		</div>
 
@@ -144,7 +144,7 @@ const ImportModal = (props) => {
 		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 		    <div className="modal-content">
 		      <div className="modal-header">
-		        <h5 className="modal-title" id="exampleModalLabel">新製品</h5>
+		        <h5 className="modal-title" id="exampleModalLabel">新明細書</h5>
 		        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
