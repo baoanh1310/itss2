@@ -163,7 +163,7 @@ const Report = (props) => {
 				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{product.ID}</td>
 				<td className="text-center">{product.productName}</td>
-				<td className="text-center">{product.price}</td>
+				{/* <td className="text-center">{product.price}</td> */}
 				<td className="text-center">{product.importAmount}</td>
 				<td className="text-center">{product.exportAmount}</td>
 				<td className="text-center">{product.remainAmount}</td>
@@ -276,7 +276,7 @@ const Report = (props) => {
 							<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
 							<th className="text-center" scope="col" style={{width: "10%"}}>ID</th>
 							<th className="text-center" scope="col" style={{width: "20%"}}>製品名</th>
-							<th className="text-center" scope="col" style={{width: "15%"}}>単位</th>
+							{/*<th className="text-center" scope="col" style={{width: "15%"}}>単位</th>*/}
 							<th className="text-center" scope="col" style={{width: "15%"}}>入庫数</th>
 							<th className="text-center" scope="col" style={{width: "15%"}}>出庫数</th>
 							<th className="text-center" scope="col" style={{width: "15%"}}>在庫数</th>
