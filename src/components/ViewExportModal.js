@@ -1,4 +1,5 @@
 import React from "react"
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer'
 
 const ViewExportModal = (props) => {
 
@@ -13,6 +14,49 @@ const ViewExportModal = (props) => {
                 <td className="text-center" scope="row">{product.amount}</td>
             </tr>
     )
+
+    const getDateFormat = (miliseconds) => {
+		let date = new Date(miliseconds)
+		let day = date.getDate().toString()
+		let month = (date.getMonth()+1).toString()
+		let year = date.getFullYear().toString()
+		let result = day.concat("-").concat(month).concat("-").concat(year)
+		return result
+	}
+
+    // Create styles
+    const styles = StyleSheet.create({
+        page: {
+        flexDirection: 'row',
+        backgroundColor: '#E4E4E4'
+        },
+        section: {
+        margin: 10,
+        padding: 10,
+        flexGrow: 1
+        }
+    });
+
+    let pdfProducts = warehouse.map(
+        (product, i) => 
+            <Text key={product._id}>
+                {product.product.name}    {product.product.supplier.name}   {product.amount}
+            </Text>
+    )
+
+    let document = <Document>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Text>Bill code: {productExport.code}</Text>
+                <Text>Email: {productExport.email}</Text>
+                <Text>Phone number: {productExport.phone}</Text>
+                <Text>Export date: {getDateFormat(productExport.time)}</Text>
+                <Text> </Text>
+                <Text>Products list</Text>
+                {pdfProducts}
+            </View>
+        </Page>
+    </Document>
 
     return (
         <div className="modal fade bd-example-modal-lg info-export" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,12 +86,25 @@ const ViewExportModal = (props) => {
                     </div>
 
                     <div className="modal-footer">
+                        <PDFButton document={document} />
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">キャンセル</button>
                     </div>
                 </div>
             </div>
         </div>
     )
+}
+
+const PDFButton = (props) => {
+	return (
+		<div>
+            <PDFDownloadLink className="btn btn-success" document={props.document} fileName="Bill.pdf">
+                {({ blob, url, loading, error }) =>
+                    loading ? 'Loading document...' : 'PDFをエクスポート'
+                }
+            </PDFDownloadLink>
+		</div>
+	)
 }
 
 export default ViewExportModal
