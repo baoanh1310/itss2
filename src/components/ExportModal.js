@@ -1,13 +1,47 @@
 import React, { useState } from "react"
-import ExportService from "../apis/ExportService"
+import ExportBillService from "../apis/ExportBillService"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const ExportModal = (props) => {
-	const [productName, setProductName] = useState('Milk')
+
+	const [billCode, setBillCode] = useState("")
+	const [email, setEmail] = useState("")
+	const [phone, setPhone] = useState("")
+	const [supplierName, setSupplierName] = useState("")
+	const [productName, setProductName] = useState("")
 	const [productQuantity, setProductQuantity] = useState(1)
 	const [exportDate, setExportDate] = useState('')
+	const [price, setPrice] = useState(1)
+	const [filteredProducts, setFilteredProducts] = useState([])
+	
+	const [dataArr, setDataArr] = useState([])
 
 	const handleProductNameChange = (e) => {
 		setProductName(e.target.value)
+	}
+
+	const handleEmailChange = (e) => {
+		setEmail(e.target.value)
+	}
+
+	const handlePhoneChange = (e) => {
+		setPhone(e.target.value)
+	}
+
+	const handleSupplierNameChange = (e) => {
+		setSupplierName(e.target.value)
+		let filteredProducts = props.products.filter(product => product.supplierName === e.target.value)
+		setFilteredProducts(filteredProducts)
+	}
+
+	const handleBillCodeChange = (e) => {
+		setBillCode(e.target.value)
+	}
+
+	const handleProductPriceChange = (e) => {
+		let price = parseInt(e.target.value)
+		setPrice(price)
 	}
 
 	const handleProductQuantityChange = (e) => {
@@ -16,6 +50,7 @@ const ExportModal = (props) => {
 	}
 
 	const handleExportDateChange = (e) => {
+		console.log(e.target.value)
 		setExportDate(e.target.value)
 	}
 
@@ -29,25 +64,83 @@ const ExportModal = (props) => {
 
 	const handleCreateProductExport = async (e) => {
 		e.preventDefault()
+		// console.log("Created new product import")
+		const supplierId = props.suppliers.filter(supplier => supplier.name === supplierName)[0]._id
 		const productId = props.products.filter(product => product.name === productName)[0]._id
-		const data = {
-			productId: productId,
-			amount: productQuantity,
-			time: convertStringToDate(exportDate)
+		console.log("ProductID: ", productId)
+		console.log("SupplierID: ", supplierId)
+		let data = []
+		let productObj = {
+			"productId": productId,
+			"amount": productQuantity,
+			"price": price
 		}
-		const res = await ExportService.create(data)
-		if (res.status === 201) {
-			window.location.reload()
+		data.push(productObj)
+		const req = {
+			code: billCode,
+			time: convertStringToDate(exportDate),
+			email: email,
+			phone: phone,
+			supplierId: supplierId,
+			data: data
 		}
+		console.log(req.data)
+		await ExportBillService.create(req)
+			.then(res => {
+				if (res.status == 201) {
+					window.location.reload()
+				}
+			})
+			.catch(err => {
+				console.log(err)
+				alert("Create new bill error")
+			})
 	}
 
-	let productOptions = props.products.map(
+	let supplierOptions = props.suppliers.map(
+		(supplier, i) => 
+			<option key={supplier._id} value={supplier.name}>
+				{supplier.name}
+			</option>
+	)
+
+	let productOptions = filteredProducts.map(
 		(product, i) => 
 			<option key={product._id} value={product.name}>
 				{product.name}
 			</option>
 	)
-	
+
+	let productSubForm = <div>
+		<hr></hr>
+		<div className="form-group" style={{display: "flex"}}>
+			<label htmlFor="productNameInput21" style={{flex: "1", marginTop: "10px"}}>製品名</label>
+			<select name="products" id="productNameInput21" 
+					style={{flex: "5", marginTop: "5px"}} 
+					className="form-control validate"
+					onChange={handleProductNameChange} 
+					value={productName}>
+				{productOptions}
+			</select>
+		</div>
+		
+		<div className="form-group" style={{display: "flex"}}>
+			<label htmlFor="productQuantityInput2" style={{flex: "1", marginTop: "10px"}}>製品数</label>
+			<input id="productQuantityInput2" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" required/>
+		</div>
+
+		<div className="form-group" style={{display: "flex"}}>
+			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価(¥)</label>
+			<input id="productPriceInput3" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
+		</div>
+
+		<div id="newSubFormBtn" style={{display: "flex"}}>
+			<button style={{margin: "auto"}}>
+				<FontAwesomeIcon icon={faPlus} />
+			</button>
+		</div>
+	</div>
+
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -59,25 +152,41 @@ const ExportModal = (props) => {
 		        </button>
 		      </div>
 		      <div className="modal-body">
-		        <form action="/warehouse/export" method="POST">
+		        <form id="mainForm">
+
 					<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productNameInput20" style={{flex: "1", marginTop: "10px"}}>製品名</label>
-		        		<select name="products" id="productNameInput20" 
+		        		<label htmlFor="billCodeInput" style={{flex: "1", marginTop: "10px"}}>請求書コード</label>
+		        		<input id="billCodeInput" style={{flex: "5", marginTop: "5px"}} value={billCode} onChange={handleBillCodeChange} type="text" className="form-control validate" placeholder="請求書コード" required/>
+		        	</div>
+
+					<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="exportEmailInput" style={{flex: "1", marginTop: "10px"}}>メールアドレス</label>
+		        		<input id="exportEmailInput" style={{flex: "5", marginTop: "5px"}} value={email} onChange={handleEmailChange} type="email" className="form-control validate" placeholder="メールアドレス" required/>
+		        	</div>
+
+					<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="exportPhoneInput" style={{flex: "1", marginTop: "10px"}}>電話番号</label>
+		        		<input id="exportPhoneInput" style={{flex: "5", marginTop: "5px"}} value={phone} onChange={handlePhoneChange} type="text" className="form-control validate" placeholder="電話番号" required/>
+		        	</div>
+
+					<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="importDateInput" style={{flex: "1", marginTop: "10px"}}>出庫日</label>
+		        		<input id="importDateInput" style={{flex: "5", marginTop: "5px"}} value={exportDate} onChange={handleExportDateChange} type="date" className="form-control validate" placeholder="入庫日" required />
+		        	</div>
+
+					<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="suppliertNameInput22" style={{flex: "1", marginTop: "10px"}}>サプライヤー名</label>
+		        		<select name="suppliers" id="suppliertNameInput22" 
 								style={{flex: "5", marginTop: "5px"}} 
 								className="form-control validate"
-								onChange={handleProductNameChange} 
-								value={productName}>
-		        			{productOptions}
+								onChange={handleSupplierNameChange} 
+								value={supplierName}>
+		        			{supplierOptions}
 		        		</select>
 		        	</div>
-		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="productQuantityInput3" style={{flex: "1", marginTop: "10px"}}>製品数</label>
-		        		<input id="productQuantityInput3" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" />
-		        	</div>
-		        	<div className="form-group" style={{display: "flex"}}>
-		        		<label htmlFor="exportDateInput" style={{flex: "1", marginTop: "10px"}}>出庫日</label>
-		        		<input id="exportDateInput" style={{flex: "5", marginTop: "5px"}} value={exportDate} onChange={handleExportDateChange} type="date" className="form-control validate" placeholder="出庫日" />
-		        	</div>
+
+					{productSubForm}
+					
 		        </form>
 		      </div>
 		      <div className="modal-footer">

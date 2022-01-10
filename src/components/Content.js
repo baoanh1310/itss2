@@ -683,6 +683,8 @@ const ExportBillTable = (props) => {
 			<tr key={productExport._id}>
 				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{productExport.code}</td>
+				<td className="text-center">{productExport.email}</td>
+				<td className="text-center">{productExport.phone}</td>
 				<td className="text-center">{getDateFormat(productExport.time)}</td>
 				<td className="text-center">
 					<button className="btn btn-info" 
@@ -704,8 +706,10 @@ const ExportBillTable = (props) => {
 				<thead>
 					<tr>
 						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>請求書コード</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>出庫日</th>
+						<th className="text-center" scope="col" style={{width: "15%"}}>請求書コード</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>メールアドレス</th>
+						<th className="text-center" scope="col" style={{width: "15%"}}>電話番号</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>出庫日</th>
 						<th className="text-center" scope="col" colSpan="2">アクション</th>
 					</tr>	
 				</thead>	
