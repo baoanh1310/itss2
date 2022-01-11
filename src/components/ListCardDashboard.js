@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import Skeleton from "react-loading-skeleton"
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 const ListCardDashboard = (props) => {
 
