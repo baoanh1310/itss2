@@ -13,35 +13,31 @@ const Dashboard = (props) => {
     let numberAlmostOutOfStock = props.products.filter(product => product.amount < 10 && product.amount > 0).length;
     let numberOutOfStock = props.products.filter(product => product.amount == 0).length;
 
-    const [products,setProducts] = useState(props.products)
-    const [suppliers,setSuppliers] = useState(props.suppliers)
-    const [model, setModel] = useState("products")
-    const [label, setLabel] = useState("製品")
-
     const handleClick = (e) => {
+				let p, s, m, l;
 
         if(e.target.value==='1'){
-            setProducts(props.products)
-            setSuppliers(props.suppliers)
-            setModel("products")
-            setLabel("製品の種類の数")
+						p = props.products
+						s = props.suppliers
+						m = "products"
+						l = "製品の種類の数"
         }else if(e.target.value==='2'){
-            setProducts(props.products)
-            setSuppliers(props.suppliers)
-            setModel("suppliers")
-            setLabel("サプライヤーの数")
+						p = props.products
+						s = props.suppliers
+						m = "suppliers"
+						l = "サプライヤーの数"
         }else if(e.target.value==='3'){
-            setProducts(props.products.filter(product => product.amount < 10 && product.amount > 0))
-            setSuppliers(props.suppliers)
-            setModel("products_sap_het")
-            setLabel("商品の在庫がなくなりそうだ")
+						p = props.products.filter(product => product.amount < 10 && product.amount > 0)
+						s = props.suppliers
+						m = "products_sap_het"
+						l = "商品の在庫がなくなりそうだ"
         }else if(e.target.value==='4'){
-            setProducts(props.products.filter(product => product.amount == 0))
-            setSuppliers(props.suppliers)
-            setModel("products_da_het")
-            setLabel("商品数量が在庫切れ")
+						p = props.products.filter(product => product.amount == 0)
+						s = props.suppliers
+						m = "products_da_het"
+						l = "商品数量が在庫切れ"
         }
-        setModal(<ContentDashboard suppliers={suppliers} products={products} model={model} label={label}/>)
+        setModal(<ContentDashboard suppliers={s} products={p} model={m} label={l}/>)
     }
 
   

@@ -12,6 +12,7 @@ const ImportModal = (props) => {
 	const [importDate, setImportDate] = useState('')
 	const [price, setPrice] = useState(1)
 	const [filteredProducts, setFilteredProducts] = useState([])
+	const [currency,setCurrency] = useState("")
 	
 	const [dataArr, setDataArr] = useState([])
 
@@ -36,6 +37,11 @@ const ImportModal = (props) => {
 	const handleProductPriceChange = (e) => {
 		let price = parseInt(e.target.value)
 		setPrice(price)
+	}
+
+	const handleCurrency = (e) => {
+		console.log(e.target.value)
+		setCurrency(e.target.value)
 	}
 
 	const handleProductQuantityChange = (e) => {
@@ -67,7 +73,8 @@ const ImportModal = (props) => {
 		let productObj = {
 			"productId": productId,
 			"amount": productQuantity,
-			"price": price
+			"price": price,
+			"currency": currency
 		}
 		data.push(productObj)
 		const req = {
@@ -95,6 +102,7 @@ const ImportModal = (props) => {
 		form.appendChild(productSubForm)
 	}
 
+
 	let supplierOptions = props.suppliers.map(
 		(supplier, i) => 
 			<option key={supplier._id} value={supplier.name}>
@@ -106,6 +114,15 @@ const ImportModal = (props) => {
 		(product, i) => 
 			<option key={product._id} value={product.name}>
 				{product.name}
+			</option>
+	)
+
+	let currencies = ['円','VND','USD','ERR']
+
+	let currencyOptions = currencies.map(
+		(currency, i) => 
+			<option key={i} value={currency}>
+				{currency}
 			</option>
 	)
 
@@ -128,8 +145,15 @@ const ImportModal = (props) => {
 		</div>
 
 		<div className="form-group" style={{display: "flex"}}>
-			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価(¥)</label>
-			<input id="productPriceInput3" style={{flex: "5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
+			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価</label>
+			<input id="productPriceInput3" style={{flex: "4.5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
+			<select name="currencies" id="currency" 
+					style={{flex: "0.5", marginTop: "5px"}} 
+					className="form-control validate"
+					onChange={handleCurrency} 
+					value={currency}>
+				{currencyOptions}
+			</select>
 		</div>
 
 		<div id="newSubFormBtn" style={{display: "flex"}}>
