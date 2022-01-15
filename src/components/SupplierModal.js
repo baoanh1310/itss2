@@ -27,7 +27,7 @@ const SupplierModal = (props) => {
 			"address": supplierAddress
 		}
 		const res = await SupplierService.create(data)
-		if (res.status == 201) {
+		if (res.status === 201) {
 			setSupplierName("")
 			setSupplierPhone("")
 			setSupplierAddress("")

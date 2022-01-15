@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AuthenService from '../apis/AuthenServices'
 import { LocalStorageKeys } from '../apis/localStorageKeys'
 import './SignIn.css'
@@ -38,7 +38,7 @@ const SignIn = (props) => {
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
-        const response = await AuthenService.login({
+        await AuthenService.login({
             email: formik.values.email,
             password: formik.values.password
         }).then(

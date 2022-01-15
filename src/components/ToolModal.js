@@ -39,7 +39,7 @@ const ToolModal = (props) => {
         console.log("Name: ", name, " Amount: ", amount, " Time: ", time)
 		await ToolService.create(data)
             .then(res => {
-                if (res.status == 201) {
+                if (res.status === 201) {
                     setName("")
                     setAmount(1)
                     setTime("")

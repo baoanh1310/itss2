@@ -8,10 +8,10 @@ const ViewExportModal = (props) => {
     let renderWarehouse = warehouse.map(
         (product, i) => 
             <tr key={product._id}>
-                <td className="text-center" scope="row">{i+1}</td>
-                <td className="text-center" scope="row">{product.product.name}</td>
-                <td className="text-center" scope="row">{product.product.supplier.name}</td>
-                <td className="text-center" scope="row">{product.amount}</td>
+                <td className="text-center">{i+1}</td>
+                <td className="text-center">{product.product.name}</td>
+                <td className="text-center">{product.product.supplier.name}</td>
+                <td className="text-center">{product.amount}</td>
             </tr>
     )
 

@@ -4,7 +4,6 @@ import AuthenServices from "../apis/AuthenServices"
 
 const Profile = (props) => {
 
-	let user = localStorage.getItem(LocalStorageKeys.UserInfo)
 	let user_email = localStorage.getItem(LocalStorageKeys.UserEmail)
 
 	const [password, setPassword] = useState("")

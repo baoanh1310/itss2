@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react"
+import React, { useState } from "react"
 import ProductService from "../apis/ProductService";
 
 const ProductModal = (props) => {
@@ -6,7 +6,6 @@ const ProductModal = (props) => {
 	const [productName, setProductName] = useState('')
 	const [supplierName, setSupplierName] = useState("Vinamilk")
 	const [supplierID, setSupplierID] = useState(0)
-	const [price, setPrice] = useState(1)
 
 	let suppNameExactly = "Vinamilk"
 	
@@ -19,7 +18,7 @@ const ProductModal = (props) => {
 		console.log(suppNameExactly)
 		var supplierTmp = props.suppliers.find(({name}) => name === suppNameExactly);
 		console.log(supplierTmp)
-		if(supplierTmp == null || supplierTmp == undefined){
+		if(supplierTmp === null || supplierTmp === undefined){
 			const supplier0 = props.suppliers.at(0)
 			setSupplierID(supplier0._id)
 		}else{
@@ -32,12 +31,6 @@ const ProductModal = (props) => {
 		setProductName(e.target.value)
 	}
 
-
-	const handleProductPriceChange = (e) => {
-		let price = parseInt(e.target.value)
-		setPrice(price)
-	}
-
 	const handleCreateProduct = async (e) => {
 		e.preventDefault()
 
@@ -47,7 +40,7 @@ const ProductModal = (props) => {
 		}
 		console.log(product)
 
-		if(supplierID == 0){
+		if(supplierID === 0){
 			const supplier0 = props.suppliers.at(0)
 			product.supplierId = supplier0._id
 		}
@@ -55,7 +48,7 @@ const ProductModal = (props) => {
 
 		// const res = await ProductService.create(product)
 
-		const response = await ProductService.create(product)
+		await ProductService.create(product)
 		.then(
 			res => {
 				console.log("Successfully!")

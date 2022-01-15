@@ -4,17 +4,16 @@ const ViewImportModal = (props) => {
 
     let productImport = props.productImport
     let importID = productImport._id
-    let code = productImport.code
     console.log("Import ID: ", importID)
     console.log("Props: ", props.productImport)
     let warehouse = productImport.importWarehouse;
     let renderWarehouse = warehouse.map(
         (product, i) => 
             <tr key={product._id}>
-                <td className="text-center" scope="row">{i+1}</td>
-                <td className="text-center" scope="row">{product.product.name}</td>
-                <td className="text-center" scope="row">{product.product.supplier.name}</td>
-                <td className="text-center" scope="row">{product.amount}</td>
+                <td className="text-center">{i+1}</td>
+                <td className="text-center">{product.product.name}</td>
+                <td className="text-center">{product.product.supplier.name}</td>
+                <td className="text-center">{product.amount}</td>
             </tr>
     )
 

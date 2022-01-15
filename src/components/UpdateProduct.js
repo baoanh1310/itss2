@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import ProductService from "../apis/ProductService";
 
 const UpdateProduct = (props) => {
@@ -7,7 +7,6 @@ const UpdateProduct = (props) => {
     let productName = props.product.name
     let supplierName = props.product.supplierName
     let supplierID = props.product.supplierId
-    let price = props.product.price
     
     const handleUpdateProduct = async (e) => {
 		e.preventDefault()
@@ -21,7 +20,7 @@ const UpdateProduct = (props) => {
         const res = await ProductService.updateProduct(productID, product)
         console.log("Response: ", res)
 
-		if (res.status == 200) {
+		if (res.status === 200) {
             window.location.reload()
         }
 	}
@@ -29,10 +28,6 @@ const UpdateProduct = (props) => {
     const handleProductNameChange = (e) => {
         productName = e.target.value
 	}
-
-    const handleProductPriceChange = (e) => {
-        price = e.target.value
-    }
 
     return (
         <>

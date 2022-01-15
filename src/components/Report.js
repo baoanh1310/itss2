@@ -1,5 +1,4 @@
-import { data } from "jquery"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { CSVLink } from 'react-csv'
 
 const Report = (props) => {
@@ -30,7 +29,7 @@ const Report = (props) => {
     let renderAlmostOutOfStock = almostOutOfStock.map(
 		(product, i) => 
 			<tr key={product._id}>
-				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{i+1}</td>
 				<td className="text-center">{product.name}</td>
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.amount}</td>
@@ -40,7 +39,7 @@ const Report = (props) => {
 	let renderOutOfStock = outOfStock.map(
 		(product, i) => 
 			<tr key={product._id}>
-				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{i+1}</td>
 				<td className="text-center">{product.name}</td>
 				<td className="text-center">{product.supplierName}</td>
 				<td className="text-center">{product.amount}</td>
@@ -67,7 +66,7 @@ const Report = (props) => {
 	let renderImports = reportImports.map(
 		(productImport, i) => 
 			<tr key={productImport._id}>
-				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{i+1}</td>
 				<td className="text-center">{productImport.productName}</td>
 				<td className="text-center">{productImport.supplierName}</td>
 				<td className="text-center">{productImport.amount}</td>
@@ -79,7 +78,7 @@ const Report = (props) => {
 	let renderExports = reportExports.map(
 		(productExport, i) => 
 			<tr key={productExport._id}>
-				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{i+1}</td>
 				<td className="text-center">{productExport.productName}</td>
 				<td className="text-center">{productExport.supplierName}</td>
 				<td className="text-center">{productExport.amount}</td>
@@ -160,7 +159,7 @@ const Report = (props) => {
 	let renderAllInOne = allInOne.map(
 		(product, i) => 
 			<tr key={product.ID}>
-				<td className="text-center" scope="row">{i+1}</td>
+				<td className="text-center">{i+1}</td>
 				<td className="text-center">{product.ID}</td>
 				<td className="text-center">{product.productName}</td>
 				{/* <td className="text-center">{product.price}</td> */}

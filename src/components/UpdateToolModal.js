@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import ToolService from "../apis/ToolService"
 
 const UpdateToolModal = (props) => {
@@ -45,7 +45,7 @@ const UpdateToolModal = (props) => {
 
         await ToolService.updateTool(toolId, data)
         .then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 window.location.reload()
             }
         })
