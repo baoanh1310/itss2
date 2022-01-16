@@ -118,7 +118,7 @@ const ExportModal = (props) => {
 			</option>
 	)
 
-	let currencies = ['円','VND','USD','ERR']
+	let currencies = ['円','VND','USD','EUR']
 
 	let currencyOptions = currencies.map(
 		(currency, i) => 

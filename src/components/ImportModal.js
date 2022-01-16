@@ -7,21 +7,35 @@ const ImportModal = (props) => {
 
 	const [billCode, setBillCode] = useState("")
 	const [supplierName, setSupplierName] = useState("")
-	const [productName, setProductName] = useState("")
-	const [productQuantity, setProductQuantity] = useState(1)
+	const [productNames, setProductNames] = useState([])
+	const [productQuantities, setProductQuantities] = useState([])
 	const [importDate, setImportDate] = useState('')
-	const [price, setPrice] = useState(1)
+	const [prices, setPrices] = useState([])
 	const [filteredProducts, setFilteredProducts] = useState([])
-	const [currency,setCurrency] = useState("")
-	
+	const [currencies,setCurrencies] = useState([])
+	const [numberSubForm, setNumberSubForm] = useState(1)
 	const [dataArr, setDataArr] = useState([])
 
-	console.log("Product name: ", productName)
-	console.log("Date: ", importDate)
-	console.log("Amount: ", productQuantity)
+	const handleNumberSubFormChange = (e) => {
+		setNumberSubForm(e.target.value)
+		let arr = []
+		for (let i = 0; i < e.target.value; i++) {
+			arr.push({
+				"productId": null,
+				"amount": null,
+				"price": null,
+				"currency": null
+			})
+		}
+		setDataArr(arr)
+	}
+	
+	// console.log("Product name: ", productNames)
+	// console.log("Date: ", importDate)
+	// console.log("Amount: ", productQuantities)
 
 	const handleProductNameChange = (e) => {
-		setProductName(e.target.value)
+		setProductNames(e.target.value)
 	}
 
 	const handleSupplierNameChange = (e) => {
@@ -34,19 +48,21 @@ const ImportModal = (props) => {
 		setBillCode(e.target.value)
 	}
 
-	const handleProductPriceChange = (e) => {
+	const handleProductPriceChange = (e, idx) => {
 		let price = parseInt(e.target.value)
-		setPrice(price)
+		let prices = [...prices]
+		prices[idx] = price
+		setPrices(prices)
 	}
 
 	const handleCurrency = (e) => {
 		console.log(e.target.value)
-		setCurrency(e.target.value)
+		setCurrencies(e.target.value)
 	}
 
 	const handleProductQuantityChange = (e) => {
 		let quantity = parseInt(e.target.value)
-		setProductQuantity(quantity)
+		setProductQuantities(quantity)
 	}
 
 	const handleImportDateChange = (e) => {
@@ -66,22 +82,22 @@ const ImportModal = (props) => {
 		e.preventDefault()
 		// console.log("Created new product import")
 		const supplierId = props.suppliers.filter(supplier => supplier.name === supplierName)[0]._id
-		const productId = props.products.filter(product => product.name === productName)[0]._id
-		console.log("ProductID: ", productId)
-		console.log("SupplierID: ", supplierId)
-		let data = []
-		let productObj = {
-			"productId": productId,
-			"amount": productQuantity,
-			"price": price,
-			"currency": currency
-		}
-		data.push(productObj)
+		// const productId = props.products.filter(product => product.name === productName)[0]._id
+		// console.log("ProductID: ", productId)
+		// console.log("SupplierID: ", supplierId)
+		// let data = []
+		// let productObj = {
+		// 	"productId": productId,
+		// 	"amount": productQuantity,
+		// 	"price": price,
+		// 	"currency": currency
+		// }
+		// data.push(productObj)
 		const req = {
 			code: billCode,
 			time: convertStringToDate(importDate),
 			supplierId: supplierId,
-			data: data
+			data: dataArr
 		}
 		console.log(req.data)
 		await ImportBillService.create(req)
@@ -94,12 +110,6 @@ const ImportModal = (props) => {
 				console.log(err)
 				alert("Create new bill error")
 			})
-	}
-
-	const handleCreateNewSubForm = (e) => {
-		e.preventDefault()
-		let form = document.getElementById("mainForm")
-		form.appendChild(productSubForm)
 	}
 
 
@@ -117,51 +127,58 @@ const ImportModal = (props) => {
 			</option>
 	)
 
-	let currencies = ['円','VND','USD','ERR']
+	let currencies_list = ['円','VND','USD','EUR']
 
-	let currencyOptions = currencies.map(
+	let currencyOptions = currencies_list.map(
 		(currency, i) => 
 			<option key={i} value={currency}>
 				{currency}
 			</option>
 	)
 
-	let productSubForm = <div>
-		<hr></hr>
-		<div className="form-group" style={{display: "flex"}}>
-			<label htmlFor="productNameInput21" style={{flex: "1", marginTop: "10px"}}>製品名</label>
-			<select name="products" id="productNameInput21" 
-					style={{flex: "5", marginTop: "5px"}} 
-					className="form-control validate"
-					onChange={handleProductNameChange} 
-					value={productName}>
-				{productOptions}
-			</select>
-		</div>
-		
-		<div className="form-group" style={{display: "flex"}}>
-			<label htmlFor="productQuantityInput2" style={{flex: "1", marginTop: "10px"}}>製品数</label>
-			<input id="productQuantityInput2" style={{flex: "5", marginTop: "5px"}} value={productQuantity} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" required/>
-		</div>
+	console.log("Number of fields: ", numberSubForm)
+	
+	let productSubForms = []
+	for (let i = 0; i < numberSubForm; i++) {
+		let productSubForm = (<div>
+			<hr></hr>
+			<div className="form-group" style={{display: "flex"}}>
+				<label htmlFor={"productNameInput21".concat(i.toString())} style={{flex: "1", marginTop: "10px"}}>製品名</label>
+				<select name="products" id={"productNameInput21".concat(i.toString())} 
+						style={{flex: "5", marginTop: "5px"}} 
+						className="form-control validate"
+						onChange={handleProductNameChange} 
+						value={productNames[i]}>
+					{productOptions}
+				</select>
+			</div>
+			
+			<div className="form-group" style={{display: "flex"}}>
+				<label htmlFor={"productQuantityInput2".concat(i.toString())} style={{flex: "1", marginTop: "10px"}}>製品数</label>
+				<input id={"productQuantityInput2".concat(i.toString())} style={{flex: "5", marginTop: "5px"}} value={productQuantities[i]} onChange={handleProductQuantityChange} type="number" min="1" max="10000" className="form-control validate" placeholder="製品数" required/>
+			</div>
 
-		<div className="form-group" style={{display: "flex"}}>
-			<label htmlFor="productPriceInput3" style={{flex: "1", marginTop: "10px"}}>単価</label>
-			<input id="productPriceInput3" style={{flex: "4.5", marginTop: "5px"}} value={price} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
-			<select name="currencies" id="currency" 
-					style={{flex: "0.5", marginTop: "5px"}} 
-					className="form-control validate"
-					onChange={handleCurrency} 
-					value={currency}>
-				{currencyOptions}
-			</select>
-		</div>
+			<div className="form-group" style={{display: "flex"}}>
+				<label htmlFor={"productPriceInput3".concat(i.toString())} style={{flex: "1", marginTop: "10px"}}>単価</label>
+				<input id={"productPriceInput3".concat(i.toString())} style={{flex: "4.5", marginTop: "5px"}} value={prices[i]} onChange={handleProductPriceChange} type="number" min="1" max="10000000" className="form-control validate" placeholder="単価" />
+				<select name="currencies" id={"currency".concat(i.toString())} 
+						style={{flex: "0.5", marginTop: "5px"}} 
+						className="form-control validate"
+						onChange={handleCurrency} 
+						value={currencies[i]}>
+					{currencyOptions}
+				</select>
+			</div>
 
-		<div id="newSubFormBtn" style={{display: "flex"}}>
-			<button style={{margin: "auto"}}>
-				<FontAwesomeIcon icon={faPlus} />
-			</button>
-		</div>
-	</div>
+			<div id="newSubFormBtn" style={{display: "flex"}}>
+				<button style={{margin: "auto"}}>
+					<FontAwesomeIcon icon={faPlus} />
+				</button>
+			</div>
+		</div>)
+		productSubForms.push(productSubForm)
+	}
+	
 
 	return (
 		<div className="modal fade bd-example-modal-lg" id={props.modalId} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -197,7 +214,12 @@ const ImportModal = (props) => {
 		        		</select>
 		        	</div>
 
-					{productSubForm}
+					<div className="form-group" style={{display: "flex"}}>
+		        		<label htmlFor="numberProductsInput" style={{flex: "1", marginTop: "10px"}}>製品フィールド番号</label>
+		        		<input id="numberProductsInput" style={{flex: "5", marginTop: "5px"}} value={numberSubForm} onChange={handleNumberSubFormChange} type="number" className="form-control validate" placeholder="製品フィールド番号" required/>
+		        	</div>
+
+					{productSubForms}
 
 		        </form>
 		      </div>
