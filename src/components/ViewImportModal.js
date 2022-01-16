@@ -13,6 +13,7 @@ const ViewImportModal = (props) => {
                 <td className="text-center">{i+1}</td>
                 <td className="text-center">{product.product.name}</td>
                 <td className="text-center">{product.product.supplier.name}</td>
+                <td className="text-center">{product.price.toString().concat(" ").concat(product.currency)}</td>
                 <td className="text-center">{product.amount}</td>
             </tr>
     )
@@ -33,8 +34,9 @@ const ViewImportModal = (props) => {
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-                                    <th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
-                                    <th className="text-center" scope="col" style={{width: "25%"}}>サプライヤー名</th>
+                                    <th className="text-center" scope="col" style={{width: "20%"}}>製品名</th>
+                                    <th className="text-center" scope="col" style={{width: "20%"}}>サプライヤー名</th>
+                                    <th className="text-center" scope="col" style={{width: "20%"}}>単価</th>
                                     <th className="text-center" scope="col" style={{width: "10%"}}>数</th>
                                 </tr>	
                             </thead>	
