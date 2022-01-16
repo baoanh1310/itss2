@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Skeleton from "react-loading-skeleton"
+// import Skeleton from "react-loading-skeleton"
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 const ListCardDashboard = (props) => {
 
@@ -52,9 +52,10 @@ const Card = (props) => {
         renderText = <h1 className="card-text text-center" style={{marginTop: "50px"}}>0</h1>
     } else if (props.text > 0) {
         renderText = <h1 className="card-text text-center" style={{marginTop: "50px"}}>{props.text}</h1>
-    } else {
-        renderText = <h1 className="card-text text-center" style={{marginTop: "50px"}}>{<Skeleton />}</h1>
-    }
+    } 
+    // else {
+    //     renderText = <h1 className="card-text text-center" style={{marginTop: "50px"}}>{<Skeleton />}</h1>
+    // }
 
     return (
         <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
