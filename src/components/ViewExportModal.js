@@ -45,6 +45,13 @@ const ViewExportModal = (props) => {
             </Text>
     )
 
+    let totalMoney = 0
+    for (let product of warehouse) {
+        totalMoney += product.price * product.amount
+    }
+
+    let money = totalMoney.toString().concat(" ").concat(warehouse[0].currency)
+    
     let document = <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
@@ -55,6 +62,8 @@ const ViewExportModal = (props) => {
                 <Text> </Text>
                 <Text>Products list</Text>
                 {pdfProducts}
+                <Text> </Text>
+                <Text>Total money: {money}</Text>
             </View>
         </Page>
     </Document>
@@ -83,6 +92,10 @@ const ViewExportModal = (props) => {
                             </thead>	
                             <tbody>
                                 {renderWarehouse}
+                                <tr>
+                                    <td className="text-center" colspan="3"><b>合計金額</b></td>
+                                    <td className="text-center" colspan="2">{money}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

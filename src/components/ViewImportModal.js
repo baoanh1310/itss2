@@ -47,7 +47,7 @@ const ViewImportModal = (props) => {
                             <tbody>
                                 {renderWarehouse}
                                 <tr>
-                                    <td className="text-center" colspan="2">合計金額</td>
+                                    <td className="text-center" colspan="2"><b>合計金額</b></td>
                                     <td className="text-center" colspan="2">{money}</td>
                                 </tr>
                             </tbody>
