@@ -614,6 +614,7 @@ const ImportBillTable = (props) => {
 			<tr key={productImport._id}>
 				<td className="text-center" scope="row">{i+1}</td>
 				<td className="text-center">{productImport.code}</td>
+				<td className="text-center">{productImport.importWarehouse[0].product.supplier.name}</td>
 				<td className="text-center">{getDateFormat(productImport.time)}</td>
 				<td className="text-center">
 					<button className="btn btn-info" 
@@ -635,8 +636,9 @@ const ImportBillTable = (props) => {
 				<thead>
 					<tr>
 						<th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>請求書コード</th>
-						<th className="text-center" scope="col" style={{width: "30%"}}>入庫日</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>請求書コード</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>サプライヤー名</th>
+						<th className="text-center" scope="col" style={{width: "20%"}}>入庫日</th>
 						<th className="text-center" scope="col" colSpan="2">アクション</th>
 					</tr>	
 				</thead>	

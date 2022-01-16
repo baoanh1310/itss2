@@ -6,17 +6,22 @@ const ViewImportModal = (props) => {
     let importID = productImport._id
     console.log("Import ID: ", importID)
     console.log("Props: ", props.productImport)
-    let warehouse = productImport.importWarehouse;
+    let warehouse = productImport.importWarehouse
     let renderWarehouse = warehouse.map(
         (product, i) => 
             <tr key={product._id}>
                 <td className="text-center">{i+1}</td>
                 <td className="text-center">{product.product.name}</td>
-                <td className="text-center">{product.product.supplier.name}</td>
                 <td className="text-center">{product.price.toString().concat(" ").concat(product.currency)}</td>
                 <td className="text-center">{product.amount}</td>
             </tr>
     )
+
+    let totalMoney = 0
+    for (let product of warehouse) {
+        totalMoney += product.price
+    }
+    let money = totalMoney.toString().concat(" ").concat(warehouse[0].currency)
 
     return (
         <div className="modal fade bd-example-modal-lg info-import" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -34,14 +39,17 @@ const ViewImportModal = (props) => {
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col" style={{width: "10%"}}>#</th>
-                                    <th className="text-center" scope="col" style={{width: "20%"}}>製品名</th>
-                                    <th className="text-center" scope="col" style={{width: "20%"}}>サプライヤー名</th>
-                                    <th className="text-center" scope="col" style={{width: "20%"}}>単価</th>
+                                    <th className="text-center" scope="col" style={{width: "25%"}}>製品名</th>
+                                    <th className="text-center" scope="col" style={{width: "25%"}}>単価</th>
                                     <th className="text-center" scope="col" style={{width: "10%"}}>数</th>
                                 </tr>	
                             </thead>	
                             <tbody>
                                 {renderWarehouse}
+                                <tr>
+                                    <td className="text-center" colspan="2">合計金額</td>
+                                    <td className="text-center" colspan="2">{money}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
