@@ -19,7 +19,7 @@ const ViewImportModal = (props) => {
 
     let totalMoney = 0
     for (let product of warehouse) {
-        totalMoney += product.price
+        totalMoney += product.price * product.amount
     }
     let money = totalMoney.toString().concat(" ").concat(warehouse[0].currency)
 
