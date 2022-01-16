@@ -48,25 +48,25 @@ const Dashboard = (props) => {
             <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
                 <Card data-toggle="tab" label="製品の種類の数" text={numberProductCategories} suppliers={props.suppliers} products={props.products} model="products"/>
                 <div className="row align-self-center">
-                    <button className="btn btn-primary" onClick={handleClick} value="1">続きを見る</button>
+                    <button className="btn btn-primary" onClick={handleClick} value="1">詳細</button>
                 </div>
             </a>
             <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
             <   Card data-toggle="tab" label="サプライヤーの数" text={numberSupplier} suppliers={props.suppliers} products={props.products} model="suppliers"/>
                 <div className="row align-self-center">
-                    <button className="btn btn-primary" onClick={handleClick} value="2">続きを見る</button>
+                    <button className="btn btn-primary" onClick={handleClick} value="2">詳細</button>
                 </div>
             </a>
             <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
                 <Card data-toggle="tab" label="商品の在庫がなくなりそうだ" text={numberAlmostOutOfStock} suppliers={props.suppliers} products={props.products.filter(product => product.amount < 10 && product.amount > 0)} model="products_sap_het"/>
                 <div className="row align-self-center">
-                    <button className="btn btn-primary" onClick={handleClick} value="3">続きを見る</button>
+                    <button className="btn btn-primary" onClick={handleClick} value="3">詳細</button>
                 </div>
             </a>
             <a style={{textDecoration: "none", color: "black"}} href={props.href} className="card col-sm-3">
                 <Card data-toggle="tab" label="商品数量が在庫切れ" text={numberOutOfStock} suppliers={props.suppliers} products={props.products.filter(product => product.amount == 0)} model="products_da_het"/>
                 <div className="row align-self-center">
-                    <button className="btn btn-primary" onClick={handleClick} value="4">続きを見る</button>
+                    <button className="btn btn-primary" onClick={handleClick} value="4">詳細</button>
                 </div>
             </a>
          
